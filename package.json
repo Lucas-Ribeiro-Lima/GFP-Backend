@@ -4,11 +4,14 @@
   "description": "gfp backend express API server",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx vitest"
   },
   "author": "Lucas Ribeiro Lima",
   "license": "ISC",
   "dependencies": {
     "express": "^4.21.0"
+  },
+  "devDependencies": {
+    "vitest": "^2.1.2"
   }
 }
