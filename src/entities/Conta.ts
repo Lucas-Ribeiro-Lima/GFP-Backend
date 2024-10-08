@@ -5,18 +5,18 @@ type ConfigsType = {
 }
 
 interface ContaProps {
-  id: number
+  id?: number
   email: string,
   provider: string,
   nome: string,
   cpf: string,
-  configs: ConfigsType | null
+  configs?: ConfigsType
 }
 
 export class Conta {
   private props: ContaProps
-    constructor({id, email, provider, nome, cpf}: ContaProps) {
-    this.props = {id, email, provider, nome, cpf, configs: null}
+    constructor({ email, provider, nome, cpf}: ContaProps) {
+    this.props = { email, provider, nome, cpf }
   }
   
   public get id() {
