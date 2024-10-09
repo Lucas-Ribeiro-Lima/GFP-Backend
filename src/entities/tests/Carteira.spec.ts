@@ -6,11 +6,10 @@ describe("Testes da classe Carteira", () => {
     id: 1,
     id_conta_dono: 1,
     compartilhada: false,
-    idGrupoEconomico: null,
+    idGrupoEconomico: undefined,
     meta: 0,
     nome: "carteira de teste",
     saldo: 0,
-    registros: []
   })
 
   it("deve criar uma carteira válida", () => {

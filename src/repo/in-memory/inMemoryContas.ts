@@ -1,22 +1,21 @@
 import { Conta } from "../../entities/Conta.ts";
 import { ContaRepo } from "../ContaRepo.ts";
 
-export class inMemoryContas implements ContaRepo {
+export class InMemoryContas implements ContaRepo {
   public contasArray: Conta[] = []
 
   async create(conta: Conta): Promise<void> {
+    const id = this.contasArray.length
+    conta.id = id
     this.contasArray.push(conta)
   }
 
-  async find(email: string): Promise<Conta> {
-    const find = this.contasArray.find((conta) => conta.email === email)
-    if(!find) throw new Error("Conta não encontrada")
-    return find
+  async find(email: string): Promise<Conta | null> {
+    return this.contasArray.find((conta) => conta.email === email) ?? null
   }
 
   async save(updatedConta: Conta): Promise<void> {
-    const index = this.contasArray.findIndex((conta) => conta.email === updatedConta.email)
-    if(index === -1) throw new Error("Conta não encontrada")
+    const index = this.contasArray.findIndex((i) => i.email === updatedConta.email)
     this.contasArray[index] = updatedConta
   }
 

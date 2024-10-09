@@ -1,26 +1,25 @@
-type ConfigsType = {
-  tema: "Dark" | "Light",
-  displayName: string,
-  customWpp: string
-}
+import { Configs } from "./Config.ts"
 
 interface ContaProps {
-  id?: number
+  id: number | null,
   email: string,
   provider: string,
   nome: string,
   cpf: string,
-  configs?: ConfigsType
+  configs: Configs
 }
 
 export class Conta {
   private props: ContaProps
-    constructor({ email, provider, nome, cpf}: ContaProps) {
-    this.props = { email, provider, nome, cpf }
+    constructor(props: ContaProps) {
+    this.props = props
   }
   
   public get id() {
     return this.props.id
+  }
+  public set id(id: number | null){
+    this.props.id = id
   }
 
   public get email() {
