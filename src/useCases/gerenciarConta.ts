@@ -8,7 +8,7 @@ export class GerenciarConta {
 
   async cadastrar(nome: string, email:string, cpf:string, provider:string): Promise<void> {
 
-    let conta = await this.buscar(email)
+    let conta = await this.contaRepo.find(email)
     if(conta) throw new Error("Conta já cadastrada com esse e-mail")
 
     const configs = new Configs()
@@ -18,7 +18,7 @@ export class GerenciarConta {
   }
 
   async buscar(email: string) {
-    const conta = this.contaRepo.find(email)
+    const conta = await this.contaRepo.find(email)
     return conta ??  null
   }
 

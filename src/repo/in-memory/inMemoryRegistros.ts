@@ -1,3 +1,4 @@
+import { randomUUID } from "crypto";
 import { Despesa } from "../../entities/Despesa.ts";
 import { Registro } from "../../entities/Registro.ts";
 import { Renda } from "../../entities/Renda.ts";
@@ -7,11 +8,13 @@ export class InMemoryRendas implements RendaRepo {
   public RendaArray: Renda[] = []
 
   async create(reg: Renda): Promise<void> {
+    const newUuid = randomUUID()
+    reg.uuid = newUuid
     this.RendaArray.push(reg)
   }
 
   async load(id_carteira: number): Promise<Registro[]> {
-    return this.RendaArray.filter((reg) => reg.idCarteira === id_carteira)
+    return this.RendaArray.filter((reg) => reg.idCarteira === id_carteira) ?? []
   }
 
   async delete(uuid: string): Promise<void> {
@@ -42,7 +45,6 @@ export class InMemoryDespesas implements DespesaRepo {
 
   async save(Despesa: Despesa): Promise<void> {
     const index = this.DespesaArray.findIndex((reg) => reg.uuid === Despesa.uuid)
-    if (index === -1) throw new Error ("Despesa não encontrado")
     this.DespesaArray[index] = Despesa
   }
 }

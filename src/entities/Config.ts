@@ -16,6 +16,9 @@ export class Configs {
   get tema() {
     return this.props.tema
   }
+  set tema(valor: "Dark" | "Light") {
+    this.props.tema = valor
+  }
 
   get displayName() {
     return this.props.displayName
@@ -23,6 +26,6 @@ export class Configs {
 
   get customWpp() {
     return this.props.customWpp
-  }
+  } 
 }
 

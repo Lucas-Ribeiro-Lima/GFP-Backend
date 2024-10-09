@@ -8,7 +8,6 @@ describe("Testes do caso de uso [UC012] Cadastro de conta", () => {
   const gerenciarConta = new GerenciarConta(repository)
 
   it("deve criar uma nova conta", () => {
-
     const  nome = "John Doe"
     const  email = "johndoe@gmail.com"
     const cpf = '1234568910'
@@ -20,20 +19,26 @@ describe("Testes do caso de uso [UC012] Cadastro de conta", () => {
   }) 
 
   it("não deve criar uma conta com e-mail já existente", () => {
-
     const  nome = "John Doe"
     const  email = "johndoe@gmail.com"
     const cpf = '1234568910'
     const  provider = 'Google'
 
-    expect(() => gerenciarConta.cadastrar(nome, email, cpf, provider)).rejects.toThrow("Conta já cadastrada com esse e-mail")
+    expect(gerenciarConta.cadastrar(nome, email, cpf, provider)).rejects.toThrow("Conta já cadastrada com esse e-mail")
   })
+
+  it("deve retornar null ao não encontrar uma conta com o e-mail fornecido", () => {
+    const email = "johnnull@gmail.com"
+
+    expect(gerenciarConta.buscar(email)).resolves.toBe(null)
+  })
+
 
   it("deve atualizar a conta do e-mail fornecido", async () => {
     const email = "johndoe@gmail.com"
     const conta = await gerenciarConta.buscar(email)
 
-    if(!conta) return
+    if(!conta) throw new Error("Conta não encontrada")
     
     const contaAlterada = new Conta({
       id: conta.id,
@@ -48,10 +53,28 @@ describe("Testes do caso de uso [UC012] Cadastro de conta", () => {
 
     const contaTeste = await gerenciarConta.buscar(email)
 
-    if(!contaTeste) return
+    if(!contaTeste) throw new Error("Conta teste não encontrada")
 
     expect(contaTeste.nome).toBe("Doe John")
     expect(contaTeste.cpf).toBe("01987654321")
     expect(contaTeste.provider).toBe("Microsoft")
   })
+
+  it("deve permitir criar quantas contas forem necessárias", async () => {
+    const array = []
+    for(let i = 1; i<11; i++) {
+      const  nome = `John Doe ${i}`
+      const  email = `johndoe${i}@gmail.com`
+      const cpf = `000000000${i}`
+      const  provider = `Google ${i}`
+      gerenciarConta.cadastrar(nome, email, cpf, provider)
+      const conta = await gerenciarConta.buscar(email)
+      if(conta) array.push(conta)
+    }
+
+    array.forEach(async (conta) => {
+      expect(await gerenciarConta.buscar(conta.email)).toBe(conta)
+    })
+  })
+
 })

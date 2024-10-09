@@ -17,6 +17,13 @@ export class Renda extends Registro {
     this.props = props
   }
 
+  public get uuid() {
+    return this.props.uuid
+  }
+  public set uuid(uuid: string) {
+    this.props.uuid = uuid
+  }
+
   public get fonte() {
     return this.props.fonte
   }
