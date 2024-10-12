@@ -2,8 +2,9 @@ import { describe, expect, it } from 'vitest'
 import { Renda } from '../../entities/Renda.ts'
 import { InMemoryRendas } from '../../repo/in-memory/inMemoryRegistros.ts'
 import { GerenciarRenda } from '../gerenciarRenda.ts'
+import { randomUUID } from 'crypto'
 
-describe("Teste para o caso de uso gerenciar Renda [UC004] [UC005] [UC006]", () => {
+describe("Teste para o caso de uso gerenciar Renda [UC001] [UC002] [UC003]", () => {
   const repository = new InMemoryRendas()
   const gerenciarRenda = new GerenciarRenda(repository)
   const arrayTeste: Renda[] = []
@@ -30,7 +31,7 @@ describe("Teste para o caso de uso gerenciar Renda [UC004] [UC005] [UC006]", () 
     const idCarteira = 1
     for(let i = 1; i<11; i++) {
       const renda = new Renda({
-        uuid: `0`,
+        uuid: randomUUID(),
         id_carteira: idCarteira,
         categoria: `salario`, 
         competencia: { ano: 2024, mes: 10, dataInclusao:  Date.now().toString() }, 

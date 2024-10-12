@@ -43,8 +43,9 @@ export class InMemoryDespesas implements DespesaRepo {
     this.DespesaArray = this.DespesaArray.filter((reg) => reg.uuid !== uuid)
   }
 
-  async save(Despesa: Despesa): Promise<void> {
-    const index = this.DespesaArray.findIndex((reg) => reg.uuid === Despesa.uuid)
-    this.DespesaArray[index] = Despesa
+  async save(despesa: Despesa): Promise<void> {
+    const index = this.DespesaArray.findIndex((reg) => reg.uuid === despesa.uuid)
+    if(index === -1) throw new Error("Despesa não encontrada")
+    this.DespesaArray[index] = despesa
   }
 }
