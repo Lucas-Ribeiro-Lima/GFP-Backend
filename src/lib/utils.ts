@@ -1,4 +1,4 @@
-export function validaCpf(cpf: string) {
+export function cpfValido (cpf: string) {
   const cpfFormatted = cpf.replace(/\D/g, "")
 
   if(cpfFormatted.length !== 11) return false
@@ -30,4 +30,7 @@ export function validaCpf(cpf: string) {
   else return true
 }
 
-export function validaEmail() {}
+export function emailValido (email: string) {
+  if((/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g).test(email)) return true
+  else return false
+}
