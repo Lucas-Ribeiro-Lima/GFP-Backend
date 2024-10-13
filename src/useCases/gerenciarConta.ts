@@ -7,7 +7,6 @@ export class GerenciarConta {
   constructor(private contaRepo: ContaRepo) {}
 
   async cadastrar(nome: string, email:string, cpf:string, provider:string): Promise<void> {
-
     let conta = await this.contaRepo.find(email)
     if(conta) throw new Error("Conta já cadastrada com esse e-mail")
 
@@ -23,6 +22,7 @@ export class GerenciarConta {
   }
 
   async atualizar(conta: Conta): Promise<void> {
+    if(!this.contaRepo.find(conta.email)) throw new Error("Conta não encontrada")
     await this.contaRepo.save(conta)
   }
 }

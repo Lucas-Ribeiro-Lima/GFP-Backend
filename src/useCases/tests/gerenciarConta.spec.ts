@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
+import { Conta } from "../../entities/Conta.ts";
 import { InMemoryContas } from "../../repo/in-memory/inMemoryContas.ts";
 import { GerenciarConta } from "../gerenciarConta.ts";
-import { Conta } from "../../entities/Conta.ts";
+import { Configs } from "../../entities/Config.ts";
 
 describe("Testes do caso de uso [UC012] Cadastro de conta", () => {
   const repository = new InMemoryContas()
@@ -53,11 +54,9 @@ describe("Testes do caso de uso [UC012] Cadastro de conta", () => {
 
     const contaTeste = await gerenciarConta.buscar(email)
 
-    if(!contaTeste) throw new Error("Conta teste não encontrada")
-
-    expect(contaTeste.nome).toBe("Doe John")
-    expect(contaTeste.cpf).toBe("12345678909")
-    expect(contaTeste.provider).toBe("Microsoft")
+    expect(contaTeste?.nome).toBe("Doe John")
+    expect(contaTeste?.cpf).toBe("12345678909")
+    expect(contaTeste?.provider).toBe("Microsoft")
   })
 
   it("deve permitir criar quantas contas forem necessárias", async () => {
@@ -73,8 +72,42 @@ describe("Testes do caso de uso [UC012] Cadastro de conta", () => {
     }
 
     array.forEach(async (conta) => {
-      expect(await gerenciarConta.buscar(conta.email)).toBe(conta)
+      expect(gerenciarConta.buscar(conta.email)).resolves.toBe(conta)
     })
   })
 
+  it("deve atualizar as configurações completamente corretamente", async () => {
+    const email = "johndoe@gmail.com"
+    const conta = await gerenciarConta.buscar(email)
+    const newConfigs = new Configs()
+
+    if(!conta) throw new Error("Conta não encontrada")
+
+    newConfigs.tema = "Dark"
+    newConfigs.displayName = "Doles"
+    newConfigs.customWpp = "/files/johndoe@gmail.com.br/wpp.png"
+
+    conta.configs = newConfigs
+    await gerenciarConta.atualizar(conta)
+
+    expect(gerenciarConta.buscar(email).then((conta) => conta?.configs)).resolves.toBe(newConfigs)
+  })
+
+  it("deve atualizar apenas as configurações informadas", async () => {
+    const email = "johndoe@gmail.com"
+    const conta = await gerenciarConta.buscar(email)
+
+    if(!conta) throw new Error("Conta não encontrada")
+    conta.configs.displayName = "JohnDo"
+    
+    await gerenciarConta.atualizar(conta)
+
+    const contaAtt = await gerenciarConta.buscar(email)
+
+    if(!contaAtt) throw new Error("Conta não encontrada")
+
+    expect((contaAtt.configs.displayName)).toBe("JohnDo")
+    expect((contaAtt.configs.tema)).toBe("Dark")
+    expect((contaAtt.configs.customWpp)).toBe("/files/johndoe@gmail.com.br/wpp.png")
+  })
 })
