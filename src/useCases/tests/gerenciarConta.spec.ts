@@ -10,7 +10,7 @@ describe("Testes do caso de uso [UC012] Cadastro de conta", () => {
   it("deve criar uma nova conta", () => {
     const  nome = "John Doe"
     const  email = "johndoe@gmail.com"
-    const cpf = '1234568910'
+    const cpf = '12345678909'
     const  provider = 'Google'
     
     gerenciarConta.cadastrar(nome, email, cpf, provider)
@@ -21,7 +21,7 @@ describe("Testes do caso de uso [UC012] Cadastro de conta", () => {
   it("não deve criar uma conta com e-mail já existente", () => {
     const  nome = "John Doe"
     const  email = "johndoe@gmail.com"
-    const cpf = '1234568910'
+    const cpf = '12345678909'
     const  provider = 'Google'
 
     expect(gerenciarConta.cadastrar(nome, email, cpf, provider)).rejects.toThrow("Conta já cadastrada com esse e-mail")
@@ -44,7 +44,7 @@ describe("Testes do caso de uso [UC012] Cadastro de conta", () => {
       id: conta.id,
       nome: "Doe John",
       email,
-      cpf: "01987654321",
+      cpf: "12345678909",
       provider: "Microsoft",
       configs: conta.configs
     })
@@ -56,7 +56,7 @@ describe("Testes do caso de uso [UC012] Cadastro de conta", () => {
     if(!contaTeste) throw new Error("Conta teste não encontrada")
 
     expect(contaTeste.nome).toBe("Doe John")
-    expect(contaTeste.cpf).toBe("01987654321")
+    expect(contaTeste.cpf).toBe("12345678909")
     expect(contaTeste.provider).toBe("Microsoft")
   })
 
@@ -65,7 +65,7 @@ describe("Testes do caso de uso [UC012] Cadastro de conta", () => {
     for(let i = 1; i<11; i++) {
       const  nome = `John Doe ${i}`
       const  email = `johndoe${i}@gmail.com`
-      const cpf = `000000000${i}`
+      const cpf = `12345678909`
       const  provider = `Google ${i}`
       gerenciarConta.cadastrar(nome, email, cpf, provider)
       const conta = await gerenciarConta.buscar(email)

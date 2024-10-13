@@ -1,4 +1,5 @@
 import { Configs } from "./Config.ts"
+import { cpfValido, emailValido } from "../lib/utils.ts"
 
 interface ContaProps {
   id: number | null,
@@ -12,6 +13,8 @@ interface ContaProps {
 export class Conta {
   private props: ContaProps
     constructor(props: ContaProps) {
+    if(!emailValido(props.email)) throw new Error("Email inválido")
+    if(!cpfValido(props.cpf)) throw new Error("CPF inválido")
     this.props = props
   }
   
@@ -25,6 +28,10 @@ export class Conta {
   public get email() {
     return this.props.email
   }
+  public set email(email: string) {
+    if(!emailValido(email)) throw new Error("Email inválido")
+    this.props.email = email
+  }
 
   public get provider() {
     return this.props.provider
@@ -37,8 +44,15 @@ export class Conta {
   public get cpf() {
     return this.props.cpf
   }
+  public set cpf(cpf: string) {
+    if(!cpfValido(cpf)) throw new Error("CPF Inválido")
+    this.props.cpf = cpf
+  }
 
   public get configs() {
     return this.props.configs
+  }
+  public set configs(configs: Configs) {
+    this.props.configs = configs
   }
 }
