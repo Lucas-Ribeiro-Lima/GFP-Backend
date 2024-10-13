@@ -1,14 +1,14 @@
 interface ConfigsProps {
   tema: "Dark" | "Light",
-  displayName?: string | null,
-  customWpp?: string | null
+  displayName: string,
+  customWpp: string
 }
 
 export class Configs {  
   private props: ConfigsProps = {
     tema: "Light",
-    displayName: null,
-    customWpp: null
+    displayName: '',
+    customWpp: ''
   }
 
   constructor() {}
@@ -23,9 +23,15 @@ export class Configs {
   get displayName() {
     return this.props.displayName
   }
+  set displayName(nome: string) {
+    this.props.displayName = nome
+  }
 
   get customWpp() {
     return this.props.customWpp
-  } 
+  }
+  set customWpp(url: string) {
+    this.props.customWpp = url
+  }
 }
 
