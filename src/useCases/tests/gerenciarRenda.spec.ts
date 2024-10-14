@@ -11,7 +11,7 @@ describe("Teste para o caso de uso gerenciar Renda [UC001] [UC002] [UC003]", () 
 
   const renda = new Renda({
     uuid: '0',
-    id_carteira: 1,
+    idCarteira: 1,
     categoria: "salario", 
     competencia: { ano: 2024, mes: 10, dataInclusao:  Date.now().toString() }, 
     descricao: "teste",
@@ -32,7 +32,7 @@ describe("Teste para o caso de uso gerenciar Renda [UC001] [UC002] [UC003]", () 
     for(let i = 1; i<11; i++) {
       const renda = new Renda({
         uuid: randomUUID(),
-        id_carteira: idCarteira,
+        idCarteira,
         categoria: `salario`, 
         competencia: { ano: 2024, mes: 10, dataInclusao:  Date.now().toString() }, 
         descricao: `teste ${i}`,

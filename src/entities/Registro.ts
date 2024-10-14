@@ -10,7 +10,7 @@ type enumReg = 'fixo' | 'variavel'
 
 export interface RegistroProps {
   uuid: string
-  id_carteira: number
+  idCarteira: number
   descricao: string
   valor: number
   competencia: Competencia
@@ -22,9 +22,9 @@ export interface RegistroProps {
 export abstract class Registro {
   protected props: RegistroProps
   
-  constructor({descricao, id_carteira, valor, competencia, tipo, categoria}: RegistroProps) {
+  constructor({descricao, idCarteira, valor, competencia, tipo, categoria}: RegistroProps) {
     const newUuid = randomUUID()
-    this.props = {uuid: newUuid, id_carteira, descricao, valor, competencia, tipo, categoria}
+    this.props = {uuid: newUuid, idCarteira, descricao, valor, competencia, tipo, categoria}
   }
 
   public get uuid() {
@@ -32,7 +32,7 @@ export abstract class Registro {
   }
 
   public get idCarteira() {
-    return this.props.id_carteira
+    return this.props.idCarteira
   }
 
   public get descricao() {
