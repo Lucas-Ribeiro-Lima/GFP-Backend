@@ -12,7 +12,7 @@ model Registro {
   numParcelas Int?
   competenciaMes Int
   competenciaAno Int
-  dataInclusao DateTime
+  dataInclusao DateTime @default(now())
 
   //ORM Relation
   carteira Carteira @relation(fields: [idCarteira], references: [id])
@@ -27,6 +27,7 @@ enum Categoria {
   salario
   investimento
   bonus
+  alimentacao
   moradia
   lazer
   outros
