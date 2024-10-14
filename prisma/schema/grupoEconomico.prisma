@@ -1,7 +1,7 @@
 model GrupoEconomico {
   id Int @id
   nome String
-  meta_geral Float
+  metaGeral Float
 
   //ORM Relation
   carteira Carteira[]

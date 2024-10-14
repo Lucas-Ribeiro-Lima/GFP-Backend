@@ -1,14 +1,14 @@
 model Carteira {
   id Int @id @default(autoincrement())
-  id_conta_dono Int @unique
-  id_grupo_economico Int?
+  idContaDono Int @unique
+  idGrupoEconomico Int?
   nome String
   saldo Float @default(0.00)
   meta Float @default(0.00)
   compartilhada Boolean @default(false)
 
   //ORM Relations
-  conta Conta @relation(fields: [id_conta_dono], references: [id])
-  grupoEconomico GrupoEconomico? @relation(fields: [id_grupo_economico], references: [id])
+  conta Conta @relation(fields: [idContaDono], references: [id])
+  grupoEconomico GrupoEconomico? @relation(fields: [idGrupoEconomico], references: [id])
   registro Registro[]
 } 

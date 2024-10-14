@@ -1,6 +1,6 @@
 model Registro {
   uuid String @id @db.VarChar(36)
-  id_carteira Int
+  idCarteira Int
   tipo Tipo
   categoria Categoria
   modalidade Modalidade @default(fixo)
@@ -9,13 +9,13 @@ model Registro {
   fonte String?
   frequencia Frequencia @default(mensal)
   parcelado Boolean?
-  num_parcelas Int?
-  competencia_mes Int
-  competencia_ano Int
-  data_inclusao DateTime
+  numParcelas Int?
+  competenciaMes Int
+  competenciaAno Int
+  dataInclusao DateTime
 
   //ORM Relation
-  carteira Carteira @relation(fields: [id_carteira], references: [id])
+  carteira Carteira @relation(fields: [idCarteira], references: [id])
 }
 
 enum Tipo { 
