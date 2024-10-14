@@ -9,14 +9,14 @@ export class InMemoryCarteira implements CarteiraRepo {
   }
 
   async find(id_dono: number): Promise<Carteira> {
-    const find = this.carteiraArray.find((cart) => cart.conta_dono === id_dono)
+    const find = this.carteiraArray.find((cart) => cart.idContaDono === id_dono)
     if(!find) throw new Error("Carteira não encontrada")
     return find
   }
 
   async save(updatedCart: Carteira): Promise<void> {
-    const index = this.carteiraArray.findIndex((cart) => cart.id === updatedCart.id)
-    if(!index) throw new Error("Carteira não encontada")
+    const index = this.carteiraArray.findIndex((cart) => cart.idContaDono === updatedCart.idContaDono)
+    if(index === -1) throw new Error("Carteira não encontada")
     this.carteiraArray[index] = updatedCart
   }
 

@@ -16,6 +16,7 @@ export class InMemoryContas implements ContaRepo {
 
   async save(updatedConta: Conta): Promise<void> {
     const index = this.contasArray.findIndex((i) => i.email === updatedConta.email)
+    if(index === -1) throw new Error("Conta não encontada")
     this.contasArray[index] = updatedConta
   }
 
