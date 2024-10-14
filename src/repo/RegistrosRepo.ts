@@ -4,7 +4,7 @@ import { Renda } from "../entities/Renda.ts";
 
 interface RegistrosRepo {
   create(registro: Registro): Promise<void>
-  load(id_carteira: number): Promise<Registro[]>
+  load(idCarteira: number): Promise<Registro[]>
   save(registro: Registro): Promise<void>
   delete(uuid: string): Promise<void>
 }
