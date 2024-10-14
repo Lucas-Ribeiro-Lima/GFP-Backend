@@ -1,7 +1,7 @@
 
 interface CarteiraProps {
   id: number, 
-  id_conta_dono: number,
+  idContaDono: number,
   nome: string,
   saldo: number,
   meta: number,
@@ -11,9 +11,9 @@ interface CarteiraProps {
 export class Carteira { 
   private readonly props: CarteiraProps
 
-  constructor({id, id_conta_dono, nome, saldo, meta, compartilhada, idGrupoEconomico}: CarteiraProps) {
-    if(id_conta_dono === null || undefined) throw new Error("Id Conta inválido")
-    this.props = {id, id_conta_dono, nome, saldo, meta, compartilhada, idGrupoEconomico}
+  constructor({id, idContaDono, nome, saldo, meta, compartilhada, idGrupoEconomico}: CarteiraProps) {
+    if(idContaDono === null || undefined) throw new Error("Id Conta inválido")
+    this.props = {id, idContaDono, nome, saldo, meta, compartilhada, idGrupoEconomico}
   }
 
   get id() {
@@ -21,7 +21,7 @@ export class Carteira {
   }
 
   get conta_dono() {
-    return this.props.id_conta_dono
+    return this.props.idContaDono
   }
 
   get nome() {
