@@ -6,14 +6,14 @@ interface CarteiraProps {
   saldo: number,
   meta: number,
   compartilhada: boolean
-  idGrupoEconomico?: number
+  idGrupoEconomico: number | null
 }
 export class Carteira { 
   private readonly props: CarteiraProps
 
-  constructor({id, id_conta_dono, nome, saldo, meta, compartilhada}: CarteiraProps) {
+  constructor({id, id_conta_dono, nome, saldo, meta, compartilhada, idGrupoEconomico}: CarteiraProps) {
     if(id_conta_dono === null || undefined) throw new Error("Id Conta inválido")
-    this.props = {id, id_conta_dono, nome, saldo, meta, compartilhada}
+    this.props = {id, id_conta_dono, nome, saldo, meta, compartilhada, idGrupoEconomico}
   }
 
   get id() {
