@@ -17,7 +17,7 @@ describe("Teste para o caso de uso gerenciar Renda [UC001] [UC002] [UC003]", () 
     descricao: "teste",
     fonte: "renda",
     frequencia: "trimestral",
-    tipo: "fixo",
+    modalidade: "fixo",
     valor: 200}
   )
 
@@ -38,7 +38,7 @@ describe("Teste para o caso de uso gerenciar Renda [UC001] [UC002] [UC003]", () 
         descricao: `teste ${i}`,
         fonte: `renda`,
         frequencia: `trimestral`,
-        tipo: `fixo`,
+        modalidade: `fixo`,
         valor: 200 * i
       })
       gerenciarRenda.cadastrar(renda)

@@ -11,7 +11,7 @@ describe("Teste para o caso de uso gerenciar Despesa [UC004] [UC005] [UC006]", (
 
   const despesa = new Despesa({
       uuid: randomUUID(),
-      id_carteira: 1,
+      idCarteira: 1,
       categoria: 'moradia',
       competencia: {
         mes: 10,
@@ -21,7 +21,7 @@ describe("Teste para o caso de uso gerenciar Despesa [UC004] [UC005] [UC006]", (
       descricao: "Teste de despesa",
       numParcelas: 1,
       parcelado: false,
-      tipo: 'fixo',
+      modalidade: 'fixo',
       valor: 350
   })
 
@@ -34,7 +34,7 @@ describe("Teste para o caso de uso gerenciar Despesa [UC004] [UC005] [UC006]", (
     for(let i = 0; i < 10; i ++) {
       const despesa = new Despesa({
         uuid: randomUUID(),
-        id_carteira: 1,
+        idCarteira: 1,
         categoria: 'moradia',
         competencia: {
           mes: 10,
@@ -44,7 +44,7 @@ describe("Teste para o caso de uso gerenciar Despesa [UC004] [UC005] [UC006]", (
         descricao: `Teste de despesa ${i}`,
         numParcelas: 1,
         parcelado: false,
-        tipo: 'fixo',
+        modalidade: 'fixo',
         valor: 350 * i
     })
 
