@@ -20,7 +20,7 @@ export class Carteira {
     return this.props.id
   }
 
-  get conta_dono() {
+  get idContaDono() {
     return this.props.idContaDono
   }
 
