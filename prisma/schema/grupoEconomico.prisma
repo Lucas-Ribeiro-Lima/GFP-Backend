@@ -1,0 +1,8 @@
+model GrupoEconomico {
+  id Int @id
+  nome String
+  meta_geral Float
+
+  //ORM Relation
+  carteira Carteira[]
+}

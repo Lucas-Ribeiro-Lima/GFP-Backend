@@ -1,0 +1,41 @@
+view DespesasCart {
+  uuid String @unique
+  id_carteira Int
+  categoria Categoria
+  modalidade Modalidade
+  valor Float
+  parcelado Boolean
+  num_parcelas Int
+  competencia_mes Int
+  competencia_ano Int
+  data_inclusao DateTime
+}
+
+view RendasCart {
+  uuid String @unique
+  id_carteira Int
+  categoria Categoria
+  modalidade Modalidade
+  valor Float
+  fonte String
+  frequencia Frequencia
+  competencia_mes Int
+  competencia_ano Int
+  data_inclusao DateTime
+}
+
+view TodosRegistros {
+  uuid String @unique
+  id_carteira Int
+  tipo Tipo
+  categoria Categoria
+  modalidade Modalidade
+  valor Float
+  fonte String
+  frequencia Frequencia
+  parcelado Boolean
+  num_parcelas Int
+  competencia_mes Int
+  competencia_ano Int
+  data_inclusao DateTime
+}

@@ -1,0 +1,19 @@
+
+model Conta {
+  id Int @id @default(autoincrement())
+  email String @unique
+  cpf String @unique
+  nome String?
+  provider String?
+  tema Tema @default(Light)
+  displayName String?
+  customWppUrl String?
+
+  // ORM Relations
+  carteira Carteira?
+}
+
+enum Tema {
+  Dark
+  Light
+}

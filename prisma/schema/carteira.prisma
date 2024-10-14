@@ -1,0 +1,14 @@
+model Carteira {
+  id Int @id
+  id_conta_dono Int @unique
+  id_grupo_economico Int?
+  nome String?
+  saldo Float @default(0.00)
+  meta Float?
+  compartilhada Boolean @default(false)
+
+  //ORM Relations
+  conta Conta @relation(fields: [id_conta_dono], references: [id])
+  grupoEconomico GrupoEconomico? @relation(fields: [id_grupo_economico], references: [id])
+  registro Registro[]
+} 

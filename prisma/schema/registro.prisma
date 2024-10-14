@@ -1,0 +1,44 @@
+model Registro {
+  uuid String @id @db.VarChar(36)
+  id_carteira Int
+  tipo Tipo
+  categoria Categoria
+  modalidade Modalidade @default(fixa)
+  valor Float
+  fonte String?
+  frequencia Frequencia?
+  parcelado Boolean?
+  num_parcelas Int?
+  competencia_mes Int
+  competencia_ano Int
+  data_inclusao DateTime
+
+  //ORM Relation
+  carteira Carteira @relation(fields: [id_carteira], references: [id])
+}
+
+enum Tipo { 
+  renda
+  despesa
+}
+
+enum Categoria {
+  salario
+  investimento
+  bonus
+  moradia
+  lazer
+  outros
+}
+
+enum Modalidade {
+  fixa
+  variavel
+}
+
+enum Frequencia {
+  mensal
+  trimestral
+  semestral
+  anual
+}

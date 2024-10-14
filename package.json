@@ -13,6 +13,7 @@
   "author": "Lucas Ribeiro Lima",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "^5.20.0",
     "express": "^4.21.0"
   },
   "devDependencies": {
