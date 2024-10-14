@@ -1,10 +1,10 @@
 model Carteira {
-  id Int @id
+  id Int @id @default(autoincrement())
   id_conta_dono Int @unique
   id_grupo_economico Int?
-  nome String?
+  nome String
   saldo Float @default(0.00)
-  meta Float?
+  meta Float @default(0.00)
   compartilhada Boolean @default(false)
 
   //ORM Relations

@@ -3,10 +3,11 @@ model Registro {
   id_carteira Int
   tipo Tipo
   categoria Categoria
-  modalidade Modalidade @default(fixa)
+  modalidade Modalidade @default(fixo)
   valor Float
+  descricao String
   fonte String?
-  frequencia Frequencia?
+  frequencia Frequencia @default(mensal)
   parcelado Boolean?
   num_parcelas Int?
   competencia_mes Int
@@ -32,7 +33,7 @@ enum Categoria {
 }
 
 enum Modalidade {
-  fixa
+  fixo
   variavel
 }
 
