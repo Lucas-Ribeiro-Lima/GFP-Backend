@@ -10,7 +10,7 @@ export class GerenciarConta {
     let conta = await this.contaRepo.find(email)
     if(conta) throw new Error("Conta já cadastrada com esse e-mail")
 
-    const configs = new Configs()
+    const configs = new Configs({tema: "Light", displayName: "", customWpp: ""})
     conta = new Conta({id: null, nome, email, provider, cpf, configs}) 
 
     await this.contaRepo.create(conta)

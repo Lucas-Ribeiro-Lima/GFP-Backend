@@ -11,7 +11,7 @@ describe("Testes unitários para a classe Conta", () => {
       cpf: '123456789-09',
       email: 'foo-bar@bar.uk',
       provider: 'Google',
-      configs: new Configs()
+      configs: new Configs({tema: 'Light', displayName: "", customWpp: ""})
     }
     const conta = new Conta(conta_valida)
 
@@ -25,7 +25,7 @@ describe("Testes unitários para a classe Conta", () => {
       cpf: '123456789-09',
       email: 'foo-barbar.uk',
       provider: 'Google',
-      configs: new Configs()
+      configs: new Configs({tema: 'Light', displayName: "", customWpp: ""})
     }  
     
     expect(() => new Conta(conta_email_invalido)).toThrowError()
@@ -38,7 +38,7 @@ describe("Testes unitários para a classe Conta", () => {
       cpf: '111111111-11',
       email: 'foo-barbar.uk',
       provider: 'Google',
-      configs: new Configs()
+      configs: new Configs({tema: 'Light', displayName: "", customWpp: ""})
     }
 
     expect(() => new Conta(conta_cpf_invalido)).toThrowError()

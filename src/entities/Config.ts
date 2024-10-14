@@ -11,7 +11,11 @@ export class Configs {
     customWpp: ''
   }
 
-  constructor() {}
+  constructor({ tema, displayName, customWpp }: ConfigsProps) {
+    this.props.tema = tema
+    this.props.displayName = displayName
+    this.props.customWpp = customWpp
+  }
 
   get tema() {
     return this.props.tema

@@ -79,7 +79,7 @@ describe("Testes do caso de uso [UC012] Cadastro de conta", () => {
   it("deve atualizar as configurações completamente corretamente", async () => {
     const email = "johndoe@gmail.com"
     const conta = await gerenciarConta.buscar(email)
-    const newConfigs = new Configs()
+    const newConfigs = new Configs({tema: 'Light', displayName: "", customWpp: ""})
 
     if(!conta) throw new Error("Conta não encontrada")
 
