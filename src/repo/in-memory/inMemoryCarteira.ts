@@ -14,10 +14,10 @@ export class InMemoryCarteira implements CarteiraRepo {
     return find
   }
 
-  async update(updatedCart: Carteira): Promise<Carteira> {
+  async save(updatedCart: Carteira): Promise<void> {
     const index = this.carteiraArray.findIndex((cart) => cart.id === updatedCart.id)
     if(!index) throw new Error("Carteira não encontada")
-    return this.carteiraArray[index]
+    this.carteiraArray[index] = updatedCart
   }
 
   async delete(id: number): Promise<void> {
