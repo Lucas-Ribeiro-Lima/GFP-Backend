@@ -22,7 +22,7 @@ export class GerenciarConta implements GerenciarContaI{
     await this.contaRepo.create(conta)
   }
 
-  async buscar(email: string) {
+  async buscar(email: string): Promise<Conta | null> {
     return await this.contaRepo.find(email)
   }
 

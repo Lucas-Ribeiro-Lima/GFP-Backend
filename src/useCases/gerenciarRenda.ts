@@ -2,7 +2,7 @@ import { RendaRepo } from "../adapters/repo/RegistrosRepo.ts";
 import { Renda } from "../entities/Renda.ts";
 export interface GerenciarRendaI {
   cadastrar(renda: Renda): Promise<void>
-  buscar(carteiraId: number): Promise<Renda[]>
+  buscar(carteiraId: number): Promise<Renda[] | []>
   atualizar(renda: Renda): Promise<void>
   excluir(uuid: string): Promise<void>
 }
@@ -13,7 +13,7 @@ export class GerenciarRenda implements GerenciarRendaI {
     this.rendaRepo.create(renda)
   }
 
-  async buscar(carteira_id: number) {
+  async buscar(carteira_id: number): Promise<Renda[] | []> {
     return this.rendaRepo.load(carteira_id)
   }
 
