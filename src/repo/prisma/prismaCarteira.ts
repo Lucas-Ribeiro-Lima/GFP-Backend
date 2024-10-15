@@ -5,11 +5,11 @@ import { CarteiraRepo } from '../CarteiraRepo.ts';
 export class PrismaCarteira implements CarteiraRepo {
   constructor(private pc = new PrismaClient({log: ['error'], errorFormat: 'pretty'})) {}
 
-  async create({conta_dono, nome, compartilhada, meta, saldo}: Carteira): Promise<void> {
+  async create({idContaDono, nome, compartilhada, meta, saldo}: Carteira): Promise<void> {
     try {
       await this.pc.carteira.create({
         data: {
-          idContaDono: conta_dono,
+          idContaDono,
           nome,
           compartilhada,
           meta,
