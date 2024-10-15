@@ -57,4 +57,18 @@ describe("Testes para o caso de uso gerenciar Carteira", () => {
 
     expect(carteiraAtualizada.nome).toBe("Carteira alterada")
   })
+
+  it("não deve permitir criar duas carteiras para um mesmo dono", () => {
+    const carteiraDuplicada = new Carteira({
+      id: 12,
+      idContaDono: 1,
+      nome: "Carteira 1",
+      saldo: 0.00,
+      compartilhada: false,
+      idGrupoEconomico: null,
+      meta: 0.00
+    })
+
+    expect(gerenciarCarteira.cadastrar(carteiraDuplicada)).rejects.toThrowError("Esta conta já possui uma carteira vinculada")
+  })
 })

@@ -8,15 +8,13 @@ export class InMemoryCarteira implements CarteiraRepo {
     this.carteiraArray.push(cart)  
   }
 
-  async find(id_dono: number): Promise<Carteira> {
-    const find = this.carteiraArray.find((cart) => cart.idContaDono === id_dono)
-    if(!find) throw new Error("Carteira não encontrada")
-    return find
+  async find(id_dono: number): Promise<Carteira | null> {
+    return this.carteiraArray.find((cart) => cart.idContaDono === id_dono) ?? null
   }
 
   async save(updatedCart: Carteira): Promise<void> {
     const index = this.carteiraArray.findIndex((cart) => cart.idContaDono === updatedCart.idContaDono)
-    if(index === -1) throw new Error("Carteira não encontada")
+    if(index === -1) throw new Error("A carteira especificada não existe no banco de dados")
     this.carteiraArray[index] = updatedCart
   }
 

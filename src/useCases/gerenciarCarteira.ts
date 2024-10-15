@@ -5,6 +5,9 @@ export class GerenciarCarteira {
   constructor(private carteiraRepo: CarteiraRepo) {}
 
   async cadastrar(carteira: Carteira): Promise<void> {
+    const carteiraExistente = await this.carteiraRepo.find(carteira.idContaDono)
+    if(carteiraExistente) throw new Error("Esta conta já possui uma carteira vinculada")
+
     await this.carteiraRepo.create(carteira)
   }
 
@@ -15,6 +18,7 @@ export class GerenciarCarteira {
   }
 
   async atualizar(carteira: Carteira): Promise<void> {
+    if(!await this.carteiraRepo.find(carteira.idContaDono)) throw new Error("A carteira a atualizar não foi encontrada")
     await this.carteiraRepo.save(carteira)
   }
 }
