@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
-import { Configs } from "../../entities/Config.ts";
-import { Conta } from "../../entities/Conta.ts";
-import { ContaRepo } from "../repo/ContaRepo.ts";
+import { Configs } from "@/entities/Config.ts";
+import { Conta } from "@/entities/Conta.ts";
+import { ContaRepo } from "@/adapters/repo/ContaRepo.ts";
 
 export class PrismaConta implements ContaRepo {
   constructor(private pc = new PrismaClient({ log: ["error"], errorFormat: "pretty"})) {}

@@ -1,8 +1,7 @@
+import { DespesaRepo } from "@/adapters/repo/RegistrosRepo.ts";
+import { Despesa } from "@/entities/Despesa.ts";
 import { PrismaClient } from "@prisma/client";
 import { randomUUID } from "crypto";
-import { Despesa } from "../../entities/Despesa.ts";
-import { Registro } from "../../entities/Registro.ts";
-import { DespesaRepo } from "../repo/RegistrosRepo.ts";
 
 export class PrismaDespesa implements DespesaRepo {
   constructor(private pc = new PrismaClient({log: ["error"], errorFormat: "pretty"})) {}
@@ -48,7 +47,7 @@ export class PrismaDespesa implements DespesaRepo {
     }
   }
 
-  async load(idCarteira: number): Promise<Registro[]> {
+  async load(idCarteira: number): Promise<Despesa[]> {
     try {
       const response = await this.pc.registro.findMany({
         where: {

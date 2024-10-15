@@ -1,6 +1,7 @@
+import { Carteira } from '@/entities/Carteira.ts';
 import { PrismaClient } from '@prisma/client';
-import { Carteira } from '../../entities/Carteira.ts';
-import { CarteiraRepo } from '../repo/CarteiraRepo.ts';
+import { CarteiraRepo } from '../CarteiraRepo.ts';
+
 
 export class PrismaCarteira implements CarteiraRepo {
   constructor(private pc = new PrismaClient({log: ['error'], errorFormat: 'pretty'})) {}

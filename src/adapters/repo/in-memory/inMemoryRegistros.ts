@@ -1,7 +1,7 @@
 import { randomUUID } from "crypto";
-import { Despesa } from "../../entities/Despesa.ts";
-import { Renda } from "../../entities/Renda.ts";
-import { DespesaRepo, RendaRepo } from "../repo/RegistrosRepo.ts";
+import { Despesa } from "@/entities/Despesa.ts";
+import { Renda } from "@/entities/Renda.ts";
+import { DespesaRepo, RendaRepo } from "@/adapters/repo/RegistrosRepo.ts";
 
 export class InMemoryRendas implements RendaRepo {
   public RendaArray: Renda[] = []

@@ -1,8 +1,7 @@
+import { RendaRepo } from "@/adapters/repo/RegistrosRepo.ts";
+import { Renda } from "@/entities/Renda.ts";
 import { PrismaClient } from "@prisma/client";
 import { randomUUID } from "crypto";
-import { Registro } from "../../entities/Registro.ts";
-import { Renda } from "../../entities/Renda.ts";
-import { RendaRepo } from "../repo/RegistrosRepo.ts";
 
 export class PrismaRenda implements RendaRepo {
   constructor(private pc = new PrismaClient({log: ["error"], errorFormat: "pretty"})) {}
@@ -46,7 +45,7 @@ export class PrismaRenda implements RendaRepo {
     }
   }
 
-  async load(idCarteira: number): Promise<Registro[]> {
+  async load(idCarteira: number): Promise<Renda[]> {
     try {
       const response = await this.pc.registro.findMany({
         where: {

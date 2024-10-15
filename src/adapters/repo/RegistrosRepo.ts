@@ -1,6 +1,6 @@
-import { Despesa } from "../../entities/Despesa.ts";
-import { Registro } from "../../entities/Registro.ts";
-import { Renda } from "../../entities/Renda.ts";
+import { Despesa } from "@/entities/Despesa.ts";
+import { Registro } from "@/entities/Registro.ts";
+import { Renda } from "@/entities/Renda.ts";
 
 interface RegistrosRepo<T> {
   create(registro: Registro): Promise<void>

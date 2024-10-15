@@ -1,4 +1,4 @@
-import { Carteira } from "../../entities/Carteira.ts"
+import { Carteira } from "@/entities/Carteira.ts"
 
 export interface CarteiraRepo {
   create(cart: Carteira): Promise<void>

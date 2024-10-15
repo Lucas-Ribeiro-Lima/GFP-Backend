@@ -1,5 +1,5 @@
-import { Carteira } from "../../entities/Carteira.ts";
-import { CarteiraRepo } from "../repo/CarteiraRepo.ts";
+import { Carteira } from "@/entities/Carteira.ts";
+import { CarteiraRepo } from "@/adapters/repo/CarteiraRepo.ts";
 
 export class InMemoryCarteira implements CarteiraRepo {
   public carteiraArray: Carteira[] = []
