@@ -12,7 +12,13 @@
     "allowImportingTsExtensions": true,              
     "forceConsistentCasingInFileNames": true,            
     "strict": true,                               
-    "alwaysStrict": true,                             
+    "alwaysStrict": true,
+    "paths": {
+      "@/entities/*": ["./src/entities/*"],
+      "@/useCases/*": ["./src/useCases/*"],
+      "@/adapters/*": ["./src/adapters/*"],
+      "@/lib/*": ["./src/lib/*"]
+    },                             
     "skipLibCheck": true                          
   },
   "include": ["**/*.ts"],
