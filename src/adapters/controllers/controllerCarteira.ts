@@ -21,8 +21,8 @@ export class ControllerCarteira {
         else res.status(500)
         return res.json({error: error.message})
       }
+      return res.status(500).json({error: "Erro crítico"})
     }
-    return res.status(500).json({error: "Erro crítico"})
   }
 
   public async handleHttpPost (req: Request, res: Response): Promise<Response> {
@@ -37,8 +37,8 @@ export class ControllerCarteira {
       if(error instanceof Error){ 
         return res.status(500).json({error: error.message})
       }
+      return res.status(500).json({error: "Erro crítico"})
     }
-    return res.status(500).json({error: "Erro crítico"})
   }
 
   public async handleHttpPatch(req: Request, res: Response): Promise<Response> {
@@ -47,7 +47,7 @@ export class ControllerCarteira {
       if(!carteira) return res.status(400).json({error: "Carteira inválida"})
 
       await this.gerenciarCarteira.atualizar(carteira)
-      return res.status(200).json("Carteira atualizada com sucesso!")
+      return res.status(200).json({message: "Carteira atualizada com sucesso!"})
 
     } catch (error) {
       if(error instanceof Error) {
@@ -55,21 +55,21 @@ export class ControllerCarteira {
         else res.status(500)
         return res.json({error: error.message})
       }
+      return res.status(500).json({error: "Erro crítico"})
     }
-    return res.status(500).json({error: "Erro crítico"})
   }
 
   public async handleHttpDelete(req: Request, res: Response): Promise<Response> {
     try {
-      const idDono = Number(req.params.idDono)
-      if(isNaN(idDono)) return res.status(400).json({error: "Id inválido"})
-      await this.gerenciarCarteira.excluir(idDono)
+      const id = Number(req.params.id)
+      if(isNaN(id)) return res.status(400).json({error: "Id inválido"})
+      await this.gerenciarCarteira.excluir(id)
       return res.status(204).json({message: "Carteira deletada com sucesso!"})
     } catch (error) {
       if(error instanceof Error) {
         return res.status(500).json({message: "Erro ao deletar a carteira."})
       }
+      return res.status(500).json({error: "Erro crítico"})
     }
-    return res.status(500).json({error: "Erro crítico"})
   }
 }
