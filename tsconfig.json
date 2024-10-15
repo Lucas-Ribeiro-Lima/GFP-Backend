@@ -17,6 +17,7 @@
       "@/entities/*": ["./src/entities/*"],
       "@/useCases/*": ["./src/useCases/*"],
       "@/adapters/*": ["./src/adapters/*"],
+      "@/controllers/*": ["./src/controllers/*"],
       "@/lib/*": ["./src/lib/*"]
     },                             
     "skipLibCheck": true                          
