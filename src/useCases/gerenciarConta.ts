@@ -23,11 +23,10 @@ export class GerenciarConta implements GerenciarContaI{
   }
 
   async buscar(email: string): Promise<Conta | null> {
-    return await this.contaRepo.find(email)
+    return await this.contaRepo.find(email) ?? null
   }
 
   async atualizar(conta: Conta): Promise<void> {
-    if(!this.contaRepo.find(conta.email)) throw new Error("Conta não encontrada")
     await this.contaRepo.save(conta)
   }
 
