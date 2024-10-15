@@ -11,6 +11,8 @@ export class ControllerCarteira {
       if(isNaN(idDono)) return res.status(400).json({error: "Id inválido"})
 
       const carteira = await this.gerenciarCarteira.buscar(idDono)
+      if(!carteira) return res.status(404).json(carteira)
+        
       return res.status(200).json(carteira)
 
     } catch (error) {

@@ -41,7 +41,7 @@ describe("Testes para o controller de carteira", () => {
     await controllerCarteira.handleHttpGet(req, res);
 
     // Verificar se o status 404 foi chamado
-    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.status).toHaveBeenCalledWith(404);
     expect(res.json).toHaveBeenCalledWith(null);
   });
 });
