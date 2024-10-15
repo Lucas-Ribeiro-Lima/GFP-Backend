@@ -1,7 +1,7 @@
 import { GerenciarDespesaI } from '@/useCases/gerenciarDespesa.ts'
 import { Request, Response } from 'express'
 
-export class controllerDespesa {
+export class ControllerDespesa {
   constructor(private gerenciarDespesa: GerenciarDespesaI) {}
 
   public async handleHttpPost (req: Request, res: Response): Promise<void> {

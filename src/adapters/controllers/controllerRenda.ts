@@ -1,7 +1,7 @@
 import { GerenciarRendaI } from '@/useCases/gerenciarRenda.ts'
 import { Request, Response } from 'express'
 
-export class controllerRenda {
+export class ControllerRenda {
   constructor(private gerenciarRenda: GerenciarRendaI) {}
 
   public async handleHttpPost (req: Request, res: Response): Promise<void> {

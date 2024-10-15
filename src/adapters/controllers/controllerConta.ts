@@ -1,13 +1,13 @@
-import { GerenciarCarteiraI } from '@/useCases/gerenciarCarteira.ts'
+import { GerenciarContaI } from '@/useCases/gerenciarConta.ts'
 import { Request, Response } from 'express'
 
-export class controllerCarteira {
-  constructor(private gerenciarCarteira: GerenciarCarteiraI) {}
+export class ControllerConta {
+  constructor(private gerenciarConta: GerenciarContaI) {}
 
   public async handleHttpPost (req: Request, res: Response): Promise<void> {
     try {
-      await this.gerenciarCarteira.cadastrar(req.body)
-      res.status(201).json({message: "Carteira criada com sucesso!"})
+      await this.gerenciarConta.cadastrar()
+      res.status(201).json({message: "Conta criada com sucesso!"})
     } catch (error) {
       if(error instanceof Error) res.status(500).json({error: error.message})
     }
@@ -15,11 +15,11 @@ export class controllerCarteira {
 
   public async handleHttpGet(req: Request, res: Response): Promise<void> {
     try {
-      const carteira = await this.gerenciarCarteira.buscar(req.body)
+      const carteira = await this.gerenciarConta.buscar(req.body)
       res.status(200).json(carteira)
     } catch (error) {
       if(error instanceof Error) {
-        if(error.message === "Carteira não encontrada.") res.status(404)
+        if(error.message === "Conta não encontrada.") res.status(404)
         else res.status(500)
         res.json({error: error.message})
       }
@@ -28,11 +28,11 @@ export class controllerCarteira {
 
   public async handleHttpPatch(req: Request, res: Response): Promise<void> {
     try {
-      await this.gerenciarCarteira.atualizar(req.body)
-      res.status(200).json("Carteira atualizada com sucesso!")
+      await this.gerenciarConta.atualizar(req.body)
+      res.status(200).json("Conta atualizada com sucesso!")
     } catch (error) {
       if(error instanceof Error) {
-        if(error.message === "A carteira a atualizar não foi encontrada.") res.status(404)
+        if(error.message === "Conta não encontrada") res.status(404)
         else res.status(500)
         res.json({error: error.message})
       }
@@ -41,10 +41,10 @@ export class controllerCarteira {
 
   public async handleHttpDelete(req: Request, res: Response): Promise<void> {
     try {
-      await this.gerenciarCarteira.excluir(req.body)
-      res.status(204).json({message: "Carteira deletada com sucesso!"})
+      await this.gerenciarConta.excluir(req.body)
+      res.status(204).json({message: "Conta deletada com sucesso!"})
     } catch (error) {
-      if(error instanceof Error) res.status(500).json({message: "Erro ao deletar a carteira."})
+      if(error instanceof Error) res.status(500).json({message: "Erro ao deletar conta."})
     }
   }
 }
