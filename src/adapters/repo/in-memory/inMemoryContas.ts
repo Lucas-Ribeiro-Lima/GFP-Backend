@@ -1,5 +1,5 @@
 import { Conta } from "../../entities/Conta.ts";
-import { ContaRepo } from "../ContaRepo.ts";
+import { ContaRepo } from "../repo/ContaRepo.ts";
 
 export class InMemoryContas implements ContaRepo {
   public contasArray: Conta[] = []

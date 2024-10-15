@@ -1,8 +1,8 @@
 import { PrismaClient } from "@prisma/client";
+import { randomUUID } from "crypto";
 import { Despesa } from "../../entities/Despesa.ts";
 import { Registro } from "../../entities/Registro.ts";
-import { DespesaRepo } from "../RegistrosRepo.ts";
-import { randomUUID } from "crypto";
+import { DespesaRepo } from "../repo/RegistrosRepo.ts";
 
 export class PrismaDespesa implements DespesaRepo {
   constructor(private pc = new PrismaClient({log: ["error"], errorFormat: "pretty"})) {}

@@ -1,8 +1,8 @@
 import { PrismaClient } from "@prisma/client";
+import { randomUUID } from "crypto";
 import { Registro } from "../../entities/Registro.ts";
 import { Renda } from "../../entities/Renda.ts";
-import { RendaRepo } from "../RegistrosRepo.ts";
-import { randomUUID } from "crypto";
+import { RendaRepo } from "../repo/RegistrosRepo.ts";
 
 export class PrismaRenda implements RendaRepo {
   constructor(private pc = new PrismaClient({log: ["error"], errorFormat: "pretty"})) {}

@@ -1,4 +1,4 @@
-import { Conta } from "../entities/Conta.ts";
+import { Conta } from "../../entities/Conta.ts";
 
 export interface ContaRepo {
   create(conta: Conta): Promise<void>

@@ -1,8 +1,7 @@
 import { randomUUID } from "crypto";
 import { Despesa } from "../../entities/Despesa.ts";
-import { Registro } from "../../entities/Registro.ts";
 import { Renda } from "../../entities/Renda.ts";
-import { DespesaRepo, RendaRepo } from "../RegistrosRepo.ts";
+import { DespesaRepo, RendaRepo } from "../repo/RegistrosRepo.ts";
 
 export class InMemoryRendas implements RendaRepo {
   public RendaArray: Renda[] = []
@@ -13,7 +12,7 @@ export class InMemoryRendas implements RendaRepo {
     this.RendaArray.push(reg)
   }
 
-  async load(id_carteira: number): Promise<Registro[]> {
+  async load(id_carteira: number): Promise<Renda[]> {
     return this.RendaArray.filter((reg) => reg.idCarteira === id_carteira) ?? []
   }
 
@@ -35,7 +34,7 @@ export class InMemoryDespesas implements DespesaRepo {
     this.DespesaArray.push(reg)
   }
 
-  async load(id_carteira: number): Promise<Registro[]> {
+  async load(id_carteira: number): Promise<Despesa[]> {
     return this.DespesaArray.filter((reg) => reg.idCarteira === id_carteira)
   }
 
