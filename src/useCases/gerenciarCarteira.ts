@@ -5,7 +5,7 @@ export interface GerenciarCarteiraI {
   cadastrar(carteira: Carteira): Promise<void>
   buscar(idDono: number): Promise<Carteira | null>
   atualizar(carteira: Carteira): Promise<void>
-  excluir(idDono: number): Promise<void>
+  excluir(id: number): Promise<void>
 }
 
 export class GerenciarCarteira implements GerenciarCarteiraI {
@@ -19,8 +19,7 @@ export class GerenciarCarteira implements GerenciarCarteiraI {
   }
 
   async buscar(idDono: number): Promise<Carteira | null> {
-    const carteira = await this.carteiraRepo.find(idDono)
-    return carteira ?? null
+    return await this.carteiraRepo.find(idDono) ?? null
   }
 
   async atualizar(carteira: Carteira): Promise<void> {
@@ -28,7 +27,7 @@ export class GerenciarCarteira implements GerenciarCarteiraI {
     await this.carteiraRepo.save(carteira)
   }
 
-  async excluir(idDono: number): Promise<void> {
-    await this.carteiraRepo.delete(idDono)
+  async excluir(id: number): Promise<void> {
+    await this.carteiraRepo.delete(id)
   }
 }
