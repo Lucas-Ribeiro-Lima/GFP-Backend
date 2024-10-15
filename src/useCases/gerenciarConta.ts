@@ -6,7 +6,7 @@ export interface GerenciarContaI {
   cadastrar(nome: string, email:string, cpf:string, provider:string): Promise<void>
   buscar(email: string): Promise<Conta | null>
   atualizar(conta: Conta): Promise<void>
-  deletar(email: string): Promise<void>
+  excluir(email: string): Promise<void>
 }
 
 export class GerenciarConta implements GerenciarContaI{
@@ -31,7 +31,7 @@ export class GerenciarConta implements GerenciarContaI{
     await this.contaRepo.save(conta)
   }
 
-  async deletar(email: string): Promise<void> {
+  async excluir(email: string): Promise<void> {
     this.contaRepo.delete(email)
   }
 }
