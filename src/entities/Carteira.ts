@@ -12,8 +12,8 @@ export class Carteira {
   private readonly props: CarteiraProps
 
   constructor({id, idContaDono, nome, saldo, meta, compartilhada, idGrupoEconomico}: CarteiraProps) {
-    if(idContaDono === null || undefined) throw new Error("Id Conta inválido")
-    this.props = {id, idContaDono, nome, saldo, meta, compartilhada, idGrupoEconomico}
+    if(idContaDono === null || undefined) throw new Error("Id Conta inválido") 
+    this.props = { id, idContaDono, nome, saldo, meta, compartilhada, idGrupoEconomico }
   }
 
   get id() {
@@ -39,6 +39,10 @@ export class Carteira {
   get compartilhada() {
     return this.props.compartilhada
   }
+
+  get idGrupoEconomico(): number | null  {
+    return this.props.idGrupoEconomico
+  }
   
   set nome(nome: string) {
     if (nome.length < 5) throw new Error("Nome inválido, mínimo de 5 caractéres")
@@ -56,5 +60,9 @@ export class Carteira {
 
   set compartilhada(status: boolean) {
     this.props.compartilhada = status
+  }
+
+  set idGrupoEconomico(id: number) {
+    this.props.idGrupoEconomico = id
   }
 }
