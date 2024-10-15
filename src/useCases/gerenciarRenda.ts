@@ -11,4 +11,12 @@ export class GerenciarRenda {
   async loadRendas(carteira_id: number) {
     return this.rendaRepo.load(carteira_id)
   }
+
+  async excluir(uuid: string) {
+    this.rendaRepo.delete(uuid)
+  }
+
+  async salvar(renda: Renda) {
+    this.rendaRepo.save(renda)
+  }
 }

@@ -11,4 +11,12 @@ export class GerenciarDespesa {
   async loadDespesas(carteira_id: number) {
     return this.despesaRepo.load(carteira_id)
   }
+
+  async excluir(uuid: string) {
+    this.despesaRepo.delete(uuid)
+  }
+
+  async salvar(despesa: Despesa) {
+    this.despesaRepo.save(despesa)
+  }
 }
