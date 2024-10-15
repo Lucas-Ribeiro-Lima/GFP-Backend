@@ -50,11 +50,12 @@ describe("Testes para o caso de uso gerenciar Carteira", () => {
   it("deve atualizar a carteira corretamente", async () => {
     const carteira = await gerenciarCarteira.buscar(1)
 
+    if(!carteira) throw new Error("Carteira não encontrada")
     carteira.nome = "Carteira alterada"
     await gerenciarCarteira.atualizar(carteira)
 
     const carteiraAtualizada = await gerenciarCarteira.buscar(1)
-
+    if(!carteiraAtualizada) throw new Error("Carteira não encontrada")
     expect(carteiraAtualizada.nome).toBe("Carteira alterada")
   })
 
