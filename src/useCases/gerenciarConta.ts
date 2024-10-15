@@ -17,8 +17,7 @@ export class GerenciarConta {
   }
 
   async buscar(email: string) {
-    const conta = await this.contaRepo.find(email)
-    return conta ??  null
+    return await this.contaRepo.find(email)
   }
 
   async atualizar(conta: Conta): Promise<void> {
