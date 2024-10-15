@@ -1,8 +1,8 @@
-import { describe, expect, it } from 'vitest'
-import { Renda } from '../../entities/Renda.ts'
-import { InMemoryRendas } from '../../repo/in-memory/inMemoryRegistros.ts'
-import { GerenciarRenda } from '../gerenciarRenda.ts'
 import { randomUUID } from 'crypto'
+import { describe, expect, it } from 'vitest'
+import { InMemoryRendas } from '../../adapters/repo/in-memory/inMemoryRegistros.ts'
+import { Renda } from '../../entities/Renda.ts'
+import { GerenciarRenda } from '../gerenciarRenda.ts'
 
 describe("Teste para o caso de uso gerenciar Renda [UC001] [UC002] [UC003]", () => {
   const repository = new InMemoryRendas()
@@ -23,7 +23,7 @@ describe("Teste para o caso de uso gerenciar Renda [UC001] [UC002] [UC003]", () 
 
   it("Deve criar a renda solicitada", async () => {
     await gerenciarRenda.cadastrar(renda)
-    expect(await gerenciarRenda.loadRendas(renda.idCarteira)).toContainEqual(renda)
+    expect(await gerenciarRenda.buscar(renda.idCarteira)).toContainEqual(renda)
   })
 
   it("Deve criar quantas rendas forem necessárias para a mesma carteira", async () => {
@@ -44,7 +44,7 @@ describe("Teste para o caso de uso gerenciar Renda [UC001] [UC002] [UC003]", () 
       gerenciarRenda.cadastrar(renda)
       arrayTeste.push(renda)
     }
-    const rendas = await gerenciarRenda.loadRendas(idCarteira)
+    const rendas = await gerenciarRenda.buscar(idCarteira)
     expect(rendas).toHaveLength(11)
     expect(rendas).toEqual(expect.arrayContaining(arrayTeste))
   })

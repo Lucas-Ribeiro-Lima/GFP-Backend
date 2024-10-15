@@ -1,8 +1,8 @@
-import { describe, it, expect } from 'vitest'
-import { InMemoryDespesas } from '../../repo/in-memory/inMemoryRegistros.ts'
-import { GerenciarDespesa } from '../gerenciarDespesa.ts'
-import { Despesa } from '../../entities/Despesa.ts'
 import { randomUUID } from 'crypto'
+import { describe, expect, it } from 'vitest'
+import { InMemoryDespesas } from '../../adapters/repo/in-memory/inMemoryRegistros.ts'
+import { Despesa } from '../../entities/Despesa.ts'
+import { GerenciarDespesa } from '../gerenciarDespesa.ts'
 
 describe("Teste para o caso de uso gerenciar Despesa [UC004] [UC005] [UC006]", () => {
   const repository = new InMemoryDespesas()
@@ -27,7 +27,7 @@ describe("Teste para o caso de uso gerenciar Despesa [UC004] [UC005] [UC006]", (
 
   it("deve criar a despesa corretamente", async () => {
     await gerenciarDespesa.cadastrar(despesa)
-    expect(await gerenciarDespesa.loadDespesas(despesa.idCarteira)).toContainEqual(despesa)
+    expect(await gerenciarDespesa.buscar(despesa.idCarteira)).toContainEqual(despesa)
   })
 
   it("deve cadastrar quantas despesas forem necessária para a mesma carteira", async () => {
@@ -52,6 +52,6 @@ describe("Teste para o caso de uso gerenciar Despesa [UC004] [UC005] [UC006]", (
     arrayTeste.push(despesa)
     }
 
-    expect(await gerenciarDespesa.loadDespesas(despesa.idCarteira)).toEqual(expect.arrayContaining(arrayTeste))
+    expect(await gerenciarDespesa.buscar(despesa.idCarteira)).toEqual(expect.arrayContaining(arrayTeste))
   }) 
 })

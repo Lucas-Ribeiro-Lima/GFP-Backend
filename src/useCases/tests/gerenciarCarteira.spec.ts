@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
+import { InMemoryCarteira } from '../../adapters/repo/in-memory/inMemoryCarteira.ts'
 import { Carteira } from '../../entities/Carteira.ts'
-import { InMemoryCarteira } from '../../repo/in-memory/inMemoryCarteira.ts'
 import { GerenciarCarteira } from '../gerenciarCarteira.ts'
 
 describe("Testes para o caso de uso gerenciar Carteira", () => {

@@ -1,9 +1,15 @@
+import { ContaRepo } from "../adapters/repo/ContaRepo.ts";
 import { Configs } from "../entities/Config.ts";
 import { Conta } from "../entities/Conta.ts";
-import { ContaRepo } from "../repo/ContaRepo.ts";
 
+export interface GerenciarContaI {
+  cadastrar(nome: string, email:string, cpf:string, provider:string): Promise<void>
+  buscar(email: string): Promise<Conta | null>
+  atualizar(conta: Conta): Promise<void>
+  deletar(email: string): Promise<void>
+}
 
-export class GerenciarConta {
+export class GerenciarConta implements GerenciarContaI{
   constructor(private contaRepo: ContaRepo) {}
 
   async cadastrar(nome: string, email:string, cpf:string, provider:string): Promise<void> {
@@ -23,5 +29,9 @@ export class GerenciarConta {
   async atualizar(conta: Conta): Promise<void> {
     if(!this.contaRepo.find(conta.email)) throw new Error("Conta não encontrada")
     await this.contaRepo.save(conta)
+  }
+
+  async deletar(email: string): Promise<void> {
+    this.contaRepo.delete(email)
   }
 }

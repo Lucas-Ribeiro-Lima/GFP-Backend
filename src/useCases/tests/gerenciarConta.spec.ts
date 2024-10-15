@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { Conta } from "../../entities/Conta.ts";
-import { InMemoryContas } from "../../repo/in-memory/inMemoryContas.ts";
-import { GerenciarConta } from "../gerenciarConta.ts";
+import { InMemoryContas } from "../../adapters/repo/in-memory/inMemoryContas.ts";
 import { Configs } from "../../entities/Config.ts";
+import { Conta } from "../../entities/Conta.ts";
+import { GerenciarConta } from "../gerenciarConta.ts";
 
 describe("Testes do caso de uso [UC012] Cadastro de conta", () => {
   const repository = new InMemoryContas()

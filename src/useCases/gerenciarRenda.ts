@@ -1,14 +1,19 @@
+import { RendaRepo } from "../adapters/repo/RegistrosRepo.ts";
 import { Renda } from "../entities/Renda.ts";
-import { RendaRepo } from "../repo/RegistrosRepo.ts";
-
-export class GerenciarRenda {
+export interface GerenciarRendaI {
+  cadastrar(renda: Renda): Promise<void>
+  buscar(carteiraId: number): Promise<Renda[]>
+  excluir(uuid: string): Promise<void>
+  salvar(renda: Renda): Promise<void>
+}
+export class GerenciarRenda implements GerenciarRendaI {
   constructor(private rendaRepo: RendaRepo) {}
 
   async cadastrar(renda: Renda) {
     this.rendaRepo.create(renda)
   }
 
-  async loadRendas(carteira_id: number) {
+  async buscar(carteira_id: number) {
     return this.rendaRepo.load(carteira_id)
   }
 
