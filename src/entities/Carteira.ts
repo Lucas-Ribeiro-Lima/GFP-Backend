@@ -1,3 +1,4 @@
+import { EntitieInstanceError } from "../errors/customErrors.ts"
 
 interface CarteiraProps {
   id: number, 
@@ -45,7 +46,7 @@ export class Carteira {
   }
   
   set nome(nome: string) {
-    if (nome.length < 5) throw new Error("Nome inválido, mínimo de 5 caractéres")
+    if (nome.length < 5) throw new EntitieInstanceError("Nome inválido. Mínimo de 5 caractéres")
     this.props.nome = nome
   } 
 
@@ -54,7 +55,7 @@ export class Carteira {
   }
 
   set meta(valor: number) {
-    if(valor < 0) throw new Error("Meta inválida, por favor insira um valor positivo válido")
+    if(valor < 0) throw new EntitieInstanceError("Meta inválida. Por favor insira um valor positivo válido")
     this.props.meta = valor
   }
 

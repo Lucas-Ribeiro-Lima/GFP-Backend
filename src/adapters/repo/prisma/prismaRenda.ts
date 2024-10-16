@@ -2,6 +2,7 @@ import { RendaRepo } from "@/adapters/repo/RegistrosRepo.ts";
 import { Renda } from "@/entities/Renda.ts";
 import { PrismaClient } from "@prisma/client";
 import { randomUUID } from "crypto";
+import { AdapterRepoError } from "../../../errors/customErrors.ts";
 
 export class PrismaRenda implements RendaRepo {
   constructor(private pc = new PrismaClient({log: ["error"], errorFormat: "pretty"})) {}
@@ -24,7 +25,7 @@ export class PrismaRenda implements RendaRepo {
       })
     } catch (error) {
       console.error(error)
-      throw new Error("Erro ao criar renda no banco de dados")
+      throw new AdapterRepoError("Erro ao criar renda no banco de dados")
     } finally {
       this.pc.$disconnect()
     }
@@ -82,7 +83,7 @@ export class PrismaRenda implements RendaRepo {
         }))
     } catch (error) {
       console.log(error)
-      throw new Error("Erro ao carregar registros de renda da carteira")
+      throw new AdapterRepoError("Erro ao carregar registros de renda da carteira")
     } finally {
       this.pc.$disconnect()
     }
@@ -107,7 +108,7 @@ export class PrismaRenda implements RendaRepo {
       })
     } catch (error) {
       console.log(error)
-      throw new Error("Erro ao salvar o registro de renda no banco de dados")
+      throw new AdapterRepoError("Erro ao salvar o registro de renda no banco de dados")
     } finally {
       this.pc.$disconnect()
     }

@@ -1,5 +1,6 @@
 import { Carteira } from "@/entities/Carteira.ts";
 import { CarteiraRepo } from "@/adapters/repo/CarteiraRepo.ts";
+import { AdapterRepoError } from "../../../errors/customErrors.ts";
 
 export class InMemoryCarteira implements CarteiraRepo {
   public carteiraArray: Carteira[] = []
@@ -14,7 +15,7 @@ export class InMemoryCarteira implements CarteiraRepo {
 
   async save(updatedCart: Carteira): Promise<void> {
     const index = this.carteiraArray.findIndex((cart) => cart.idContaDono === updatedCart.idContaDono)
-    if(index === -1) throw new Error("A carteira especificada não existe no banco de dados")
+    if(index === -1) throw new AdapterRepoError("carteira not found")
     this.carteiraArray[index] = updatedCart
   }
 

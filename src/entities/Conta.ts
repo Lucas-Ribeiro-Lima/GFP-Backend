@@ -1,5 +1,6 @@
-import { Configs } from "./Config.ts"
+import { EntitieInstanceError } from "../errors/customErrors.ts"
 import { cpfValido, emailValido } from "../lib/utils.ts"
+import { Configs } from "./Config.ts"
 
 interface ContaProps {
   id: number | null,
@@ -29,7 +30,7 @@ export class Conta {
     return this.props.email
   }
   public set email(email: string) {
-    if(!emailValido(email)) throw new Error("Email inválido")
+    if(!emailValido(email)) throw new EntitieInstanceError("Email inválido")
     this.props.email = email
   }
 
@@ -45,7 +46,7 @@ export class Conta {
     return this.props.cpf
   }
   public set cpf(cpf: string) {
-    if(!cpfValido(cpf)) throw new Error("CPF Inválido")
+    if(!cpfValido(cpf)) throw new EntitieInstanceError("CPF Inválido")
     this.props.cpf = cpf
   }
 

@@ -1,6 +1,7 @@
 import { ContaRepo } from "../adapters/repo/ContaRepo.ts";
 import { Configs } from "../entities/Config.ts";
 import { Conta } from "../entities/Conta.ts";
+import { UseCaseError } from "../errors/customErrors.ts";
 
 export interface GerenciarContaI {
   cadastrar(nome: string, email:string, cpf:string, provider:string): Promise<void>
@@ -14,7 +15,7 @@ export class GerenciarConta implements GerenciarContaI{
 
   async cadastrar(nome: string, email:string, cpf:string, provider:string): Promise<void> {
     let conta = await this.contaRepo.find(email)
-    if(conta) throw new Error("Conta já cadastrada com esse e-mail")
+    if(conta) throw new UseCaseError("Conta já cadastrada com esse e-mail")
 
     const configs = new Configs({tema: "Light", displayName: "", customWpp: ""})
     conta = new Conta({id: null, nome, email, provider, cpf, configs}) 

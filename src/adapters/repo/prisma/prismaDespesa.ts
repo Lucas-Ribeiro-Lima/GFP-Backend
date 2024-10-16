@@ -2,6 +2,7 @@ import { DespesaRepo } from "@/adapters/repo/RegistrosRepo.ts";
 import { Despesa } from "@/entities/Despesa.ts";
 import { PrismaClient } from "@prisma/client";
 import { randomUUID } from "crypto";
+import { AdapterRepoError } from "../../../errors/customErrors.ts";
 
 export class PrismaDespesa implements DespesaRepo {
   constructor(private pc = new PrismaClient({log: ["error"], errorFormat: "pretty"})) {}
@@ -41,7 +42,7 @@ export class PrismaDespesa implements DespesaRepo {
       })
     } catch (error) {
       console.log(error)
-      throw new Error("Erro ao deletar a despesa do banco de dados")
+      throw new AdapterRepoError("Erro ao deletar a despesa do banco de dados")
     } finally {
       this.pc.$disconnect()
     }
@@ -82,7 +83,7 @@ export class PrismaDespesa implements DespesaRepo {
       }))
     } catch (error) {
       console.log(error)
-      throw new Error("Erro ao carregar os registros de despesa da carteira")
+      throw new AdapterRepoError("Erro ao carregar os registros de despesa da carteira")
     }
   }
 
@@ -105,7 +106,7 @@ export class PrismaDespesa implements DespesaRepo {
       })
     } catch (error) {
       console.log(error)
-      throw new Error("Erro ao salvar o registro de despesa no banco de dados")
+      throw new AdapterRepoError("Erro ao salvar o registro de despesa no banco de dados")
     } finally {
       this.pc.$disconnect()
     }

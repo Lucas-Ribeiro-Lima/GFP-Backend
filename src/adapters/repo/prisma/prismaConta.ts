@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { Configs } from "@/entities/Config.ts";
 import { Conta } from "@/entities/Conta.ts";
 import { ContaRepo } from "@/adapters/repo/ContaRepo.ts";
+import { AdapterRepoError } from "../../../errors/customErrors.ts";
 
 export class PrismaConta implements ContaRepo {
   constructor(private pc = new PrismaClient({ log: ["error"], errorFormat: "pretty"})) {}
@@ -21,7 +22,7 @@ export class PrismaConta implements ContaRepo {
       });
     } catch (error) {
       console.error(error);
-      throw new Error("Erro ao criar conta no banco de dados");
+      throw new AdapterRepoError("Erro ao criar conta no banco de dados");
     } finally {
       await this.pc.$disconnect();
     }
@@ -36,7 +37,7 @@ export class PrismaConta implements ContaRepo {
       });
     } catch (error) {
       console.error(error);
-      throw new Error("Erro ao deletar conta no banco de dados");
+      throw new AdapterRepoError("Erro ao deletar conta no banco de dados");
     } finally {
       await this.pc.$disconnect();
     }
@@ -86,7 +87,7 @@ export class PrismaConta implements ContaRepo {
       });
     } catch (error) {
       console.error(error);
-      throw new Error("Erro ao salvar a conta no banco de dados");
+      throw new AdapterRepoError("Erro ao salvar a conta no banco de dados");
     } finally {
       await this.pc.$disconnect();
     }

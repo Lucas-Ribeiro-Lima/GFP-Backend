@@ -2,6 +2,7 @@ import { randomUUID } from "crypto";
 import { Despesa } from "@/entities/Despesa.ts";
 import { Renda } from "@/entities/Renda.ts";
 import { DespesaRepo, RendaRepo } from "@/adapters/repo/RegistrosRepo.ts";
+import { AdapterRepoError } from "../../../errors/customErrors.ts";
 
 export class InMemoryRendas implements RendaRepo {
   public RendaArray: Renda[] = []
@@ -22,7 +23,7 @@ export class InMemoryRendas implements RendaRepo {
 
   async save(renda: Renda): Promise<void> {
     const index = this.RendaArray.findIndex((reg) => reg.uuid === renda.uuid)
-    if (index === -1) throw new Error ("Renda não encontrada")
+    if (index === -1) throw new AdapterRepoError("Renda não encontrada")
     this.RendaArray[index] = renda
   }
 }

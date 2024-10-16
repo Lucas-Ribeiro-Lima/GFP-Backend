@@ -1,6 +1,7 @@
 import { Carteira } from '@/entities/Carteira.ts';
 import { PrismaClient } from '@prisma/client';
 import { CarteiraRepo } from '../CarteiraRepo.ts';
+import { AdapterRepoError } from '../../../errors/customErrors.ts';
 
 
 export class PrismaCarteira implements CarteiraRepo {
@@ -19,7 +20,7 @@ export class PrismaCarteira implements CarteiraRepo {
       })
     } catch (error) {
       console.log(error)
-      throw new Error("Erro ao criar carteira no banco de dados")
+      throw new AdapterRepoError("Erro ao criar carteira no banco de dados")
     } finally {
       this.pc.$disconnect()
     }
@@ -34,7 +35,7 @@ export class PrismaCarteira implements CarteiraRepo {
       })
     } catch (error) {
       console.log(error)
-      throw new Error("Erro ao deletar carteira do banco de dados")
+      throw new AdapterRepoError("Erro ao deletar carteira do banco de dados")
     }
   }
 
@@ -80,7 +81,7 @@ export class PrismaCarteira implements CarteiraRepo {
       })
     } catch (error) {
       console.log(error)
-      throw new Error("Erro ao atualizar a carteira")
+      throw new AdapterRepoError("Erro ao atualizar a carteira")
     }
   }
 }

@@ -1,3 +1,5 @@
+import { EntitieInstanceError } from "../errors/customErrors.ts"
+
 interface GrupoEconomicoProps {
   id: number,
   nome: string,
@@ -20,7 +22,7 @@ export class GrupoEconomico {
     return this.props.nome
   }
   set nome(nome: string) {
-    if(nome.length < 5) throw new Error("Nome inválido. O nome deve conter pelo menos 5 caracteres")
+    if(nome.length < 5) throw new EntitieInstanceError("Nome inválido. O nome deve conter pelo menos 5 caracteres")
     this.props.nome = nome
   }
 
@@ -32,7 +34,7 @@ export class GrupoEconomico {
     return this.props.metaGeral
   }
   set metaGeral(meta: number) {
-    if(meta <= 0) throw new Error("Valor inválido. A meta não pode ser negativa")
+    if(meta <= 0) throw new EntitieInstanceError("Valor inválido. A meta não pode ser negativa")
     this.props.metaGeral = meta
   }
 }

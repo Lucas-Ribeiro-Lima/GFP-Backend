@@ -1,5 +1,6 @@
 import { Conta } from "@/entities/Conta.ts";
 import { ContaRepo } from "@/adapters/repo/ContaRepo.ts";
+import { AdapterRepoError } from "../../../errors/customErrors.ts";
 
 export class InMemoryContas implements ContaRepo {
   public contasArray: Conta[] = []
@@ -16,7 +17,7 @@ export class InMemoryContas implements ContaRepo {
 
   async save(updatedConta: Conta): Promise<void> {
     const index = this.contasArray.findIndex((i) => i.email === updatedConta.email)
-    if(index === -1) throw new Error("Conta não encontada")
+    if(index === -1) throw new AdapterRepoError("Conta not found")
     this.contasArray[index] = updatedConta
   }
 
