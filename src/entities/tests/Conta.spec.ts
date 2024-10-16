@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest'
 describe("Testes unitários para a classe Conta", () => {
   
   it("deve criar um objeto da classe conta", () => {
-    const conta_valida = {
+    const contaValida = {
       id: 1,
       nome: "John Doe",
       cpf: '123456789-09',
@@ -13,9 +13,9 @@ describe("Testes unitários para a classe Conta", () => {
       provider: 'Google',
       configs: new Configs({tema: 'Light', displayName: "", customWpp: ""})
     }
-    const conta = new Conta(conta_valida)
+    const conta = new Conta(contaValida)
 
-    expect(conta).toMatchObject(conta_valida)
+    expect(conta).toMatchObject(contaValida)
   })
 
   it("não deve criar uma conta com e-mail inválido", () => {

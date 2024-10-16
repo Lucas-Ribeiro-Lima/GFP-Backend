@@ -4,9 +4,9 @@ import { Carteira } from '../Carteira.ts'
 describe("Testes da classe Carteira", () => {
   const carteiraValid = new Carteira({
     id: 1,
-    id_conta_dono: 1,
+    idContaDono: 1,
     compartilhada: false,
-    idGrupoEconomico: undefined,
+    idGrupoEconomico: null,
     meta: 0,
     nome: "carteira de teste",
     saldo: 0,

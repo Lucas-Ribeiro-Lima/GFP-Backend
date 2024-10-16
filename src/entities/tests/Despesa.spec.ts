@@ -5,13 +5,13 @@ import { Despesa } from "../Despesa.ts";
 describe("Testes da classe Despesa", () => {
   const DespesaValid = new Despesa({
     uuid: randomUUID(),
-    id_carteira: 1,
+    idCarteira: 1,
     parcelado: false,
     numParcelas: 1,
     categoria: "alimentacao",
     competencia: { ano: 2024, mes: 10, dataInclusao:  Date.now().toString() }, 
     descricao: "teste",
-    tipo: "fixo",
+    modalidade: "fixo",
     valor: 200}
   )
   

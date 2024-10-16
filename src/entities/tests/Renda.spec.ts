@@ -5,13 +5,13 @@ import { Renda } from "../Renda.ts";
 describe("Testes da classe renda", () => {
   const rendaValid = new Renda({
     uuid: randomUUID(),
-    id_carteira: 1,
+    idCarteira: 1,
     categoria: "salario", 
     competencia: { ano: 2024, mes: 10, dataInclusao:  Date.now().toString() }, 
     descricao: "teste",
     fonte: "renda",
     frequencia: "trimestral",
-    tipo: "fixo",
+    modalidade: "fixo",
     valor: 200}
   )
   
