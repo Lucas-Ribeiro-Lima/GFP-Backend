@@ -29,12 +29,13 @@ describe("Testes para o controller de carteira", () => {
     meta: 0.00
   })
   it("deve criar uma carteira corretamente", async () => {
-    req.body = carteira
-
+    req.body = {
+      carteira
+    }
     await controllerCarteira.handleHttpPost(req, res)
 
     expect(res.status).toBeCalledWith(201)
-    expect(res.json).toBeCalledWith({message: "Carteira criada com sucesso!"})
+    expect(res.json).toBeCalledWith({message: "Carteira criada com sucesso"})
   })
 
   it("deve retornar uma carteira corretamente", async () => {
@@ -56,12 +57,14 @@ describe("Testes para o controller de carteira", () => {
       meta: 0.00
     })
 
-    req.body = carteira
+    req.body = {
+      carteira
+    }
 
     await controllerCarteira.handleHttpPatch(req, res)
 
     expect(res.status).toBeCalledWith(200)
-    expect(res.json).toBeCalledWith({message: "Carteira atualizada com sucesso!"})
+    expect(res.json).toBeCalledWith({message: "Carteira atualizada com sucesso"})
   })
 
   it("deve deletar uma carteira corretamente", async () => {
@@ -70,7 +73,7 @@ describe("Testes para o controller de carteira", () => {
     await controllerCarteira.handleHttpDelete(req, res)
 
     expect(res.status).toHaveBeenCalledWith(204)
-    expect(res.json).toHaveBeenCalledWith({message: "Carteira deletada com sucesso!"})
+    expect(res.json).toHaveBeenCalledWith({message: "Carteira deletada com sucesso"})
   })
 
   

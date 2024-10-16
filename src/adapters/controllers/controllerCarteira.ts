@@ -2,8 +2,9 @@ import { GerenciarCarteiraI } from '@/useCases/gerenciarCarteira.ts'
 import { Request, Response } from 'express'
 import { Carteira } from '../../entities/Carteira.ts'
 import { InvalidInputError } from '../../errors/customErrors.ts'
+import { controllerHtppI } from './controllerHttpI.ts'
 
-export class ControllerCarteira {
+export class ControllerCarteira implements controllerHtppI {
   constructor(private gerenciarCarteira: GerenciarCarteiraI) {}
 
   public async handleHttpGet(req: Request, res: Response): Promise<Response> {
@@ -17,15 +18,15 @@ export class ControllerCarteira {
   }
 
   public async handleHttpPost (req: Request, res: Response): Promise<Response> {
-      const carteira = new Carteira(req.body)
+      const carteira = new Carteira(req.body.carteira)
       await this.gerenciarCarteira.cadastrar(carteira)
-      return res.status(201).json({message: "Carteira criada com sucesso!"})      
+      return res.status(201).json({message: "Carteira criada com sucesso"})      
   }
 
   public async handleHttpPatch(req: Request, res: Response): Promise<Response> {
-      const carteira = new Carteira(req.body)
+      const carteira = new Carteira(req.body.carteira)
       await this.gerenciarCarteira.atualizar(carteira)
-      return res.status(200).json({message: "Carteira atualizada com sucesso!"})
+      return res.status(200).json({message: "Carteira atualizada com sucesso"})
   }
 
   public async handleHttpDelete(req: Request, res: Response): Promise<Response> {
@@ -33,6 +34,6 @@ export class ControllerCarteira {
       if(isNaN(id)) throw new InvalidInputError("Id inválido")
 
       await this.gerenciarCarteira.excluir(id)
-      return res.status(204).json({message: "Carteira deletada com sucesso!"})
+      return res.status(204).json({message: "Carteira deletada com sucesso"})
   }
 }

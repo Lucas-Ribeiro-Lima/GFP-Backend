@@ -1,43 +1,36 @@
 import { GerenciarDespesaI } from '@/useCases/gerenciarDespesa.ts'
 import { Request, Response } from 'express'
+import { controllerHtppI } from './controllerHttpI.ts'
+import { InvalidInputError } from '../../errors/customErrors.ts'
 
-export class ControllerDespesa {
+export class ControllerDespesa implements controllerHtppI {
   constructor(private gerenciarDespesa: GerenciarDespesaI) {}
 
-  public async handleHttpPost (req: Request, res: Response): Promise<void> {
-    try {
-      await this.gerenciarDespesa.cadastrar(req.body)
-      res.status(201).json({message: "Despesa criada com sucesso!"})
-    } catch (error) {
-      if(error instanceof Error) res.status(500).json({error: error.message})
-    }
+  async handleHttpGet(req: Request, res: Response): Promise<Response> {
+    const idCarteira = Number(req.params.idCarteira)
+    if(isNaN(idCarteira)) throw new InvalidInputError("Id da carteira inválido")
+    const despesas = await this.gerenciarDespesa.buscar(idCarteira)
+    return res.status(200).json(despesas)
   }
 
-  public async handleHttpGet(req: Request, res: Response): Promise<void> {
-    try {
-      const despesa = await this.gerenciarDespesa.buscar(req.body)
-      if(!despesa) res.status(404).json("Despesas da carteira informada não foram encontradas")
-      res.status(200).json(despesa)
-    } catch (error) {
-      if(error instanceof Error) res.status(500).json({error: error.message})
-    }
+  async handleHttpPost(req: Request, res: Response): Promise<Response> {
+    const despesa = req.body.despesa
+
+    await this.gerenciarDespesa.cadastrar(despesa)
+    return res.status(201).json({message: "Despesa criada com sucesso"})
   }
 
-  public async handleHttpPatch(req: Request, res: Response): Promise<void> {
-    try {
-      await this.gerenciarDespesa.atualizar(req.body)
-      res.status(200).json("Despesa atualizada com sucesso!")
-    } catch (error) {
-      if(error instanceof Error) res.status(500).json({message: "Erro ao atualizar a despesa"})
-    }
+  async handleHttpPatch(req: Request, res: Response): Promise<Response> {
+    const despesa = req.body.despesa
+
+    await this.gerenciarDespesa.atualizar(despesa)
+    return res.status(200).json({message: "Despesa atualizada com sucesso"})
   }
 
-  public async handleHttpDelete(req: Request, res: Response): Promise<void> {
-    try {
-      await this.gerenciarDespesa.excluir(req.body)
-      res.status(204).json({message: "Despesa deletada com sucesso!"})
-    } catch (error) {
-      if(error instanceof Error) res.status(500).json({message: "Erro ao deletar a despesa"})
-    }
+  async handleHttpDelete(req: Request, res: Response): Promise<Response> {
+    const uuid = req.params.uuid
+    await this.gerenciarDespesa.excluir(uuid)
+    return res.status(204).json({message: "Despesa excluida com sucesso"})
+
   }
 }
