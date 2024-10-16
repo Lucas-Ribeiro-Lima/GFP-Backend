@@ -18,6 +18,7 @@
       "@/useCases/*": ["./src/useCases/*"],
       "@/adapters/*": ["./src/adapters/*"],
       "@/controllers/*": ["./src/controllers/*"],
+      "@/errors/*": ["./src/errors/*"],
       "@/lib/*": ["./src/lib/*"]
     },                             
     "skipLibCheck": true                          
