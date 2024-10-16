@@ -1,6 +1,8 @@
-import { describe, expect, it, vi} from 'vitest'
-import { cpfValido, emailValido, requestBodyValido, requestParamsValido} from '../utils.ts'  
-import { Request, Response, NextFunction } from 'express'
+import { NextFunction, Request, Response } from 'express'
+import { describe, expect, it, vi } from 'vitest'
+import { cpfValido, emailValido } from '../utils.ts'
+import { requestBodyValido, requestParamsValido } from '../middlewares/validacoes.ts'
+
 
 describe("Testes para as funções utilitárias", () => {  
   it("deve retornar verdadeiro para o cpf válido", () => {
