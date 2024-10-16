@@ -97,14 +97,14 @@ describe("Testes do caso de uso [UC012] Cadastro de conta", () => {
     const email = "johndoe@gmail.com"
     const conta = await gerenciarConta.buscar(email)
 
-    if(!conta) throw new Error("Conta não encontrada")
+    if(!conta) expect.fail("Conta não foi encontrada durante o teste")
     conta.configs.displayName = "JohnDo"
     
     await gerenciarConta.atualizar(conta)
 
     const contaAtt = await gerenciarConta.buscar(email)
 
-    if(!contaAtt) throw new Error("Conta não encontrada")
+    if(!contaAtt) expect.fail("Conta não foi encontrada durante o teste")
 
     expect((contaAtt.configs.displayName)).toBe("JohnDo")
     expect((contaAtt.configs.tema)).toBe("Dark")

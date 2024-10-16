@@ -50,13 +50,27 @@ describe("Testes para o caso de uso gerenciar Carteira", () => {
   it("deve atualizar a carteira corretamente", async () => {
     const carteira = await gerenciarCarteira.buscar(1)
 
-    if(!carteira) throw new Error("Carteira não encontrada")
+    if(!carteira) expect.fail("Carteira não foi encontrada durante o teste")
     carteira.nome = "Carteira alterada"
     await gerenciarCarteira.atualizar(carteira)
 
     const carteiraAtualizada = await gerenciarCarteira.buscar(1)
     if(!carteiraAtualizada) throw new Error("Carteira não encontrada")
     expect(carteiraAtualizada.nome).toBe("Carteira alterada")
+  })
+
+  it("deve retornar erro caso a carteira a atualizar não exista", async () => {
+    const carteira = new Carteira({
+      id: 1,
+      idContaDono: 12,
+      nome: "Carteira 1",
+      saldo: 0.00,
+      compartilhada: false,
+      idGrupoEconomico: null,
+      meta: 0.00
+    })
+
+    expect(gerenciarCarteira.atualizar(carteira)).rejects.toThrowError()
   })
 
   it("não deve permitir criar duas carteiras para um mesmo dono", () => {
