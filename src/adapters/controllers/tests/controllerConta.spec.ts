@@ -12,10 +12,9 @@ describe("Testes para o controller Http de conta", () => {
   const controllerConta = new ControllerConta(gerenciarConta)
 
   const req = {
-    body: {},
-    params: {
+    body: {
       email: "johndoe@doe.uk"
-    }
+    },
   } as unknown as Request
 
   const res = {
@@ -47,7 +46,7 @@ describe("Testes para o controller Http de conta", () => {
   })
 
   it("deve recuperar uma conta cadastrada corretamente", async () => {
-    req.params.email = "johndoe@doe.uk"
+    req.body.email = "johndoe@doe.uk"
 
     await controllerConta.handleHttpGet(req, res)
 
@@ -64,7 +63,7 @@ describe("Testes para o controller Http de conta", () => {
   })
   
   it("deve deletar um conta corretamente", async () => {
-    req.params.email = "johndoe@doe.uk"
+    req.body.email = "johndoe@doe.uk"
 
     await controllerConta.handleHttpDelete(req, res)
 

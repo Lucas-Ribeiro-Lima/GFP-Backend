@@ -9,7 +9,7 @@ export class ControllerConta implements controllerHtppI {
   constructor(private gerenciarConta: GerenciarContaI) {}
 
   public async handleHttpGet(req: Request, res: Response): Promise<Response> {
-    const email = req.params.email
+    const email = req.body.email
     if(!emailValido(email)) throw new InvalidInputError("E-mail inválido")
 
     const conta = await this.gerenciarConta.buscar(email)
@@ -31,7 +31,7 @@ export class ControllerConta implements controllerHtppI {
   }
 
   public async handleHttpDelete(req: Request, res: Response): Promise<Response> {
-    const email = req.params.email
+    const email = req.body.email
     if(!emailValido(email)) throw new InvalidInputError("Email inválido")
 
     await this.gerenciarConta.excluir(email)
