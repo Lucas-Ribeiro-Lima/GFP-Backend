@@ -1,19 +1,17 @@
 import { Request, Response, NextFunction } from "express";
 import { appendFile } from "fs/promises"
 import path from "path";
-import { stdout } from "process";
 
-const logPath = path.join(__dirname, '..', 'logs', 'error.log.txt');
+const logPath = path.join(path.dirname("./"), '..', 'backend', 'src', 'logs', 'error.log');
 
 export async function logHandler(err: Error, req: Request, res: Response, next: NextFunction) {
   const logLine = `Date: ${new Date().toISOString()} | Name: ${err.name} | Message: ${err.message} | Stack: ${err.stack}\n`;
 
   try {
-    stdout.write(logLine)
     await appendFile(logPath, logLine);
-  } catch (fileError) {
-    console.error("Erro ao escrever no log:", fileError);
+  } catch (err) {
+    next(err)
   }
-    
+  
   next(err)
 }
