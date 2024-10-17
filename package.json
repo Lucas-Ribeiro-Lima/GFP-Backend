@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "yarn build && node ./dist/src/app.js",
-    "dev": "nodemon --exec node --loader ts-node/esm ./src/app.ts",
+    "dev": "npx nodemon --exec node --loader ts-node/esm --env-file=.env ./src/app.ts",
     "build": "npx tsc",
     "test": "npx vitest"
   },
@@ -14,7 +14,8 @@
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^5.20.0",
-    "express": "^4.21.0"
+    "express": "^4.21.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@eslint/js": "^9.11.1",
