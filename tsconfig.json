@@ -19,6 +19,7 @@
       "@/adapters/*": ["./src/adapters/*"],
       "@/controllers/*": ["./src/controllers/*"],
       "@/errors/*": ["./src/errors/*"],
+      "@/configs/*": ["./src/configs/*"],
       "@/lib/*": ["./src/lib/*"]
     },                             
     "skipLibCheck": true                          
