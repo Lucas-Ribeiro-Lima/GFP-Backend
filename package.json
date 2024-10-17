@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "yarn build && node ./dist/src/app.js",
-    "dev": "npx nodemon --exec node --loader ts-node/esm --env-file=.env ./src/app.ts",
+    "dev": "npx nodemon --exec node --inspect --loader ts-node/esm --env-file=.env ./src/app.ts",
     "build": "npx tsc",
     "test": "npx vitest"
   },
