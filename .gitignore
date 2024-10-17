@@ -13,3 +13,6 @@ dist
 
 #log files
 src/logs
+
+#vscode debug config
+.vscode/
