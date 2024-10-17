@@ -1,9 +1,9 @@
 import { GerenciarDespesaI } from '@/useCases/gerenciarDespesa.ts'
 import { Request, Response } from 'express'
-import { controllerHtppI } from './controllerHttpI.ts'
+import { ControllerHttpI } from './controllerHttpI.ts'
 import { InvalidInputError } from '../../errors/customErrors.ts'
 
-export class ControllerDespesa implements controllerHtppI {
+export class ControllerDespesa implements ControllerHttpI {
   constructor(private gerenciarDespesa: GerenciarDespesaI) {}
 
   async handleHttpGet(req: Request, res: Response): Promise<Response> {

@@ -2,9 +2,9 @@ import { GerenciarCarteiraI } from '@/useCases/gerenciarCarteira.ts'
 import { Request, Response } from 'express'
 import { Carteira } from '../../entities/Carteira.ts'
 import { InvalidInputError } from '../../errors/customErrors.ts'
-import { controllerHtppI } from './controllerHttpI.ts'
+import { ControllerHttpI } from './controllerHttpI.ts'
 
-export class ControllerCarteira implements controllerHtppI {
+export class ControllerCarteira implements ControllerHttpI {
   constructor(private gerenciarCarteira: GerenciarCarteiraI) {}
 
   public async handleHttpGet(req: Request, res: Response): Promise<Response> {

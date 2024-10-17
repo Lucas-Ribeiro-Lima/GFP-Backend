@@ -1,11 +1,11 @@
 import { GerenciarContaI } from '@/useCases/gerenciarConta.ts'
 import { Request, Response } from 'express'
-import { controllerHtppI } from './controllerHttpI.ts'
+import { ControllerHttpI } from './controllerHttpI.ts'
 import { InvalidInputError } from '../../errors/customErrors.ts'
 import { emailValido } from '../../lib/utils.ts'
 import { Conta } from '@/entities/Conta.ts'
 
-export class ControllerConta implements controllerHtppI {
+export class ControllerConta implements ControllerHttpI {
   constructor(private gerenciarConta: GerenciarContaI) {}
 
   public async handleHttpGet(req: Request, res: Response): Promise<Response> {

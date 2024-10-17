@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 
-export interface controllerHtppI {
+export interface ControllerHttpI {
   handleHttpGet(req: Request, res: Response): Promise<Response>
   handleHttpPost(req: Request, res: Response): Promise<Response>
   handleHttpPatch(req: Request, res: Response): Promise<Response>

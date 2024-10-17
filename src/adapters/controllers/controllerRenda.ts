@@ -1,9 +1,9 @@
 import { GerenciarRendaI } from '../../useCases/gerenciarRenda.ts'
 import { Request, Response } from 'express'
-import { controllerHtppI } from './controllerHttpI.ts'
+import { ControllerHttpI } from './controllerHttpI.ts'
 import { InvalidInputError } from '../../errors/customErrors.ts'
 
-export class ControllerRenda implements controllerHtppI {
+export class ControllerRenda implements ControllerHttpI {
   constructor(private gerenciarRenda: GerenciarRendaI) {}
 
   public async handleHttpGet(req: Request, res: Response): Promise<Response> {
