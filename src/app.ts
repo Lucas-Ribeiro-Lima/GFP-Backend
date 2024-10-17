@@ -1,13 +1,20 @@
 import e from 'express'
+import { envs } from './configs/env.ts'
+import { def } from './routes/default.ts'
+import { errorHandler } from './lib/middlewares/errorHandler.ts'
+import { logHandler } from './lib/middlewares/logHandler.ts'
 
 const app = e()
-const port = 5000
+const host = envs.EXPRESS_HOST
+const port = envs.EXPRESS_PORT
 
-app.get("/", (req, res) => {
-  res.send("Hello Express!")
-})
+//Rota default
+app.get("/", def)
+
+app.use(logHandler)
+app.use(errorHandler)
 
 app.listen(port, () => {
-  console.log(`Hello, express application listening on port ${port}`)
+  console.log(`Hello, GFP application listening http://${host}:${port}/`)
 })
 
