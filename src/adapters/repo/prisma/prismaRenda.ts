@@ -1,5 +1,5 @@
-import { RendaRepo } from "@/adapters/repo/RegistrosRepo.ts";
-import { Renda } from "@/entities/Renda.ts";
+import { RendaRepo } from "../../../adapters/repo/RegistrosRepo.ts";
+import { Renda } from "../../../entities/Renda.ts";
 import { PrismaClient } from "@prisma/client";
 import { randomUUID } from "crypto";
 import { AdapterRepoError } from "../../../errors/customErrors.ts";

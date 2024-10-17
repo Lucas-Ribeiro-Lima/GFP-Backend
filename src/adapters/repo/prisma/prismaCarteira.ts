@@ -1,4 +1,4 @@
-import { Carteira } from '@/entities/Carteira.ts';
+import { Carteira } from '../../../entities/Carteira.ts';
 import { PrismaClient } from '@prisma/client';
 import { CarteiraRepo } from '../CarteiraRepo.ts';
 import { AdapterRepoError } from '../../../errors/customErrors.ts';

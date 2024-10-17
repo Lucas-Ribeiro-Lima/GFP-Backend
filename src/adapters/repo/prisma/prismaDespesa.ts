@@ -1,5 +1,5 @@
-import { DespesaRepo } from "@/adapters/repo/RegistrosRepo.ts";
-import { Despesa } from "@/entities/Despesa.ts";
+import { DespesaRepo } from "../../../adapters/repo/RegistrosRepo.ts";
+import { Despesa } from "../../../entities/Despesa.ts";
 import { PrismaClient } from "@prisma/client";
 import { randomUUID } from "crypto";
 import { AdapterRepoError } from "../../../errors/customErrors.ts";
