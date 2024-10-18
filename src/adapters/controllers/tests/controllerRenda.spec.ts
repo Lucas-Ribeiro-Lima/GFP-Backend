@@ -13,8 +13,7 @@ describe("Testes para o controller Http de renda", () => {
   const controllerRenda = new ControllerRenda(gerenciarRenda)
 
   const req = {
-    body: {},
-    params: {
+    body: {
       idCarteira: 1
     }
   } as unknown as Request
@@ -71,7 +70,7 @@ describe("Testes para o controller Http de renda", () => {
   })
 
   it("deve deletar a renda informada", async () => {
-    req.params.uuid = arrayRendas[9].uuid
+    req.body.uuid = arrayRendas[9].uuid
 
     await controllerRenda.handleHttpDelete(req, res)
 

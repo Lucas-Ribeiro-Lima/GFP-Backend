@@ -14,8 +14,7 @@ describe("Testes para o controller Http de despesas", () => {
   const controllerDespesas = new ControllerDespesa(gerenciarDespesas)
 
   const req = {
-    body: {},
-    params: {
+    body: {
       idCarteira: 1
     }
   } as unknown as Request
@@ -72,7 +71,7 @@ describe("Testes para o controller Http de despesas", () => {
   })
 
   it("deve deletar uma despesa corretamente", async () => {
-    req.params.uuid = arrayDespesas[9].uuid
+    req.body.uuid = arrayDespesas[9].uuid
 
     await controllerDespesas.handleHttpDelete(req, res)
 

@@ -7,7 +7,7 @@ export class ControllerDespesa implements ControllerHttpI {
   constructor(private gerenciarDespesa: GerenciarDespesaI) {}
 
   async handleHttpGet(req: Request, res: Response): Promise<Response> {
-    const idCarteira = Number(req.params.idCarteira)
+    const idCarteira = Number(req.body.idCarteira)
     if(isNaN(idCarteira)) throw new InvalidInputError("Id da carteira inválido")
     const despesas = await this.gerenciarDespesa.buscar(idCarteira)
     return res.status(200).json(despesas)
@@ -28,7 +28,7 @@ export class ControllerDespesa implements ControllerHttpI {
   }
 
   async handleHttpDelete(req: Request, res: Response): Promise<Response> {
-    const uuid = req.params.uuid
+    const uuid = req.body.uuid
     await this.gerenciarDespesa.excluir(uuid)
     return res.status(204).json({message: "Despesa excluida com sucesso"})
 

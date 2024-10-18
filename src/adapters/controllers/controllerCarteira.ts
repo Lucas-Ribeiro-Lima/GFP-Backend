@@ -8,7 +8,7 @@ export class ControllerCarteira implements ControllerHttpI {
   constructor(private gerenciarCarteira: GerenciarCarteiraI) {}
 
   public async handleHttpGet(req: Request, res: Response): Promise<Response> {
-      const idContaDono = Number(req.params.idContaDono)
+      const idContaDono = Number(req.body.idContaDono)
       if(isNaN(idContaDono)) throw new InvalidInputError("Id de conta do dono inválido")
 
       const carteira = await this.gerenciarCarteira.buscar(idContaDono)
@@ -30,7 +30,7 @@ export class ControllerCarteira implements ControllerHttpI {
   }
 
   public async handleHttpDelete(req: Request, res: Response): Promise<Response> {
-      const id = Number(req.params.id)
+      const id = Number(req.body.id)
       if(isNaN(id)) throw new InvalidInputError("Id inválido")
 
       await this.gerenciarCarteira.excluir(id)

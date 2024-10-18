@@ -7,7 +7,7 @@ export class ControllerRenda implements ControllerHttpI {
   constructor(private gerenciarRenda: GerenciarRendaI) {}
 
   public async handleHttpGet(req: Request, res: Response): Promise<Response> {
-    const idCarteira = Number(req.params.idCarteira)
+    const idCarteira = Number(req.body.idCarteira)
     if(isNaN(idCarteira)) throw new InvalidInputError("Id da carteira inválido")
 
     const rendas = await this.gerenciarRenda.buscar(idCarteira)
@@ -29,7 +29,7 @@ export class ControllerRenda implements ControllerHttpI {
   }
 
   public async handleHttpDelete(req: Request, res: Response): Promise<Response> {
-    const uuid = req.params.uuid
+    const uuid = req.body.uuid
 
     await this.gerenciarRenda.excluir(uuid)
     return res.status(204).json({message: "Renda excluida com sucesso"})
