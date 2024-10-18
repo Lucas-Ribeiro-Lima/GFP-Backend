@@ -63,7 +63,7 @@ const optionsJsDocs = {
 const openApiSpecification = swaggerJsDocs(optionsJsDocs)
 
 const optionsUi = {
-  explorer: true
+  explorer: false
 }
 
 routeSwagger.use('/', serve)
