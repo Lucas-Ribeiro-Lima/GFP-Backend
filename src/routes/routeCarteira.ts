@@ -21,7 +21,7 @@ routeCarteira.get("/", (req, res) => {
  *      content:
  *        application/json:
  *          example:
- *            idDono: 1
+ *            idContaDono: 1
  *    responses:
  *      200:
  *        description: Retorna a carteira especificada
@@ -53,7 +53,14 @@ routeCarteira.post("/buscar", async (req, res, next) => {
  *      content:
  *        application/json:
  *          example:
- *            idDono: 1
+ *            carteira:
+ *              id: 1
+ *              idContaDono: 1
+ *              nome: Carteira John Doe
+ *              saldo: 0.00
+ *              compartilhada: false
+ *              idGrupoEconomico: null
+ *              meta: 0.00
  *    responses:
  *      200:
  *        description: Retorna a carteira especificada
@@ -85,7 +92,14 @@ routeCarteira.post("/criar", async (req, res, next) => {
  *      content:
  *        application/json:
  *          example:
- *            idDono: 1
+ *            carteira:
+ *              id: 1
+ *              idContaDono: 1
+ *              nome: Carteira John Doe
+ *              saldo: 0.00
+ *              compartilhada: false
+ *              idGrupoEconomico: null
+ *              meta: 0.00
  *    responses:
  *      201:
  *        description: Atualiza a carteira especificada
@@ -117,7 +131,7 @@ routeCarteira.patch("/atualizar", async (req, res, next) => {
  *      content:
  *        application/json:
  *          example:
- *            idDono: 1
+ *            id: 1
  *    responses:
  *      204:
  *        description: Exclui a carteira solicitada

@@ -56,7 +56,19 @@ routeRenda.post("/buscar", async (req, res, next) => {
  *      content:
  *        application/json:
  *          example:
- *            idCarteira: 1
+ *            renda:
+ *             uuid: 00000000-0000-0000-0000-000000000000
+ *             idCarteira: 1
+ *             descricao: Renda 1
+ *             fonte: Swagger
+ *             valor: 2100.0
+ *             categoria: salario
+ *             modalidade: fixo
+ *             frequencia: mensal
+ *             competencia: 
+ *                mes: 10
+ *                ano: 2024
+ *                dataInclusao: 18/10/2024
  *    responses:
  *      200:
  *        description: Despesa criada com sucesso
@@ -86,7 +98,19 @@ routeRenda.post("/criar", async(req, res, next) => {
  *      content:
  *        application/json:
  *          example:
- *            uuid: 00000000-0000-0000-0000-000000000000
+ *            renda:
+ *             uuid: 00000000-0000-0000-0000-000000000000
+ *             idCarteira: 1
+ *             descricao: Renda Alterada
+ *             fonte: Swagger
+ *             valor: 2100.0
+ *             categoria: salario
+ *             modalidade: fixo
+ *             frequencia: mensal
+ *             competencia: 
+ *                mes: 10
+ *                ano: 2024
+ *                dataInclusao: 18/10/2024
  *    responses:
  *      200:
  *        description: Retorna todas as rendas da carteira

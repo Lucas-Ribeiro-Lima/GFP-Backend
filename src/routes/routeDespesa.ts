@@ -55,7 +55,19 @@ routeDespesa.post("/buscar", async (req, res, next) => {
  *      content:
  *        application/json:
  *          example:
- *            idCarteira: 1
+ *            despesa:
+ *              uuid: 00000000-0000-0000-0000-000000000000
+ *              idCarteira: 1
+ *              valor: 50.25
+ *              descricao: despesa 1
+ *              modalidade: variavel
+ *              categoria: outros
+ *              parcelado: false
+ *              numParcelas: 1
+ *              competencia:
+ *                  mes: 10
+ *                  ano: 2024
+ *                  dataInclusao: 18/10/2024
  *    responses:
  *      200:
  *        description: Despesa criada com sucesso
@@ -85,7 +97,19 @@ routeDespesa.post("/criar", async(req, res, next) => {
  *      content:
  *        application/json:
  *          example:
- *            uuid: 00000000-0000-0000-0000-000000000000
+ *            despesa:
+ *             uuid: 00000000-0000-0000-0000-000000000000
+ *             idCarteira: 1
+ *             valor: 60.50
+ *             descricao: despesa alterada
+ *             modalidade: variavel
+ *             categoria: outros
+ *             parcelado: false
+ *             numParcelas: 1
+ *             competencia:
+ *                mes: 10
+ *                ano: 2024
+ *                dataInclusao: 18/10/2024
  *    responses:
  *      200:
  *        description: Retorna todas as despesas da carteira
