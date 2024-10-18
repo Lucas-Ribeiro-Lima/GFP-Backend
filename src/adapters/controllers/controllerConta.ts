@@ -13,7 +13,8 @@ export class ControllerConta implements ControllerHttpI {
     if(!emailValido(email)) throw new InvalidInputError("E-mail inválido")
 
     const conta = await this.gerenciarConta.buscar(email)
-    return res.status(200).json(conta)
+    const status = (!conta) ? 404 : 200
+    return res.status(status).json(conta)
   }
 
   public async handleHttpPost (req: Request, res: Response): Promise<Response> {
