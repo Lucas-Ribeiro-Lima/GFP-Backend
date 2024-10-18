@@ -5,6 +5,7 @@ import { envs } from "../configs/env.ts";
 
 export const routeSwagger = Router()
 
+
 const optionsJsDocs = {
   definition: {
     openapi: '3.0.0',
@@ -12,6 +13,11 @@ const optionsJsDocs = {
       title: 'Swagger Gestor de Finanças Pessoais',
       version: '1.0.0',
       description: "<strong>API para aplicação GFP<strong/>",
+      security: [
+        {
+          "OAuth2": ["criar", "buscar", "atualizar", "deletar"]
+        }
+      ],
       servers: [
       {
        "url": "http://localhost:5000",
@@ -38,7 +44,19 @@ const optionsJsDocs = {
       ]
     },
   },
-  components: {},
+  components: {
+    securitySchemes: {
+      http: {
+        description: "Basic HTTP Authentication",
+        type: "http",
+        scheme: "Basic"
+      },
+      openIdConnect: {
+        type: "openIdConnect",
+        openIdConnectUrl: "https://learn.openapis.org/.well-known/openid-configuration"
+      }
+    }
+  },
   apis: ['./src/**/*.ts'], // files containing annotations as above
 };
 
