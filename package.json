@@ -8,7 +8,8 @@
     "start": "yarn build && node ./dist/src/main.js",
     "dev": "npx nodemon --exec node --inspect --loader ts-node/esm --env-file=.env ./src/main.ts",
     "build": "npx tsc",
-    "test": "npx vitest"
+    "test": "npx vitest",
+    "db:push": "npx prisma db push"
   },
   "author": "Lucas Ribeiro Lima",
   "license": "ISC",
