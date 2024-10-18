@@ -1,7 +1,6 @@
-import { Request, Response, NextFunction } from 'express'
+import { NextFunction, Request, Response } from 'express'
 import { describe, expect, it, vi } from 'vitest'
-import { requestParamsValido, requestBodyValido, requestBodyFieldPresentes  } from '../middlewares/validacoes.ts'
-import { Carteira } from '../../entities/Carteira.ts'
+import { requiredtBodyProps, requestBodyValido, requestParamsValido } from '../middlewares/validacoesHttp.ts'
 
 describe("Testes para as funções middleware para roteamento", () => {
   const req = {
@@ -15,6 +14,16 @@ describe("Testes para as funções middleware para roteamento", () => {
   } as unknown as Response
 
   const next = vi.fn() as unknown as NextFunction
+
+  const requiredPropsCarteira = requiredtBodyProps([
+    "id", 
+    "idContaDono",
+    "nome",
+    "saldo",
+    "idGrupoEconomico",
+    "meta",
+    "compartilhada"
+  ])
 
   it("deve retornar status 400 caso a requisição não possua paramêtros", () => {
     requestParamsValido(req, res, next)
@@ -57,7 +66,10 @@ describe("Testes para as funções middleware para roteamento", () => {
     }
     req.body = carteira
 
-    await requestBodyFieldPresentes(Carteira.prototype, req, res, next)
+ 
+
+
+    await requiredPropsCarteira(req, res, next)
     expect(res.status).toBeCalledWith(400)
     expect(res.json).toBeCalledWith({
       error: "Propriedades faltantes no corpo da requisição",
@@ -77,7 +89,7 @@ describe("Testes para as funções middleware para roteamento", () => {
     }
     req.body = carteira
 
-    await requestBodyFieldPresentes(Carteira.prototype, req, res, next)
+    await requiredPropsCarteira(req, res, next)
 
     expect(next).toBeCalled()
   })

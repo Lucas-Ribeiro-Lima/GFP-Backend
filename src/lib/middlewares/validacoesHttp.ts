@@ -24,22 +24,22 @@ export async function requestQueryValido(req: Request, res: Response, next: Next
   next();
 }
 
-export async function requestBodyFieldPresentes<T>(objeto: T,req: Request, res: Response, next: NextFunction): Promise<void> {
-  const bodyPropriedades = Object.getOwnPropertyNames(req.body)
-  const objetoPropriedades = Object.getOwnPropertyNames(objeto)
+export function requiredtBodyProps(propriedades: Array<string>) {
   const propriedadesFaltantes: Array<string> = []
+  return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const bodyPropriedades = Object.getOwnPropertyNames(req.body)
 
-  objetoPropriedades.forEach((propriedade) => {
-    if(!bodyPropriedades.includes(propriedade) && propriedade !== "constructor") propriedadesFaltantes.push(propriedade)
-  })
+    propriedades.forEach((propriedade) => {
+      if(!bodyPropriedades.includes(propriedade) && propriedade !== "constructor") propriedadesFaltantes.push(propriedade)
+      })
 
-  if(propriedadesFaltantes.length) {
-    res.status(400).json({
-    error: "Propriedades faltantes no corpo da requisição",
-    propriedades: propriedadesFaltantes
-   })
-   return
+    if(propriedadesFaltantes.length) {
+      res.status(400).json({
+      error: "Propriedades faltantes no corpo da requisição",
+      propriedades: propriedadesFaltantes
+      })
+      return
+    }
+    next()
   }
-
-  next()
 }
