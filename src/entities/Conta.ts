@@ -14,8 +14,8 @@ interface ContaProps {
 export class Conta {
   private props: ContaProps
     constructor(props: ContaProps) {
-    if(!emailValido(props.email)) throw new Error("Email inválido")
-    if(!cpfValido(props.cpf)) throw new Error("CPF inválido")
+    if(!emailValido(props.email)) throw new EntitieInstanceError("Email inválido")
+    if(!cpfValido(props.cpf)) throw new EntitieInstanceError("CPF inválido")
     this.props = props
   }
   
