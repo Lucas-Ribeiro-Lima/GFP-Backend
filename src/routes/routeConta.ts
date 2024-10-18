@@ -4,12 +4,6 @@ import { requestBodyValido } from '../lib/middlewares/validacoes.ts'
 
 export const routeConta = Router()
 
-/**
- * @openapi
- * /conta:
- *  get:
- *    description:
- */
 routeConta.get("/", async (req, res) => {
   res.json({
     path: "Serviços relacionados a conta"
@@ -20,7 +14,21 @@ routeConta.get("/", async (req, res) => {
  * @openapi
  * /conta/buscar:
  *  post:
- *    description:
+ *    tags:
+ *      - Contas
+ *    summary: Recupera uma conta
+ *    description: Endpoint para recuperação de contas baseado no e-mail
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          example:
+ *            email: johndoe@doe.uk
+ *    responses:
+ *      200:
+ *         description: Retorna a conta solicitada.
+ *      404:
+ *         description: Returna null se não exister uma conta com o e-mail.
  */
 routeConta.post("/buscar", requestBodyValido, async (req, res, next) => {
   try {
