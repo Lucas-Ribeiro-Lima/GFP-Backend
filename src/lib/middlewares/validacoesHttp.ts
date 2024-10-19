@@ -24,10 +24,14 @@ export async function requestQueryValido(req: Request, res: Response, next: Next
   next();
 }
 
-export function requiredtBodyProps(propriedades: Array<string>) {
+export function requiredtBodyProps(propriedades: Array<string>, chave?: string) {
   const propriedadesFaltantes: Array<string> = []
   return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const bodyPropriedades = Object.getOwnPropertyNames(req.body)
+    if(chave && !req.body[chave]) {
+      res.status(400).json({error: `Propriedade ${chave} faltando no corpo da requisição`})
+      return
+    }
+    const bodyPropriedades = Object.getOwnPropertyNames(chave ? req.body[chave] : req.body) 
 
     propriedades.forEach((propriedade) => {
       if(!bodyPropriedades.includes(propriedade) && propriedade !== "constructor") propriedadesFaltantes.push(propriedade)

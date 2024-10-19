@@ -7,7 +7,8 @@ export const routeConta = Router()
 const requiredPropEmail = requiredtBodyProps(["email"])
 const requiredPropConta = requiredtBodyProps([
   "id", "nome", "email", "cpf", "provider", "configs"
-])
+], "conta")
+const requiredPropCriar = requiredtBodyProps(["nome", "email", "cpf", "provider"], "conta")
 
 routeConta.get("/", async (req, res) => {
   res.json({
@@ -56,7 +57,7 @@ routeConta.post("/buscar", requestBodyValido, requiredPropEmail, async (req, res
  *    requestBody:
  *      required: true
  *      content:
- *        aplication/json:
+ *        application/json:
  *          example:
  *            conta:
  *               nome: johndoe
@@ -71,7 +72,7 @@ routeConta.post("/buscar", requestBodyValido, requiredPropEmail, async (req, res
  *      500:
  *        description: Erro interno    
  */
-routeConta.post("/criar", requestBodyValido, async (req, res, next) => {
+routeConta.post("/criar", requestBodyValido, requiredPropCriar, async (req, res, next) => {
   try {
     await controllerConta.handleHttpPost(req, res)
   } catch (error) {
@@ -92,7 +93,7 @@ routeConta.post("/criar", requestBodyValido, async (req, res, next) => {
  *    requestBody:
  *      required: true
  *      content:
- *         aplication/json:
+ *         application/json:
  *          example:
  *            id: 0
  *            nome: Doe John
@@ -130,16 +131,16 @@ routeConta.patch("/atualizar", requestBodyValido, requiredPropConta, async (req,
  *    requestBody:
  *      required: true
  *      content:
- *         aplication/json:
+ *         application/json:
  *          example:
  *            email: johndoe@doe.uk
  *    responses:
- *      200: 
+ *      204: 
  *        description: Conta deletada com sucesso
  *      500: 
  *        description: Erro ao deletar uma conta
  */
-routeConta.delete("/excluir", requestBodyValido, async (req, res, next) => {
+routeConta.delete("/excluir", requestBodyValido, requiredPropEmail, async (req, res, next) => {
   try {
     await controllerConta.handleHttpDelete(req, res)
   } catch (error) {
