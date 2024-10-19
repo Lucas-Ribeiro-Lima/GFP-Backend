@@ -9,6 +9,7 @@ import { routeDespesa } from '../routes/routeDespesa.ts'
 import { routeRenda } from '../routes/routeRenda.ts'
 
 export const app = e()
+app.disable('x-powered-by')
 
 app.use(e.json())
 
