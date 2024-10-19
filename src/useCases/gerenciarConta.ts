@@ -27,7 +27,8 @@ export class GerenciarConta implements GerenciarContaI{
     return await this.contaRepo.find(email) ?? null
   }
 
-  async atualizar(conta: Conta): Promise<void> {
+  async atualizar(acc: Conta): Promise<void> {
+    const conta = new Conta(acc)
     await this.contaRepo.save(conta)
   }
 

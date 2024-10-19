@@ -17,7 +17,8 @@ export class GerenciarRenda implements GerenciarRendaI {
     return this.rendaRepo.load(carteira_id)
   }
 
-  async atualizar(renda: Renda) {
+  async atualizar(rend: Renda) {
+    const renda = new Renda(rend)
     this.rendaRepo.save(renda)
   }
 

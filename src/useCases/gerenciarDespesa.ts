@@ -19,7 +19,8 @@ export class GerenciarDespesa implements GerenciarDespesaI {
     return this.despesaRepo.load(carteiraId)
   }
 
-  async atualizar(despesa: Despesa): Promise<void> {
+  async atualizar(desp: Despesa): Promise<void> {
+    const despesa = new Despesa(desp)
     this.despesaRepo.save(despesa)
   }
 

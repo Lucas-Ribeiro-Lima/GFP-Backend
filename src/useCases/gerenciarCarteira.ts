@@ -23,9 +23,10 @@ export class GerenciarCarteira implements GerenciarCarteiraI {
     return await this.carteiraRepo.find(idDono) ?? null
   }
 
-  async atualizar(carteira: Carteira): Promise<void> {
-    const carteiraExistente = await this.carteiraRepo.find(carteira.idContaDono)
+  async atualizar(cart: Carteira): Promise<void> {
+    const carteiraExistente = await this.carteiraRepo.find(cart.idContaDono)
     if(!carteiraExistente) throw new UseCaseError("A carteira informada não foi encontrada")
+    const carteira = new Carteira(cart)
     await this.carteiraRepo.save(carteira)
   }
 
