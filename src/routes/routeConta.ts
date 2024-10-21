@@ -1,14 +1,13 @@
 import { Router } from 'express'
 import { controllerConta } from '../configs/controllers.ts'
-import { requestBodyValido, requiredtBodyProps } from '../lib/middlewares/validacoesHttp.ts'
+import { requestBodyValido, requiredBodyProps } from '../lib/middlewares/validacoesHttp.ts'
+import { contaCriarSchema, contaEmailSchema, contaSchema } from '../adapters/zod/schemas/conta.ts'
 
 export const routeConta = Router()
 
-const requiredPropEmail = requiredtBodyProps(["email"])
-const requiredPropConta = requiredtBodyProps([
-  "id", "nome", "email", "cpf", "provider", "configs"
-], "conta")
-const requiredPropCriar = requiredtBodyProps(["nome", "email", "cpf", "provider"], "conta")
+const requiredPropEmail = requiredBodyProps(contaEmailSchema)
+const requiredPropConta = requiredBodyProps(contaSchema, "conta")
+const requiredPropCriar = requiredBodyProps(contaCriarSchema, "conta")
 
 routeConta.get("/", async (req, res) => {
   res.json({

@@ -1,7 +1,13 @@
 import { Router } from "express";
 import { controllerCarteira } from '../configs/controllers.ts'
+import { requestBodyValido, requiredBodyProps } from "../lib/middlewares/validacoesHttp.ts";
+import { carteiraIdContaDonoSchema, carteiraIdSchema, carteiraSchema } from '../adapters/zod/schemas/carteira.ts'
 
 export const routeCarteira = Router()
+
+const requiredPropIdContaDono = requiredBodyProps(carteiraIdContaDonoSchema)
+const requiredPropCarteira = requiredBodyProps(carteiraSchema, "carteira")
+const requiredPropId = requiredBodyProps(carteiraIdSchema)
 
 
 routeCarteira.get("/", (req, res) => {
@@ -30,7 +36,7 @@ routeCarteira.get("/", (req, res) => {
  *      500: 
  *        description: Erro interno
  */
-routeCarteira.post("/buscar", async (req, res, next) => {
+routeCarteira.post("/buscar", requestBodyValido, requiredPropIdContaDono, async (req, res, next) => {
   try {
     await controllerCarteira.handleHttpGet(req, res)
   } catch (error) {
@@ -69,9 +75,9 @@ routeCarteira.post("/buscar", async (req, res, next) => {
  *      500: 
  *        description: Erro interno
  */
-routeCarteira.post("/criar", async (req, res, next) => {
+routeCarteira.post("/criar", requestBodyValido, requiredPropCarteira, async (req, res, next) => {
   try {
-    await controllerCarteira.handleHttpPatch(req, res)
+    await controllerCarteira.handleHttpPost(req, res)
   } catch (error) {
     next(error)
   }
@@ -95,8 +101,8 @@ routeCarteira.post("/criar", async (req, res, next) => {
  *            carteira:
  *              id: 1
  *              idContaDono: 1
- *              nome: Carteira John Doe
- *              saldo: 0.00
+ *              nome: Carteira Doe John pessoal
+ *              saldo: 10.00
  *              compartilhada: false
  *              idGrupoEconomico: null
  *              meta: 0.00
@@ -108,7 +114,7 @@ routeCarteira.post("/criar", async (req, res, next) => {
  *      500: 
  *        description: Erro interno
  */
-routeCarteira.patch("/atualizar", async (req, res, next) => {
+routeCarteira.patch("/atualizar", requestBodyValido, requiredPropCarteira,async (req, res, next) => {
   try {
     await controllerCarteira.handleHttpPatch(req, res)
   } catch (error) {
@@ -140,7 +146,7 @@ routeCarteira.patch("/atualizar", async (req, res, next) => {
  *      500: 
  *        description: Erro interno
  */
-routeCarteira.delete("/excluir", async (req, res, next) => {
+routeCarteira.delete("/excluir", requestBodyValido, requiredPropId, async (req, res, next) => {
   try {
     await controllerCarteira.handleHttpDelete(req, res)
   } catch (error) {

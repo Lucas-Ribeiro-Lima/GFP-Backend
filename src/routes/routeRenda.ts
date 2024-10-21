@@ -1,8 +1,13 @@
 import { Router  } from "express";
 import { controllerRenda } from "../configs/controllers.ts"
+import { requestBodyValido, requiredBodyProps } from "../lib/middlewares/validacoesHttp.ts";
+import { idCarteiraSchema, rendaSchema, uuidSchema } from "../adapters/zod/schemas/registros.ts";
 
 export const routeRenda = Router()
 
+const requiredIdCarteira = requiredBodyProps(idCarteiraSchema)
+const requiredUuid = requiredBodyProps(uuidSchema)
+const requiredRenda = requiredBodyProps(rendaSchema, "renda")
 
 routeRenda.get("/", (req, res) => {
   res.json({
@@ -32,7 +37,7 @@ routeRenda.get("/", (req, res) => {
  *      500: 
  *        description: Erro interno
  */
-routeRenda.post("/buscar", async (req, res, next) => {
+routeRenda.post("/buscar", requestBodyValido, requiredIdCarteira, async (req, res, next) => {
   try {
     await controllerRenda.handleHttpGet(req, res)
   } catch (error) {
@@ -75,7 +80,7 @@ routeRenda.post("/buscar", async (req, res, next) => {
  *      500: 
  *        description: Erro interno
  */
-routeRenda.post("/criar", async(req, res, next) => {
+routeRenda.post("/criar", requestBodyValido, requiredRenda, async(req, res, next) => {
   try {
     await controllerRenda.handleHttpPost(req, res)
   } catch (error) {
@@ -119,7 +124,7 @@ routeRenda.post("/criar", async(req, res, next) => {
  *      500: 
  *        description: Erro interno
  */
-routeRenda.patch("/atualizar", async (req, res, next) => {
+routeRenda.patch("/atualizar", requestBodyValido, requiredRenda, async (req, res, next) => {
   try {
     await controllerRenda.handleHttpPatch(req, res)
   } catch (error) {
@@ -150,7 +155,7 @@ routeRenda.patch("/atualizar", async (req, res, next) => {
  *      500: 
  *        description: Erro interno
  */
-routeRenda.delete("/excluir", async (req, res, next) => {
+routeRenda.delete("/excluir", requestBodyValido, requiredUuid, async (req, res, next) => {
   try {
     await controllerRenda.handleHttpDelete(req, res)
   } catch (error) {

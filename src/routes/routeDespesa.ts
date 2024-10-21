@@ -1,8 +1,13 @@
 import { Router  } from "express";
 import { controllerDespesa } from "../configs/controllers.ts"
+import { requestBodyValido, requiredBodyProps } from "../lib/middlewares/validacoesHttp.ts"
+import { despesaSchema, idCarteiraSchema, uuidSchema } from "../adapters/zod/schemas/registros.ts";
 
 export const routeDespesa = Router()
 
+const requiredIdCarteira = requiredBodyProps(idCarteiraSchema)
+const requiredUuid = requiredBodyProps(uuidSchema)
+const requiredDespesa = requiredBodyProps(despesaSchema, "despesa")
 
 routeDespesa.get("/", (req, res) => {
   res.json({
@@ -32,7 +37,7 @@ routeDespesa.get("/", (req, res) => {
  *      500: 
  *        description: Erro interno
  */
-routeDespesa.post("/buscar", async (req, res, next) => {
+routeDespesa.post("/buscar", requestBodyValido, requiredIdCarteira, async (req, res, next) => {
   try {
     await controllerDespesa.handleHttpGet(req, res)
   } catch (error) {
@@ -74,7 +79,7 @@ routeDespesa.post("/buscar", async (req, res, next) => {
  *      500: 
  *        description: Erro interno
  */
-routeDespesa.post("/criar", async(req, res, next) => {
+routeDespesa.post("/criar", requestBodyValido, requiredDespesa, async(req, res, next) => {
   try {
     await controllerDespesa.handleHttpPost(req, res)
   } catch (error) {
@@ -118,7 +123,7 @@ routeDespesa.post("/criar", async(req, res, next) => {
  *      500: 
  *        description: Erro interno
  */
-routeDespesa.patch("/atualizar", async (req, res, next) => {
+routeDespesa.patch("/atualizar", requestBodyValido, requiredDespesa, async (req, res, next) => {
   try {
     await controllerDespesa.handleHttpPatch(req, res)
   } catch (error) {
@@ -148,7 +153,7 @@ routeDespesa.patch("/atualizar", async (req, res, next) => {
  *      500: 
  *        description: Erro interno
  */
-routeDespesa.delete("/excluir", async (req, res, next) => {
+routeDespesa.delete("/excluir", requestBodyValido, requiredUuid, async (req, res, next) => {
   try {
     await controllerDespesa.handleHttpDelete(req, res)
   } catch (error) {
