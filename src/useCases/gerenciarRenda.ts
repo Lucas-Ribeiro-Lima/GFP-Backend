@@ -11,19 +11,19 @@ export class GerenciarRenda implements GerenciarRendaI {
 
   async cadastrar(rend: RendaProps) {
     const renda = new Renda(rend)
-    this.rendaRepo.create(renda)
+    await this.rendaRepo.create(renda)
   }
 
   async buscar(carteira_id: number): Promise<Renda[] | []> {
-    return this.rendaRepo.load(carteira_id)
+    return await this.rendaRepo.load(carteira_id)
   }
 
   async atualizar(rend: RendaProps) {
     const renda = new Renda(rend)
-    this.rendaRepo.save(renda)
+    await this.rendaRepo.save(renda)
   }
 
   async excluir(uuid: string) {
-    this.rendaRepo.delete(uuid)
+    await this.rendaRepo.delete(uuid)
   }
 }

@@ -13,20 +13,20 @@ export class GerenciarDespesa implements GerenciarDespesaI {
 
   async cadastrar(desp: DespesaProps): Promise<void> {
     const despesa = new Despesa(desp)
-    this.despesaRepo.create(despesa)
+    await this.despesaRepo.create(despesa)
   }
 
   async buscar(carteiraId: number): Promise<Despesa[] | []> {
-    return this.despesaRepo.load(carteiraId)
+    return await this.despesaRepo.load(carteiraId)
   }
 
   async atualizar(desp: DespesaProps): Promise<void> {
     const despesa = new Despesa(desp)
-    this.despesaRepo.save(despesa)
+    await this.despesaRepo.save(despesa)
   }
 
   async excluir(uuid: string): Promise<void> {
-    this.despesaRepo.delete(uuid)
+   await this.despesaRepo.delete(uuid)
   }
 
 }
