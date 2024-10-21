@@ -1,12 +1,12 @@
 import { AdapterRepoError, EntitieInstanceError, InvalidInputError, NotFoundError, UseCaseError } from "./customErrors.ts"
 
-type ErrorResponse = {
+export type ErrorResponse = {
   code: number,
   type: string,
   message: string
 }
 
-export function errorHandler(err: Error): ErrorResponse {
+export function errorHandler(err: Error, extendedHandler?: (err: Error) => ErrorResponse | void): ErrorResponse {
   if (err instanceof AdapterRepoError) return {
     code: 500,
     type: "Repositorio",
@@ -33,6 +33,10 @@ export function errorHandler(err: Error): ErrorResponse {
     message: err.message
   }
   else {
+    const extendedResponse = extendedHandler?.(err);
+    if (extendedResponse) {
+      return extendedResponse;
+    }
     return {
       code: 500,
       type: "Erro não especificado",

@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { ZodSchema } from "zod";
 
 export async function requestBodyValido(req: Request, res: Response, next: NextFunction): Promise<void> {
   if (!req.body || Object.keys(req.body).length === 0) {
@@ -24,26 +25,13 @@ export async function requestQueryValido(req: Request, res: Response, next: Next
   next();
 }
 
-export function requiredtBodyProps(propriedades: Array<string>, chave?: string) {
-  const propriedadesFaltantes: Array<string> = []
-  return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export function requiredBodyProps(schema: ZodSchema, chave?: string) {
+  return (req: Request, res: Response, next: NextFunction) => {
     if(chave && !req.body[chave]) {
       res.status(400).json({error: `Propriedade ${chave} faltando no corpo da requisição`})
       return
     }
-    const bodyPropriedades = Object.getOwnPropertyNames(chave ? req.body[chave] : req.body) 
-
-    propriedades.forEach((propriedade) => {
-      if(!bodyPropriedades.includes(propriedade) && propriedade !== "constructor") propriedadesFaltantes.push(propriedade)
-      })
-
-    if(propriedadesFaltantes.length) {
-      res.status(400).json({
-      error: "Propriedades faltantes no corpo da requisição",
-      propriedades: propriedadesFaltantes
-      })
-      return
-    }
+    schema.parse((chave) ? req.body[chave] : req.body)
     next()
   }
 }
