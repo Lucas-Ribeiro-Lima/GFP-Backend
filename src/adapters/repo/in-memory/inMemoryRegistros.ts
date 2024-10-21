@@ -32,6 +32,8 @@ export class InMemoryDespesas implements DespesaRepo {
   public DespesaArray: Despesa[] = []
 
   async create(reg: Despesa): Promise<void> {
+    const newUuid = randomUUID()
+    reg.uuid = newUuid
     this.DespesaArray.push(reg)
   }
 
@@ -45,7 +47,7 @@ export class InMemoryDespesas implements DespesaRepo {
 
   async save(despesa: Despesa): Promise<void> {
     const index = this.DespesaArray.findIndex((reg) => reg.uuid === despesa.uuid)
-    if(index === -1) throw new Error("Despesa não encontrada")
+    if(index === -1) throw new AdapterRepoError("Despesa não encontrada")
     this.DespesaArray[index] = despesa
   }
 }

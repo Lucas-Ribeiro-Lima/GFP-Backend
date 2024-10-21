@@ -12,7 +12,7 @@ export const despesaSchema = z.object({
   competencia: z.object({
     mes: z.number().min(1, "Mês invalido").max(new Date().getMonth() + 1),
     ano: z.number().min(1900, "Ano inválido"). max(new Date().getFullYear()),
-    dataInclusao: z.date()
+    dataInclusao: z.string().optional()
   })
 })
 
@@ -28,7 +28,7 @@ export const rendaSchema = z.object({
   competencia: z.object({
     mes: z.number().min(1, "Mês invalido").max(new Date().getMonth() + 1),
     ano: z.number().min(1900, "Ano inválido"). max(new Date().getFullYear()),
-    dataInclusao: z.date()
+    dataInclusao: z.string().optional()
   })
 })
 
@@ -37,6 +37,6 @@ export const uuidSchema = z.object({
 })
 
 export const idCarteiraSchema = z.object({
-  idCarteira: z.number()
+  idCarteira: z.coerce.number()
 })
 

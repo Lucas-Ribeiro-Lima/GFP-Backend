@@ -1,6 +1,6 @@
 import { ContaRepo } from "../adapters/repo/ContaRepo.ts";
 import { Configs } from "../entities/Config.ts";
-import { Conta } from "../entities/Conta.ts";
+import { Conta, ContaProps } from "../entities/Conta.ts";
 import { UseCaseError } from "../errors/customErrors.ts";
 
 export interface GerenciarContaI {
@@ -27,7 +27,7 @@ export class GerenciarConta implements GerenciarContaI{
     return await this.contaRepo.find(email) ?? null
   }
 
-  async atualizar(acc: Conta): Promise<void> {
+  async atualizar(acc: ContaProps): Promise<void> {
     const conta = new Conta(acc)
     await this.contaRepo.save(conta)
   }

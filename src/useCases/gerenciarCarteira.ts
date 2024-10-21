@@ -1,5 +1,5 @@
 import { CarteiraRepo } from "../adapters/repo/CarteiraRepo.ts";
-import { Carteira } from "../entities/Carteira.ts";
+import { Carteira, CarteiraProps } from "../entities/Carteira.ts";
 import { UseCaseError } from "../errors/customErrors.ts";
 
 export interface GerenciarCarteiraI {
@@ -12,9 +12,11 @@ export interface GerenciarCarteiraI {
 export class GerenciarCarteira implements GerenciarCarteiraI {
   constructor(private carteiraRepo: CarteiraRepo) {}
   
-  async cadastrar(carteira: Carteira): Promise<void> {
-    const carteiraExistente = await this.carteiraRepo.find(carteira.idContaDono)
+  async cadastrar(cart: CarteiraProps): Promise<void> {
+    const carteiraExistente = await this.carteiraRepo.find(cart.idContaDono)
     if(carteiraExistente) throw new UseCaseError("Esta conta já possui uma carteira vinculada")
+    
+    const carteira = new Carteira(cart)
 
     await this.carteiraRepo.create(carteira)
   }
@@ -23,7 +25,7 @@ export class GerenciarCarteira implements GerenciarCarteiraI {
     return await this.carteiraRepo.find(idDono) ?? null
   }
 
-  async atualizar(cart: Carteira): Promise<void> {
+  async atualizar(cart: CarteiraProps): Promise<void> {
     const carteiraExistente = await this.carteiraRepo.find(cart.idContaDono)
     if(!carteiraExistente) throw new UseCaseError("A carteira informada não foi encontrada")
     const carteira = new Carteira(cart)

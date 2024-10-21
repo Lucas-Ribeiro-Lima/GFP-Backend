@@ -4,7 +4,7 @@ type enumFrequencia = 'mensal' | 'trimestral' | 'semestral' | 'anual'
 
 type enumCategoria = 'salario' | 'investimento' | 'bonus' | 'outros'
 
-interface RendaProps extends RegistroProps {
+export interface RendaProps extends RegistroProps {
   fonte: string,
   frequencia: enumFrequencia,
   categoria: enumCategoria

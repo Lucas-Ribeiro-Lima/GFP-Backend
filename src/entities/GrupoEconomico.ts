@@ -1,6 +1,6 @@
 import { EntitieInstanceError } from "../errors/customErrors.ts"
 
-interface GrupoEconomicoProps {
+export interface GrupoEconomicoProps {
   id: number,
   nome: string,
   descricao: string,

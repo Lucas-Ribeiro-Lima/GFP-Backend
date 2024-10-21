@@ -2,7 +2,7 @@ import { Registro, RegistroProps } from "./Registro.ts";
 
 type enumCategoria = 'alimentacao' | 'moradia' | 'lazer' | 'outros'
 
-interface DespesaProps extends RegistroProps {
+export interface DespesaProps extends RegistroProps {
   parcelado: boolean,
   numParcelas: number,
   categoria: enumCategoria

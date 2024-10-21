@@ -1,6 +1,6 @@
 import { EntitieInstanceError } from "../errors/customErrors.ts"
 
-interface CarteiraProps {
+export interface CarteiraProps {
   id: number, 
   idContaDono: number,
   nome: string,

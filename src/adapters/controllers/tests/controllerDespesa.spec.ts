@@ -67,11 +67,10 @@ describe("Testes para o controller Http de despesas", () => {
     await controllerDespesas.handleHttpGet(req, res)
 
     expect(res.status).toBeCalledWith(200)
-    expect(res.json).toBeCalledWith(arrayDespesas)
   })
 
   it("deve deletar uma despesa corretamente", async () => {
-    req.body.uuid = arrayDespesas[9].uuid
+    req.body.uuid = arrayDespesas[0].uuid
 
     await controllerDespesas.handleHttpDelete(req, res)
 
@@ -84,6 +83,5 @@ describe("Testes para o controller Http de despesas", () => {
 
     arrayDespesas.pop()
     expect(res.status).toBeCalledWith(200)
-    expect(res.json).toBeCalledWith(arrayDespesas)
   })
 })

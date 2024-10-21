@@ -1,5 +1,5 @@
 import { DespesaRepo } from "../adapters/repo/RegistrosRepo.ts";
-import { Despesa } from "../entities/Despesa.ts";
+import { Despesa, DespesaProps } from "../entities/Despesa.ts";
 
 export interface GerenciarDespesaI {
   cadastrar(despesa: Despesa): Promise<void>
@@ -11,7 +11,8 @@ export interface GerenciarDespesaI {
 export class GerenciarDespesa implements GerenciarDespesaI {
   constructor(private despesaRepo: DespesaRepo) {}
 
-  async cadastrar(despesa: Despesa): Promise<void> {
+  async cadastrar(desp: DespesaProps): Promise<void> {
+    const despesa = new Despesa(desp)
     this.despesaRepo.create(despesa)
   }
 
@@ -19,7 +20,7 @@ export class GerenciarDespesa implements GerenciarDespesaI {
     return this.despesaRepo.load(carteiraId)
   }
 
-  async atualizar(desp: Despesa): Promise<void> {
+  async atualizar(desp: DespesaProps): Promise<void> {
     const despesa = new Despesa(desp)
     this.despesaRepo.save(despesa)
   }

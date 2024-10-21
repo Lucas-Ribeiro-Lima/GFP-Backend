@@ -1,4 +1,4 @@
-interface ConfigsProps {
+export interface ConfigsProps {
   tema: "Dark" | "Light",
   displayName: string,
   customWpp: string

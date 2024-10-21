@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { InMemoryContas } from "../../adapters/repo/in-memory/inMemoryContas.ts";
 import { Configs } from "../../entities/Config.ts";
-import { Conta } from "../../entities/Conta.ts";
 import { GerenciarConta } from "../gerenciarConta.ts";
 
 describe("Testes do caso de uso [UC012] Cadastro de conta", () => {
@@ -39,16 +38,16 @@ describe("Testes do caso de uso [UC012] Cadastro de conta", () => {
     const email = "johndoe@gmail.com"
     const conta = await gerenciarConta.buscar(email)
 
-    if(!conta) throw new Error("Conta não encontrada")
+    if(!conta) expect.fail("Conta não encontrada")
     
-    const contaAlterada = new Conta({
+    const contaAlterada = {
       id: conta.id,
       nome: "Doe John",
       email,
       cpf: "12345678909",
       provider: "Microsoft",
       configs: conta.configs
-    })
+    }
 
     gerenciarConta.atualizar(contaAlterada)
 
@@ -81,7 +80,7 @@ describe("Testes do caso de uso [UC012] Cadastro de conta", () => {
     const conta = await gerenciarConta.buscar(email)
     const newConfigs = new Configs({tema: 'Light', displayName: "", customWpp: ""})
 
-    if(!conta) throw new Error("Conta não encontrada")
+    if(!conta) expect.fail("Conta não encontrada")
 
     newConfigs.tema = "Dark"
     newConfigs.displayName = "Doles"

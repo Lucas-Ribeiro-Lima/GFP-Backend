@@ -2,7 +2,7 @@ import { EntitieInstanceError } from "../errors/customErrors.ts"
 import { cpfValido, emailValido } from "../lib/utils.ts"
 import { Configs } from "./Config.ts"
 
-interface ContaProps {
+export interface ContaProps {
   id: number | null,
   email: string,
   provider: string,
@@ -37,9 +37,15 @@ export class Conta {
   public get provider() {
     return this.props.provider
   }
+  public set provider(provider: string) {
+    this.props.provider = provider
+  }
 
   public get nome() {
     return this.props.nome
+  }
+  public set nome(nome: string) {
+    this.props.nome = nome
   }
 
   public get cpf() {

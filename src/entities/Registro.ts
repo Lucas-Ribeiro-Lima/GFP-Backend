@@ -15,20 +15,22 @@ export interface RegistroProps {
   valor: number
   competencia: Competencia
   modalidade: enumReg,
-  categoria: string
 }
 
 
 export abstract class Registro {
   protected props: RegistroProps
   
-  constructor({descricao, idCarteira, valor, competencia, modalidade, categoria}: RegistroProps) {
+  constructor({descricao, idCarteira, valor, competencia, modalidade}: RegistroProps) {
     const newUuid = randomUUID()
-    this.props = {uuid: newUuid, idCarteira, descricao, valor, competencia, modalidade, categoria}
+    this.props = {uuid: newUuid, idCarteira, descricao, valor, competencia, modalidade}
   }
 
   public get uuid() {
     return this.props.uuid
+  }
+  public set uuid(uuid: string) {
+    this.props.uuid = uuid
   }
 
   public get idCarteira() {
@@ -52,15 +54,8 @@ export abstract class Registro {
   public get competencia() {
     return this.props.competencia
   }
-  public set competenciaMes({mes, dataInclusao}: Competencia) {
-    this.props.competencia.mes = mes
-    this.props.competencia.dataInclusao = dataInclusao
-  }
-  public set competenciaAno({ ano }: Competencia) {
-    this.props.competencia.ano = ano
-  }
-  public set competenciaDataInclusao({ dataInclusao }: Competencia){
-    this.props.competencia.dataInclusao = dataInclusao
+  public set competencia(competencia: Competencia) {
+    this.props.competencia = competencia
   }
 
   public get modalidade() {

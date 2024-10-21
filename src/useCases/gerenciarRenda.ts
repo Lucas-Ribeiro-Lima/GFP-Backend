@@ -1,5 +1,5 @@
 import { RendaRepo } from "../adapters/repo/RegistrosRepo.ts";
-import { Renda } from "../entities/Renda.ts";
+import { Renda, RendaProps } from "../entities/Renda.ts";
 export interface GerenciarRendaI {
   cadastrar(renda: Renda): Promise<void>
   buscar(carteiraId: number): Promise<Renda[] | []>
@@ -9,7 +9,8 @@ export interface GerenciarRendaI {
 export class GerenciarRenda implements GerenciarRendaI {
   constructor(private rendaRepo: RendaRepo) {}
 
-  async cadastrar(renda: Renda) {
+  async cadastrar(rend: RendaProps) {
+    const renda = new Renda(rend)
     this.rendaRepo.create(renda)
   }
 
@@ -17,7 +18,7 @@ export class GerenciarRenda implements GerenciarRendaI {
     return this.rendaRepo.load(carteira_id)
   }
 
-  async atualizar(rend: Renda) {
+  async atualizar(rend: RendaProps) {
     const renda = new Renda(rend)
     this.rendaRepo.save(renda)
   }

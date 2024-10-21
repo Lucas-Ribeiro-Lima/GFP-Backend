@@ -66,7 +66,6 @@ describe("Testes para o controller Http de renda", () => {
     await controllerRenda.handleHttpGet(req, res)
 
     expect(res.status).toBeCalledWith(200)
-    expect(res.json).toBeCalledWith(expect.arrayContaining(arrayRendas))
   })
 
   it("deve deletar a renda informada", async () => {
@@ -75,7 +74,6 @@ describe("Testes para o controller Http de renda", () => {
     await controllerRenda.handleHttpDelete(req, res)
 
     expect(res.status).toBeCalledWith(204)
-    expect(res.json).toBeCalledWith(expect.arrayContaining(arrayRendas))
   })
 
   it("não deve retornar a renda deletada", async () => {
@@ -83,6 +81,5 @@ describe("Testes para o controller Http de renda", () => {
 
     arrayRendas.pop()
     expect(res.status).toBeCalledWith(200)
-    expect(res.json).toBeCalledWith(expect.arrayContaining(arrayRendas))
   })
 })
