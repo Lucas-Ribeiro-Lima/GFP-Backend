@@ -4,12 +4,12 @@ model Conta {
   email String @unique
   cpf String @unique
   nome String
-  provider String
   tema Tema @default(Light)
   displayName String @default("")
   customWpp String @default("")
 
   // ORM Relations
+  federado Federados?
   carteira Carteira?
 }
 

@@ -5,7 +5,6 @@ import { Configs } from "./Config.ts"
 export interface ContaProps {
   id: number | null,
   email: string,
-  provider: string,
   nome: string,
   cpf: string,
   configs: Configs
@@ -33,13 +32,6 @@ export class Conta {
   public set email(email: string) {
     if(!emailValido(email)) throw new EntitieInstanceError("Email inválido")
     this.props.email = email
-  }
-
-  public get provider() {
-    return this.props.provider
-  }
-  public set provider(provider: string) {
-    this.props.provider = provider
   }
 
   public get nome() {

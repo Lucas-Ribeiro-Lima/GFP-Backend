@@ -10,7 +10,6 @@ describe("Testes unitários para a classe Conta", () => {
       nome: "John Doe",
       cpf: '123456789-09',
       email: 'foo-bar@bar.uk',
-      provider: 'Google',
       configs: new Configs({tema: 'Light', displayName: "", customWpp: ""})
     }
     const conta = new Conta(contaValida)
@@ -24,7 +23,6 @@ describe("Testes unitários para a classe Conta", () => {
       nome: "John Doe",
       cpf: '123456789-09',
       email: 'foo-barbar.uk',
-      provider: 'Google',
       configs: new Configs({tema: 'Light', displayName: "", customWpp: ""})
     }  
     
@@ -37,7 +35,6 @@ describe("Testes unitários para a classe Conta", () => {
       nome: "John Doe",
       cpf: '111111111-11',
       email: 'foo-barbar.uk',
-      provider: 'Google',
       configs: new Configs({tema: 'Light', displayName: "", customWpp: ""})
     }
 

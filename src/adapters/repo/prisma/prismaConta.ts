@@ -8,14 +8,13 @@ import { logWriter } from "../../../lib/utils.ts";
 export class PrismaConta implements ContaRepo {
   constructor(private pc = new PrismaClient({ log: ["error"], errorFormat: "pretty"})) {}
 
-  async create({ nome, email, cpf, provider, configs: {tema, customWpp, displayName} }: Conta): Promise<void> {
+  async create({ nome, email, cpf, configs: {tema, customWpp, displayName} }: Conta): Promise<void> {
     try {
       await this.pc.conta.create({
         data: {
           nome,
           cpf,
           email,
-          provider,
           tema,
           displayName,
           customWpp
@@ -53,14 +52,13 @@ export class PrismaConta implements ContaRepo {
       });
       if(!prismaResponse)  return null
 
-      const { id, nome, cpf, provider, tema, displayName, customWpp } = prismaResponse
+      const { id, nome, cpf, tema, displayName, customWpp } = prismaResponse
       const configs = new Configs({ tema, displayName, customWpp });
       const conta = new Conta({
         id,
         nome,
         email,
         cpf,
-        provider,
         configs
       });
       return conta;
@@ -72,13 +70,12 @@ export class PrismaConta implements ContaRepo {
     }
   }
 
-  async save({ nome, email, cpf, provider, configs: { tema, displayName, customWpp } }: Conta): Promise<void> {
+  async save({ nome, email, cpf, configs: { tema, displayName, customWpp } }: Conta): Promise<void> {
     try {
       await this.pc.conta.update({
         data: {
           nome,
           cpf,
-          provider,
           tema,
           displayName,
           customWpp

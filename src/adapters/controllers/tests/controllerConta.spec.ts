@@ -26,7 +26,6 @@ describe("Testes para o controller Http de conta", () => {
     nome: "John Doe",
     cpf: "123456789-09",
     email: "johndoe@doe.uk",
-    provider: "Google"
   }
 
 

@@ -62,7 +62,6 @@ routeConta.post("/buscar", requestBodyValido, requiredPropEmail, async (req, res
  *               nome: johndoe
  *               email: johndoe@doe.uk
  *               cpf: 123456789-09
- *               provider: Google
  *    responses:
  *      201:
  *        description: Conta criada com sucesso
@@ -98,7 +97,6 @@ routeConta.post("/criar", requestBodyValido, requiredPropCriar, async (req, res,
  *            nome: Doe John
  *            email: johndoe@doe.uk
  *            cpf: 12345678909
- *            provider: Microsoft
  *            configs:
  *              tema: dark            
  *              displayName: Does

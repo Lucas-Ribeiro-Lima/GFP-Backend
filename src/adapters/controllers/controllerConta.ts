@@ -18,9 +18,9 @@ export class ControllerConta implements ControllerHttpI {
   }
 
   public async handleHttpPost (req: Request, res: Response): Promise<Response> {
-    const {nome, email, provider, cpf}: Conta = req.body.conta
+    const {nome, email, cpf}: Conta = req.body.conta
 
-    await this.gerenciarConta.cadastrar(nome, email, cpf, provider)
+    await this.gerenciarConta.cadastrar(nome, email, cpf)
     return res.status(201).json({message: "Conta criada com sucesso"})
   }
 
