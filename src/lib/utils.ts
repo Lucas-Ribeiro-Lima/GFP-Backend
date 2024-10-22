@@ -1,3 +1,6 @@
+import { appendFile } from 'fs/promises'
+import path from 'path'
+
 export function cpfValido (cpf: string) {
   const cpfFormatted = cpf.replace(/\D/g, "")
 
@@ -35,5 +38,12 @@ export function emailValido (email: string) {
   else return false
 }
 
+export function formataCpf(cpf: string): string {
+  return cpf.replace(/\D/g, "")
+}
 
-
+export async function logWriter(err: Error): Promise<void> {
+  const logPath = path.join(path.dirname("./"), '..', 'backend', 'src', 'logs', 'errorServer.log');
+  const logLine = `stack: ${err.stack}`
+  await appendFile(logPath, logLine);
+}
