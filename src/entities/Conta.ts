@@ -17,6 +17,7 @@ export class Conta {
     if(!emailValido(props.email)) throw new EntitieInstanceError("Email inválido")
     if(!cpfValido(props.cpf)) throw new EntitieInstanceError("CPF inválido")
     this.props = props
+    this.props.cpf = props.cpf.replace(/\D/g, "")
   }
   
   public get id() {
@@ -53,7 +54,7 @@ export class Conta {
   }
   public set cpf(cpf: string) {
     if(!cpfValido(cpf)) throw new EntitieInstanceError("CPF Inválido")
-    this.props.cpf = cpf
+    this.props.cpf = cpf.replace(/\D/g, "")
   }
 
   public get configs() {
