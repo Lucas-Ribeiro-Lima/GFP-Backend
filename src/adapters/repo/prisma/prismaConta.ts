@@ -3,6 +3,7 @@ import { Configs } from "../../../entities/Config.ts";
 import { Conta } from "../../../entities/Conta.ts";
 import { ContaRepo } from "../../../adapters/repo/ContaRepo.ts";
 import { AdapterRepoError } from "../../../errors/customErrors.ts";
+import { logWriter } from "../../../lib/utils.ts";
 
 export class PrismaConta implements ContaRepo {
   constructor(private pc = new PrismaClient({ log: ["error"], errorFormat: "pretty"})) {}
@@ -21,7 +22,7 @@ export class PrismaConta implements ContaRepo {
         }
       });
     } catch (error) {
-      console.error(error);
+      if(error instanceof Error) logWriter(error)
       throw new AdapterRepoError("Erro ao criar conta no banco de dados");
     } finally {
       await this.pc.$disconnect();
@@ -36,7 +37,7 @@ export class PrismaConta implements ContaRepo {
         }
       });
     } catch (error) {
-      console.error(error);
+      if(error instanceof Error) logWriter(error)
       throw new AdapterRepoError("Erro ao deletar conta no banco de dados");
     } finally {
       await this.pc.$disconnect();
@@ -45,12 +46,14 @@ export class PrismaConta implements ContaRepo {
 
   async find(email: string): Promise<Conta | null> {
     try {
-      const { id, nome, cpf, provider, tema, displayName, customWpp } = await this.pc.conta.findUniqueOrThrow({
+      const prismaResponse = await this.pc.conta.findUnique({
         where: {
           email
         }
       });
+      if(!prismaResponse)  return null
 
+      const { id, nome, cpf, provider, tema, displayName, customWpp } = prismaResponse
       const configs = new Configs({ tema, displayName, customWpp });
       const conta = new Conta({
         id,
@@ -60,10 +63,9 @@ export class PrismaConta implements ContaRepo {
         provider,
         configs
       });
-
       return conta;
     } catch (error) {
-      console.error(error);
+      if(error instanceof Error) logWriter(error)
       return null
     } finally {
       await this.pc.$disconnect();
@@ -86,7 +88,7 @@ export class PrismaConta implements ContaRepo {
         }
       });
     } catch (error) {
-      console.error(error);
+      if(error instanceof Error) logWriter(error)
       throw new AdapterRepoError("Erro ao salvar a conta no banco de dados");
     } finally {
       await this.pc.$disconnect();

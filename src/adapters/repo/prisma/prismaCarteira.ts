@@ -2,10 +2,11 @@ import { Carteira } from '../../../entities/Carteira.ts';
 import { PrismaClient } from '@prisma/client';
 import { CarteiraRepo } from '../CarteiraRepo.ts';
 import { AdapterRepoError } from '../../../errors/customErrors.ts';
+import { logWriter } from '../../../lib/utils.ts'
 
 
 export class PrismaCarteira implements CarteiraRepo {
-  constructor(private pc = new PrismaClient({log: ['error'], errorFormat: 'pretty'})) {}
+  constructor(private pc = new PrismaClient({log: ['error'], errorFormat: 'minimal'})) {}
 
   async create({idContaDono, nome, compartilhada, meta, saldo}: Carteira): Promise<void> {
     try {
@@ -19,7 +20,7 @@ export class PrismaCarteira implements CarteiraRepo {
         }
       })
     } catch (error) {
-      console.log(error)
+      if(error instanceof Error) logWriter(error)
       throw new AdapterRepoError("Erro ao criar carteira no banco de dados")
     } finally {
       this.pc.$disconnect()
@@ -34,18 +35,21 @@ export class PrismaCarteira implements CarteiraRepo {
         }
       })
     } catch (error) {
-      console.log(error)
+      if(error instanceof Error) logWriter(error)
       throw new AdapterRepoError("Erro ao deletar carteira do banco de dados")
     }
   }
 
   async find(id_dono: number): Promise<Carteira | null> {
     try {
-      const { id, idContaDono, idGrupoEconomico, nome, saldo, compartilhada, meta} = await this.pc.carteira.findFirstOrThrow({
+      const prismaResponse = await this.pc.carteira.findUnique({
         where: {
           idContaDono: id_dono
         }
       })
+      if(!prismaResponse) return null
+
+      const { id, idContaDono, idGrupoEconomico, nome, saldo, compartilhada, meta} = prismaResponse
 
       const carteira = new Carteira({
         id,
@@ -59,7 +63,7 @@ export class PrismaCarteira implements CarteiraRepo {
 
       return carteira
     } catch (error) {
-      console.error(error)
+      if(error instanceof Error) logWriter(error)
       return null
     } finally {
       this.pc.$disconnect()
@@ -80,7 +84,7 @@ export class PrismaCarteira implements CarteiraRepo {
         }
       })
     } catch (error) {
-      console.log(error)
+      if(error instanceof Error) logWriter(error)
       throw new AdapterRepoError("Erro ao atualizar a carteira")
     }
   }
