@@ -1,10 +1,10 @@
 import { z } from 'zod'
 
 export const contaSchema = z.object({
-  id: z.coerce.number(),
+  id: z.coerce.number({message: "Id inválido"}),
   nome: z.string({ message: "Nome inválido"}),
-  email: z.string({ message: "Email obrigatório"}),
-  cpf: z.string({ message: "CPF obrigatório"}),
+  email: z.string().optional(),
+  cpf: z.string().optional(),
   configs: z.object({
     tema: z.enum(["Light", "Dark"]).default("Light"),
     displayName: z.string().optional(),
@@ -19,5 +19,4 @@ export const contaEmailSchema = z.object({
 export const contaCriarSchema = z.object({
   nome: z.string({ message: "Nome inválido"}),
   email: z.string({ message: "Email obrigatório"}),
-  cpf: z.string({ message: "CPF obrigatório"}),
 })

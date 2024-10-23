@@ -1,4 +1,4 @@
-import { app } from './configs/app.ts'
+import { app } from './app.ts'
 import { envs } from './configs/env.ts'
 
 const host = envs.EXPRESS_HOST
