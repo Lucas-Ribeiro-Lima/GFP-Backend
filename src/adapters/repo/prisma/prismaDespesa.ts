@@ -1,8 +1,8 @@
-import { DespesaRepo } from "../../../adapters/repo/RegistrosRepo.ts";
-import { Despesa } from "../../../entities/Despesa.ts";
 import { PrismaClient } from "@prisma/client";
 import { randomUUID } from "crypto";
+import { DespesaProps } from "../../../entities/Despesa.ts";
 import { AdapterRepoError } from "../../../errors/customErrors.ts";
+import { DespesaRepo } from "../../../useCases/repo/RegistrosRepo.ts";
 
 export class PrismaDespesa implements DespesaRepo {
   constructor(private pc = new PrismaClient({log: ["error"], errorFormat: "pretty"})) {}
@@ -15,7 +15,7 @@ export class PrismaDespesa implements DespesaRepo {
     parcelado,
     numParcelas,
     competencia: { ano, mes }
-  }: Despesa): Promise<void> {
+  }: DespesaProps): Promise<void> {
     await this.pc.registro.create({
       data: {
         uuid: randomUUID(),
@@ -48,46 +48,48 @@ export class PrismaDespesa implements DespesaRepo {
     }
   }
 
-  async load(idCarteira: number): Promise<Despesa[]> {
+  async load(idCarteira: number): Promise<DespesaProps[] | []> {
     try {
-      const response = await this.pc.registro.findMany({
+      const prismaResponse = await this.pc.registro.findMany({
         where: {
           idCarteira,
           tipo: "despesa"
         }
       })
+      if(!prismaResponse) return []
 
-      return response.map(({
-        uuid,
-        idCarteira,
-        descricao,
-        valor,
-        // categoria,
-        modalidade,
-        parcelado,
-        numParcelas,
-        competenciaMes,
-        competenciaAno,
-        dataInclusao
-      }) => new Despesa({
-          uuid, 
-          idCarteira,
-          descricao, 
-          valor, 
-          categoria: "outros", 
-          modalidade, 
-          parcelado: parcelado ?? false, 
-          numParcelas: numParcelas ?? 1, 
-          competencia: 
-            { mes: competenciaMes, ano: competenciaAno, dataInclusao: dataInclusao.toString() }
-      }))
+      const response = prismaResponse.map(despesa => {
+        if (despesa.categoria !== 'alimentacao' && 
+          despesa.categoria !== 'moradia' && 
+          despesa.categoria !== 'lazer' && 
+          despesa.categoria !== 'outros') {
+        throw new Error("Categoria de despesa inválida");
+        }
+        return {
+          uuid: despesa.uuid,
+          idCarteira: idCarteira,
+          descricao: despesa.descricao,
+          valor: despesa.valor,
+          modalidade: despesa.modalidade,
+          parcelado: despesa.parcelado,
+          numParcelas: despesa.numParcelas,
+          categoria: despesa.categoria,
+          competencia: {
+            mes: despesa.competenciaMes,
+            ano: despesa.competenciaAno,
+            dataInclusao: despesa.dataInclusao.toLocaleDateString("pt-BR")
+          }
+        }
+      })
+
+      return response
     } catch (error) {
       console.log(error)
       throw new AdapterRepoError("Erro ao carregar os registros de despesa da carteira")
     }
   }
 
-  async save({uuid , categoria, modalidade, valor, descricao, parcelado, numParcelas, competencia: { ano, mes }}: Despesa): Promise<void> {
+  async save({uuid , categoria, modalidade, valor, descricao, parcelado, numParcelas, competencia: { ano, mes }}: DespesaProps): Promise<void> {
     try {
       await this.pc.registro.update({
         data: {

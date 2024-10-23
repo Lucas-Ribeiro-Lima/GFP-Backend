@@ -1,0 +1,9 @@
+model Federado {
+  provider String 
+  subject String  @unique 
+  idConta Int @unique
+
+  @@id([provider, subject])
+  //ORM Relations
+  conta Conta  @relation(fields: [idConta], references: [id])
+}

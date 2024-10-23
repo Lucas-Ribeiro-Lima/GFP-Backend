@@ -6,10 +6,10 @@ model Registro {
   modalidade Modalidade @default(fixo)
   valor Float
   descricao String
-  fonte String?
+  fonte String @default("")
   frequencia Frequencia @default(mensal)
-  parcelado Boolean?
-  numParcelas Int?
+  parcelado Boolean @default(false)
+  numParcelas Int @default(1)
   competenciaMes Int
   competenciaAno Int
   dataInclusao DateTime @default(now())

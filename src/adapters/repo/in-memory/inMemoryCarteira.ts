@@ -1,19 +1,19 @@
-import { Carteira } from "@/entities/Carteira.ts";
-import { CarteiraRepo } from "@/adapters/repo/CarteiraRepo.ts";
+import { CarteiraProps } from "@/entities/Carteira.ts";
+import { CarteiraRepo } from "@/useCases/repo/CarteiraRepo.ts";
 import { AdapterRepoError } from "../../../errors/customErrors.ts";
 
 export class InMemoryCarteira implements CarteiraRepo {
-  public carteiraArray: Carteira[] = []
+  public carteiraArray: Array<CarteiraProps> = []
 
-  async create(cart: Carteira): Promise<void> {
+  async create(cart: CarteiraProps): Promise<void> {
     this.carteiraArray.push(cart)  
   }
 
-  async find(id_dono: number): Promise<Carteira | null> {
-    return this.carteiraArray.find((cart) => cart.idContaDono === id_dono) ?? null
+  async find(idContaDono: number): Promise<CarteiraProps | null> {
+    return this.carteiraArray.find((cart) => cart.idContaDono === idContaDono) ?? null
   }
 
-  async save(updatedCart: Carteira): Promise<void> {
+  async save(updatedCart: CarteiraProps): Promise<void> {
     const index = this.carteiraArray.findIndex((cart) => cart.idContaDono === updatedCart.idContaDono)
     if(index === -1) throw new AdapterRepoError("carteira not found")
     this.carteiraArray[index] = updatedCart

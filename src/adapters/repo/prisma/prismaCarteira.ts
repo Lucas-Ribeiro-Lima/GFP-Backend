@@ -1,14 +1,14 @@
-import { Carteira } from '../../../entities/Carteira.ts';
 import { PrismaClient } from '@prisma/client';
-import { CarteiraRepo } from '../CarteiraRepo.ts';
+import { CarteiraProps } from '../../../entities/Carteira.ts';
 import { AdapterRepoError } from '../../../errors/customErrors.ts';
-import { logWriter } from '../../../lib/utils.ts'
+import { logWriter } from '../../../lib/utils.ts';
+import { CarteiraRepo } from '../../../useCases/repo/CarteiraRepo.ts';
 
 
 export class PrismaCarteira implements CarteiraRepo {
   constructor(private pc = new PrismaClient({log: ['error'], errorFormat: 'minimal'})) {}
 
-  async create({idContaDono, nome, compartilhada, meta, saldo}: Carteira): Promise<void> {
+  async create({idContaDono, nome, compartilhada, meta, saldo}: CarteiraProps): Promise<void> {
     try {
       await this.pc.carteira.create({
         data: {
@@ -40,28 +40,14 @@ export class PrismaCarteira implements CarteiraRepo {
     }
   }
 
-  async find(id_dono: number): Promise<Carteira | null> {
+  async find(idContaDono: number): Promise<CarteiraProps | null> {
     try {
       const prismaResponse = await this.pc.carteira.findUnique({
         where: {
-          idContaDono: id_dono
+          idContaDono
         }
       })
-      if(!prismaResponse) return null
-
-      const { id, idContaDono, idGrupoEconomico, nome, saldo, compartilhada, meta} = prismaResponse
-
-      const carteira = new Carteira({
-        id,
-        idContaDono,
-        idGrupoEconomico,
-        nome,
-        saldo,
-        compartilhada,
-        meta
-      })
-
-      return carteira
+      return prismaResponse ?? null
     } catch (error) {
       if(error instanceof Error) logWriter(error)
       return null
@@ -70,7 +56,7 @@ export class PrismaCarteira implements CarteiraRepo {
     }
   }
 
-  async save({id, nome, saldo, meta, compartilhada}: Carteira): Promise<void> {
+  async save({id, nome, saldo, meta, compartilhada}: CarteiraProps): Promise<void> {
     try {
       await this.pc.carteira.update({
         data: {

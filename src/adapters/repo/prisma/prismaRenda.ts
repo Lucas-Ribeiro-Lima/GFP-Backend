@@ -1,17 +1,16 @@
-import { RendaRepo } from "../../../adapters/repo/RegistrosRepo.ts";
-import { Renda } from "../../../entities/Renda.ts";
 import { PrismaClient } from "@prisma/client";
-import { randomUUID } from "crypto";
+import { RendaProps } from "../../../entities/Renda.ts";
 import { AdapterRepoError } from "../../../errors/customErrors.ts";
+import { RendaRepo } from "../../../useCases/repo/RegistrosRepo.ts";
 
 export class PrismaRenda implements RendaRepo {
   constructor(private pc = new PrismaClient({log: ["error"], errorFormat: "pretty"})) {}
 
-  async create({idCarteira, descricao, categoria, valor, fonte, frequencia, competencia: { mes, ano }}: Renda): Promise<void> {
+  async create({uuid, idCarteira, descricao, categoria, valor, fonte, frequencia, competencia: { mes, ano }}: RendaProps): Promise<void> {
     try {
       await this.pc.registro.create({
         data: {
-          uuid: randomUUID(),
+          uuid,
           idCarteira,
           tipo: "renda",
           descricao,
@@ -46,41 +45,40 @@ export class PrismaRenda implements RendaRepo {
     }
   }
 
-  async load(idCarteira: number): Promise<Renda[]> {
+  async load(idCarteira: number): Promise<RendaProps[] | []> {
     try {
-      const response = await this.pc.registro.findMany({
+      const prismaResponse = await this.pc.registro.findMany({
         where: {
           idCarteira,
           tipo: "renda"
         },
       })
 
-      return response.map(({
-        uuid, 
-        idCarteira, 
-        modalidade,
-        valor,
-        fonte,
-        frequencia, 
-        descricao,
-        // categoria, 
-        competenciaMes, 
-        competenciaAno, 
-        dataInclusao}) => new Renda({
-          uuid,
-          idCarteira,
-          modalidade,
-          valor,
-          fonte: fonte ?? "",
-          frequencia,
-          descricao,
-          categoria: "outros",
+      const response = prismaResponse.map(despesa => {
+        if (despesa.categoria !== 'salario' && 
+          despesa.categoria !== 'investimento' && 
+          despesa.categoria !== 'bonus' && 
+          despesa.categoria !== 'outros') {
+        throw new Error("Categoria de despesa inválida");
+        }
+        return {
+          uuid: despesa.uuid,
+          idCarteira: idCarteira,
+          descricao: despesa.descricao,
+          valor: despesa.valor,
+          modalidade: despesa.modalidade,
+          fonte: despesa.fonte,
+          frequencia: despesa.frequencia,
+          categoria: despesa.categoria,
           competencia: {
-            mes: competenciaMes,
-            ano: competenciaAno,
-            dataInclusao: dataInclusao.toString()
+            mes: despesa.competenciaMes,
+            ano: despesa.competenciaAno,
+            dataInclusao: despesa.dataInclusao.toLocaleDateString("pt-BR")
           }
-        }))
+        }
+      })
+      
+      return response
     } catch (error) {
       console.log(error)
       throw new AdapterRepoError("Erro ao carregar registros de renda da carteira")
@@ -89,7 +87,7 @@ export class PrismaRenda implements RendaRepo {
     }
   }
 
-  async save({ uuid, modalidade, categoria, descricao, fonte, frequencia, valor, competencia: { ano, mes } }: Renda): Promise<void> {
+  async save({ uuid, modalidade, categoria, descricao, fonte, frequencia, valor, competencia: { ano, mes } }: RendaProps): Promise<void> {
     try {
       await this.pc.registro.update({
         data: {

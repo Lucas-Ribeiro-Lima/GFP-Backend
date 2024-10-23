@@ -2,14 +2,14 @@
 model Conta {
   id Int @id @default(autoincrement())
   email String @unique
-  cpf String @unique
+  cpf String @unique @default("")
   nome String
   tema Tema @default(Light)
   displayName String @default("")
   customWpp String @default("")
 
   // ORM Relations
-  federado Federados?
+  federado Federado?
   carteira Carteira?
 }
 

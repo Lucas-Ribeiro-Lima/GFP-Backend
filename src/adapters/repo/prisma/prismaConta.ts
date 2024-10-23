@@ -1,16 +1,15 @@
 import { PrismaClient } from "@prisma/client";
-import { Configs } from "../../../entities/Config.ts";
-import { Conta } from "../../../entities/Conta.ts";
-import { ContaRepo } from "../../../adapters/repo/ContaRepo.ts";
+import { ContaProps } from "../../../entities/Conta.ts";
 import { AdapterRepoError } from "../../../errors/customErrors.ts";
 import { logWriter } from "../../../lib/utils.ts";
+import { ContaRepo } from "../../../useCases/repo/ContaRepo.ts";
 
 export class PrismaConta implements ContaRepo {
   constructor(private pc = new PrismaClient({ log: ["error"], errorFormat: "pretty"})) {}
 
-  async create({ nome, email, cpf, configs: {tema, customWpp, displayName} }: Conta): Promise<void> {
+  async create({ nome, email, cpf, configs: {tema, customWpp, displayName} }: ContaProps): Promise<number> {
     try {
-      await this.pc.conta.create({
+      const response = await this.pc.conta.create({
         data: {
           nome,
           cpf,
@@ -20,6 +19,7 @@ export class PrismaConta implements ContaRepo {
           customWpp
         }
       });
+      return response.id
     } catch (error) {
       if(error instanceof Error) logWriter(error)
       throw new AdapterRepoError("Erro ao criar conta no banco de dados");
@@ -43,7 +43,27 @@ export class PrismaConta implements ContaRepo {
     }
   }
 
-  async find(email: string): Promise<Conta | null> {
+  async find(id: number): Promise<ContaProps | null> {
+    try {
+      const prismaResponse = await this.pc.conta.findUnique({
+        where: {
+          id
+        }
+      });
+      if(!prismaResponse) return null
+      const { nome, email, cpf, tema, customWpp, displayName} = prismaResponse
+      const configs = { tema, displayName, customWpp }
+      const conta = {id, nome, email, cpf, configs}
+      return conta
+    } catch (error) {
+      if(error instanceof Error) logWriter(error)
+      return null
+    } finally {
+      await this.pc.$disconnect();
+    }
+  }
+
+  async findEmail(email: string): Promise<ContaProps | null> {
     try {
       const prismaResponse = await this.pc.conta.findUnique({
         where: {
@@ -53,14 +73,8 @@ export class PrismaConta implements ContaRepo {
       if(!prismaResponse)  return null
 
       const { id, nome, cpf, tema, displayName, customWpp } = prismaResponse
-      const configs = new Configs({ tema, displayName, customWpp });
-      const conta = new Conta({
-        id,
-        nome,
-        email,
-        cpf,
-        configs
-      });
+      const configs = { tema, displayName, customWpp }
+      const conta = {id, nome, email, cpf, configs}
       return conta;
     } catch (error) {
       if(error instanceof Error) logWriter(error)
@@ -70,18 +84,19 @@ export class PrismaConta implements ContaRepo {
     }
   }
 
-  async save({ nome, email, cpf, configs: { tema, displayName, customWpp } }: Conta): Promise<void> {
+  async save({ id, nome, email, cpf, configs: { tema, displayName, customWpp } }: ContaProps): Promise<void> {
     try {
       await this.pc.conta.update({
         data: {
           nome,
+          email,
           cpf,
           tema,
           displayName,
           customWpp
         },
         where: {
-          email
+          id
         }
       });
     } catch (error) {
