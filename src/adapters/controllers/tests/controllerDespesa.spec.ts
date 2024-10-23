@@ -1,6 +1,6 @@
 import { GerenciarDespesa } from '../../../useCases/gerenciarDespesa.ts'
 import { InMemoryDespesas } from '../../repo/in-memory/inMemoryRegistros.ts'
-import { ControllerDespesa } from '../controllerDespesa.ts'
+import { ControllerDespesa } from '../http/controllerDespesa.ts'
 import { describe, expect, it, vi } from 'vitest'
 import { Request, Response } from 'express'
 import { randomUUID } from 'crypto'
@@ -39,7 +39,7 @@ describe("Testes para o controller Http de despesas", () => {
       competencia: {
         mes: 10,
         ano: 2024,
-        dataInclusao: Date.now().toString()
+        dataInclusao: new Date().toLocaleDateString("pt-BR")
       },
     })
 

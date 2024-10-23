@@ -2,7 +2,7 @@ import { describe, it, vi, expect } from 'vitest'
 import { Request, Response } from 'express'
 import { InMemoryRendas } from '../../repo/in-memory/inMemoryRegistros.ts'
 import { GerenciarRenda } from '../../../useCases/gerenciarRenda.ts'
-import { ControllerRenda } from '../controllerRenda.ts'
+import { ControllerRenda } from '../http/controllerRenda.ts'
 import { Renda } from '../../../entities/Renda.ts'
 import { randomUUID } from 'crypto'
 

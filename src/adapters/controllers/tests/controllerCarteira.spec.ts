@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from 'vitest'
 import { Carteira } from '../../../entities/Carteira.ts'
 import { GerenciarCarteira } from '../../../useCases/gerenciarCarteira.ts'
 import { InMemoryCarteira } from '../../repo/in-memory/inMemoryCarteira.ts'
-import { ControllerCarteira } from '../controllerCarteira.ts'
+import { ControllerCarteira } from '../http/controllerCarteira.ts'
 
 describe("Testes para o controller de carteira", () => {
   const repositorio = new InMemoryCarteira()

@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import { describe, expect, it, vi } from 'vitest'
 import { GerenciarConta } from '../../../useCases/gerenciarConta.ts'
 import { InMemoryContas } from '../../repo/in-memory/inMemoryContas.ts'
-import { ControllerConta } from '../controllerConta.ts'
+import { ControllerConta } from '../http/controllerConta.ts'
 
 
 describe("Testes para o controller Http de conta", () => {
