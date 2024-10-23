@@ -1,26 +1,28 @@
-import { RendaRepo } from "../adapters/repo/RegistrosRepo.ts";
 import { Renda, RendaProps } from "../entities/Renda.ts";
-export interface GerenciarRendaI {
-  cadastrar(renda: Renda): Promise<void>
+import { RendaRepo } from "./repo/RegistrosRepo.ts";
+export interface GerenciarRendaProps {
+  cadastrar(renda: RendaProps): Promise<void>
   buscar(carteiraId: number): Promise<Renda[] | []>
-  atualizar(renda: Renda): Promise<void>
+  atualizar(renda: RendaProps): Promise<void>
   excluir(uuid: string): Promise<void>
 }
-export class GerenciarRenda implements GerenciarRendaI {
+export class GerenciarRenda implements GerenciarRendaProps {
   constructor(private rendaRepo: RendaRepo) {}
 
   async cadastrar(rend: RendaProps) {
     const renda = new Renda(rend)
-    await this.rendaRepo.create(renda)
+    await this.rendaRepo.create(renda.allProps)
   }
 
   async buscar(carteira_id: number): Promise<Renda[] | []> {
-    return await this.rendaRepo.load(carteira_id)
+    const repoResponse = await this.rendaRepo.load(carteira_id)
+    const rendas = repoResponse.map(renda => new Renda(renda))
+    return rendas ?? []
   }
 
   async atualizar(rend: RendaProps) {
     const renda = new Renda(rend)
-    await this.rendaRepo.save(renda)
+    await this.rendaRepo.save(renda.allProps)
   }
 
   async excluir(uuid: string) {

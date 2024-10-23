@@ -7,49 +7,57 @@ describe("Testes do caso de uso [UC012] Cadastro de conta", () => {
   const repository = new InMemoryContas()
   const gerenciarConta = new GerenciarConta(repository)
 
-  it("deve criar uma nova conta", () => {
+  it("deve criar uma nova conta", async () => {
     const  nome = "John Doe"
     const  email = "johndoe@gmail.com"
-    const cpf = '12345678909'
-
     
-    gerenciarConta.cadastrar(nome, email, cpf)
+    await gerenciarConta.cadastrar(nome, email)
  
-    expect(gerenciarConta.buscar(email)).not.toBe(null)
+    const conta = await gerenciarConta.buscar(0)
+       
+    if(!conta) expect.fail("Erro ao criar conta")
+    expect(conta?.nome).toBe("John Doe")
+    expect(conta.email).toBe("johndoe@gmail.com")
   }) 
 
   it("não deve criar uma conta com e-mail já existente", () => {
     const  nome = "John Doe"
     const  email = "johndoe@gmail.com"
-    const cpf = '12345678909'
 
-    expect(gerenciarConta.cadastrar(nome, email, cpf)).rejects.toThrow("Conta já cadastrada com esse e-mail")
+    expect(gerenciarConta.cadastrar(nome, email)).rejects.toThrow("Conta já cadastrada com esse e-mail")
   })
 
   it("deve retornar null ao não encontrar uma conta com o e-mail fornecido", () => {
     const email = "johnnull@gmail.com"
 
-    expect(gerenciarConta.buscar(email)).resolves.toBe(null)
+    expect(gerenciarConta.buscarEmail(email)).resolves.toBe(null)
+  })
+
+  it("deve retornar null ao não encontrar uma conta com o id fornecido", async () => {
+    const id = 1
+
+    const conta = await gerenciarConta.buscar(id)
+    expect(conta).toBe(null)
   })
 
 
-  it("deve atualizar a conta do e-mail fornecido", async () => {
-    const email = "johndoe@gmail.com"
-    const conta = await gerenciarConta.buscar(email)
+  it("deve atualizar a conta corretamente", async () => {
+    const id = 0
+    const conta = await gerenciarConta.buscar(id)
 
     if(!conta) expect.fail("Conta não encontrada")
     
     const contaAlterada = {
       id: conta.id,
       nome: "Doe John",
-      email,
+      email: conta.email,
       cpf: "12345678909",
       configs: conta.configs
     }
 
-    gerenciarConta.atualizar(contaAlterada)
+    await gerenciarConta.atualizar(contaAlterada)
 
-    const contaTeste = await gerenciarConta.buscar(email)
+    const contaTeste = await gerenciarConta.buscar(0)
 
     expect(contaTeste?.nome).toBe("Doe John")
     expect(contaTeste?.cpf).toBe("12345678909")
@@ -60,20 +68,19 @@ describe("Testes do caso de uso [UC012] Cadastro de conta", () => {
     for(let i = 1; i<11; i++) {
       const  nome = `John Doe ${i}`
       const  email = `johndoe${i}@gmail.com`
-      const cpf = `12345678909`
-      gerenciarConta.cadastrar(nome, email, cpf)
-      const conta = await gerenciarConta.buscar(email)
+      await gerenciarConta.cadastrar(nome, email)
+      const conta = await gerenciarConta.buscar(i)
       if(conta) array.push(conta)
     }
 
-    array.forEach(async (conta) => {
-      expect(gerenciarConta.buscar(conta.email)).resolves.toBe(conta)
+    array.forEach((conta) => {
+      expect(gerenciarConta.buscar(conta.id)).resolves.toEqual(conta)
     })
   })
 
   it("deve atualizar as configurações completamente corretamente", async () => {
-    const email = "johndoe@gmail.com"
-    const conta = await gerenciarConta.buscar(email)
+    const id = 0
+    const conta = await gerenciarConta.buscar(id)
     const newConfigs = new Configs({tema: 'Light', displayName: "", customWpp: ""})
 
     if(!conta) expect.fail("Conta não encontrada")
@@ -85,19 +92,21 @@ describe("Testes do caso de uso [UC012] Cadastro de conta", () => {
     conta.configs = newConfigs
     await gerenciarConta.atualizar(conta)
 
-    expect(gerenciarConta.buscar(email).then((conta) => conta?.configs)).resolves.toBe(newConfigs)
+    const contaAtt = await gerenciarConta.buscar(id)
+    if(!contaAtt) expect.fail("Erro ao buscar conta atualizada")
+    expect(contaAtt.configs).toBe(newConfigs)
   })
 
   it("deve atualizar apenas as configurações informadas", async () => {
-    const email = "johndoe@gmail.com"
-    const conta = await gerenciarConta.buscar(email)
+    const id = 0
+    const conta = await gerenciarConta.buscar(id)
 
     if(!conta) expect.fail("Conta não foi encontrada durante o teste")
     conta.configs.displayName = "JohnDo"
     
     await gerenciarConta.atualizar(conta)
 
-    const contaAtt = await gerenciarConta.buscar(email)
+    const contaAtt = await gerenciarConta.buscar(id)
 
     if(!contaAtt) expect.fail("Conta não foi encontrada durante o teste")
 

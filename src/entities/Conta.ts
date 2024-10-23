@@ -1,28 +1,29 @@
 import { EntitieInstanceError } from "../errors/customErrors.ts"
-import { cpfValido, emailValido } from "../lib/utils.ts"
-import { Configs } from "./Config.ts"
+import { Configs, ConfigsProps } from "./Config.ts"
 
 export interface ContaProps {
-  id: number | null,
+  id?: number,
   email: string,
   nome: string,
-  cpf: string,
-  configs: Configs
+  cpf?: string,
+  configs: ConfigsProps
 }
 
 export class Conta {
   private props: ContaProps
     constructor(props: ContaProps) {
-    if(!emailValido(props.email)) throw new EntitieInstanceError("Email inválido")
-    if(!cpfValido(props.cpf)) throw new EntitieInstanceError("CPF inválido")
+    if(!this.emailValido(props.email)) throw new EntitieInstanceError("Email inválido")
     this.props = props
-    this.props.cpf = props.cpf.replace(/\D/g, "")
+  }
+
+  public get allProps() {
+    return this.props
   }
   
   public get id() {
-    return this.props.id
+    return this.props.id ?? 0
   }
-  public set id(id: number | null){
+  public set id(id: number){
     this.props.id = id
   }
 
@@ -30,7 +31,7 @@ export class Conta {
     return this.props.email
   }
   public set email(email: string) {
-    if(!emailValido(email)) throw new EntitieInstanceError("Email inválido")
+    if(!this.emailValido(email)) throw new EntitieInstanceError("Email inválido")
     this.props.email = email
   }
 
@@ -42,10 +43,10 @@ export class Conta {
   }
 
   public get cpf() {
-    return this.props.cpf
+    return this.props.cpf ?? ""
   }
   public set cpf(cpf: string) {
-    if(!cpfValido(cpf)) throw new EntitieInstanceError("CPF Inválido")
+    if(!this.cpfValido(cpf)) throw new EntitieInstanceError("CPF Inválido")
     this.props.cpf = cpf.replace(/\D/g, "")
   }
 
@@ -54,5 +55,42 @@ export class Conta {
   }
   public set configs(configs: Configs) {
     this.props.configs = configs
+  }
+
+  cpfValido (cpf: string) {
+    const cpfFormatted = cpf.replace(/\D/g, "")
+  
+    if(cpfFormatted.length !== 11) return false
+    if(/^(\d)\1*$/.test(cpfFormatted)) return false
+  
+    let soma = 0
+    for(let i = 0; i < 9; i++) {
+      const digit = parseInt(cpfFormatted[i])
+      soma += digit * (10 - i)
+    }
+  
+    let resto = soma % 11
+  
+    const primeiroDigito = resto < 2 ? 0 : 11 - resto
+  
+    if(parseInt(cpfFormatted[9]) !== primeiroDigito) return false
+  
+    soma = 0
+    for(let i = 0; i < 10; i++) {
+      const digit = parseInt(cpfFormatted[i])
+      soma += digit * (11 - i)
+    }
+  
+    resto = soma % 11
+  
+    const segundoDigito = resto < 2 ? 0 : 11 - resto
+  
+    if(parseInt(cpfFormatted[10]) !== segundoDigito) return false
+    else return true
+  }
+
+  emailValido (email: string) {
+    if((/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g).test(email)) return true
+    else return false
   }
 }

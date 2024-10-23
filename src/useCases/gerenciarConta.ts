@@ -1,35 +1,44 @@
-import { ContaRepo } from "../adapters/repo/ContaRepo.ts";
 import { Configs } from "../entities/Config.ts";
 import { Conta, ContaProps } from "../entities/Conta.ts";
 import { UseCaseError } from "../errors/customErrors.ts";
+import { ContaRepo } from "./repo/ContaRepo.ts";
 
-export interface GerenciarContaI {
-  cadastrar(nome: string, email:string, cpf:string): Promise<void>
-  buscar(email: string): Promise<Conta | null>
-  atualizar(conta: Conta): Promise<void>
+export interface GerenciarContaProps {
+  cadastrar(nome: string, email:string): Promise<number>
+  buscar(id: number): Promise<Conta | null>
+  buscarEmail(email: string): Promise<ContaProps | null>
+  atualizar(conta: ContaProps): Promise<void>
   excluir(email: string): Promise<void>
 }
 
-export class GerenciarConta implements GerenciarContaI{
+export class GerenciarConta implements GerenciarContaProps{
   constructor(private contaRepo: ContaRepo) {}
 
-  async cadastrar(nome: string, email:string, cpf:string): Promise<void> {
-    let conta = await this.contaRepo.find(email)
-    if(conta) throw new UseCaseError("Conta já cadastrada com esse e-mail")
+  async cadastrar(nome: string, email:string): Promise<number> {
+    const contaExistente = await this.contaRepo.findEmail(email)
+    if(contaExistente) throw new UseCaseError("Conta já cadastrada com esse e-mail")
 
     const configs = new Configs({tema: "Light", displayName: "", customWpp: ""})
-    conta = new Conta({id: null, nome, email, cpf, configs}) 
+    const conta = new Conta({nome, email, configs}) 
 
-    await this.contaRepo.create(conta)
+    return await this.contaRepo.create(conta.allProps)
   }
 
-  async buscar(email: string): Promise<Conta | null> {
-    return await this.contaRepo.find(email) ?? null
+  async buscar(id: number): Promise<Conta | null> {
+    const repoReponse = await this.contaRepo.find(id)
+    return (repoReponse) ? new Conta(repoReponse) : null
+  }
+
+  async buscarEmail(email: string): Promise<Conta | null> {
+    const repoReponse = await this.contaRepo.findEmail(email)
+    return (repoReponse) ? new Conta(repoReponse) : null
   }
 
   async atualizar(acc: ContaProps): Promise<void> {
+    const contaExistente = await this.contaRepo.findEmail(acc.email)
+    if(!contaExistente) throw new UseCaseError("Conta informada não existe")
     const conta = new Conta(acc)
-    await this.contaRepo.save(conta)
+    await this.contaRepo.save(conta.allProps)
   }
 
   async excluir(email: string): Promise<void> {

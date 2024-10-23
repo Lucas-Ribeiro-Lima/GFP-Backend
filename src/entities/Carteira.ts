@@ -17,6 +17,10 @@ export class Carteira {
     this.props = { id, idContaDono, nome, saldo, meta, compartilhada, idGrupoEconomico }
   }
 
+  get allProps() {
+    return this.props
+  }
+
   get id() {
     return this.props.id
   }

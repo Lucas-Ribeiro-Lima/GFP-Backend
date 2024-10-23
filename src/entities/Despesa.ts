@@ -1,10 +1,10 @@
 import { Registro, RegistroProps } from "./Registro.ts";
 
-type enumCategoria = 'alimentacao' | 'moradia' | 'lazer' | 'outros'
+export type enumCategoria = 'alimentacao' | 'moradia' | 'lazer' | 'outros'
 
 export interface DespesaProps extends RegistroProps {
-  parcelado: boolean,
-  numParcelas: number,
+  parcelado?: boolean,
+  numParcelas?: number,
   categoria: enumCategoria
 }
 
@@ -14,16 +14,19 @@ export class Despesa extends Registro {
     super(props)
     this.props = props
   }
+  public get allProps() {
+    return this.props
+  }
 
   public get parcelado() {
-    return this.props.parcelado
+    return this.props.parcelado ?? false
   }
   public set parcelado(bool: boolean) {
     this.props.parcelado = bool
   }
 
   public get numParcelas() {
-    return this.props.numParcelas
+    return this.props.numParcelas ?? 1
   }
   public set numParcelas(num: number) {
     this.props.numParcelas = num

@@ -1,5 +1,3 @@
-import { randomUUID } from "crypto"
-
 type Competencia = {
   mes: number,
   ano: number,
@@ -21,9 +19,12 @@ export interface RegistroProps {
 export abstract class Registro {
   protected props: RegistroProps
   
-  constructor({descricao, idCarteira, valor, competencia, modalidade}: RegistroProps) {
-    const newUuid = randomUUID()
-    this.props = {uuid: newUuid, idCarteira, descricao, valor, competencia, modalidade}
+  constructor({uuid, descricao, idCarteira, valor, competencia, modalidade}: RegistroProps) {
+    this.props = {uuid, idCarteira, descricao, valor, competencia, modalidade}
+  }
+
+  public get allProps() {
+    return this.props
   }
 
   public get uuid() {

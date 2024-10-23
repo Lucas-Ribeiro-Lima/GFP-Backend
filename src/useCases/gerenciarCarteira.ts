@@ -1,15 +1,15 @@
-import { CarteiraRepo } from "../adapters/repo/CarteiraRepo.ts";
 import { Carteira, CarteiraProps } from "../entities/Carteira.ts";
 import { UseCaseError } from "../errors/customErrors.ts";
+import { CarteiraRepo } from "./repo/CarteiraRepo.ts";
 
-export interface GerenciarCarteiraI {
-  cadastrar(carteira: Carteira): Promise<void>
+export interface GerenciarCarteiraProps {
+  cadastrar(carteira: CarteiraProps): Promise<void>
   buscar(idDono: number): Promise<Carteira | null>
-  atualizar(carteira: Carteira): Promise<void>
+  atualizar(carteira: CarteiraProps): Promise<void>
   excluir(id: number): Promise<void>
 }
 
-export class GerenciarCarteira implements GerenciarCarteiraI {
+export class GerenciarCarteira implements GerenciarCarteiraProps {
   constructor(private carteiraRepo: CarteiraRepo) {}
   
   async cadastrar(cart: CarteiraProps): Promise<void> {
@@ -18,18 +18,19 @@ export class GerenciarCarteira implements GerenciarCarteiraI {
     
     const carteira = new Carteira(cart)
 
-    await this.carteiraRepo.create(carteira)
+    await this.carteiraRepo.create(carteira.allProps)
   }
 
   async buscar(idDono: number): Promise<Carteira | null> {
-    return await this.carteiraRepo.find(idDono) ?? null
+    const repoResponse = await this.carteiraRepo.find(idDono)
+    return (repoResponse)  ? new Carteira(repoResponse) : null
   }
 
   async atualizar(cart: CarteiraProps): Promise<void> {
     const carteiraExistente = await this.carteiraRepo.find(cart.idContaDono)
     if(!carteiraExistente) throw new UseCaseError("A carteira informada não foi encontrada")
     const carteira = new Carteira(cart)
-    await this.carteiraRepo.save(carteira)
+    await this.carteiraRepo.save(carteira.allProps)
   }
 
   async excluir(id: number): Promise<void> {
