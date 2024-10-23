@@ -32,3 +32,10 @@ export class AdapterRepoError extends Error {
     this.name = "AdapterRepoError"
   }
 }
+
+export class AuthenticationError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = "AuthenticationError"
+  }
+}

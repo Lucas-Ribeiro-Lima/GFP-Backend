@@ -1,4 +1,4 @@
-import { AdapterRepoError, EntitieInstanceError, InvalidInputError, NotFoundError, UseCaseError } from "./customErrors.ts"
+import { AdapterRepoError, AuthenticationError, EntitieInstanceError, InvalidInputError, NotFoundError, UseCaseError } from "./customErrors.ts"
 
 export type ErrorResponse = {
   code: number,
@@ -30,6 +30,11 @@ export function errorHandler(err: Error, extendedHandler?: (err: Error) => Error
   else if (err instanceof UseCaseError) return {
     code: 500,
     type: "Casos de uso",
+    message: err.message
+  }
+  else if (err instanceof AuthenticationError) return {
+    code: 501,
+    type: "Autenticação",
     message: err.message
   }
   else {
