@@ -10,5 +10,6 @@ await redisClient.connect()
 
 export const redisStore = new RedisStore({
   client: redisClient,
-  prefix: "gfp"
+  prefix: "gfp",
+  ttl: 1000 * 60 * 60 // 1 hora
 })
