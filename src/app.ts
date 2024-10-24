@@ -1,5 +1,7 @@
 import e from 'express'
 import session from 'express-session'
+import cors from 'cors'
+import { passport } from './adapters/passport/passport.ts'
 import { redisStore } from './configs/redis.ts'
 import { envs } from './configs/env.ts'
 import { errorHandlerHttp } from './lib/middlewares/errorHandlerHttp.ts'
@@ -16,6 +18,9 @@ export const app = e()
 app.disable('x-powered-by')
 
 //Configurações do Express
+app.use(cors({
+  origin: envs.CORS_ALLOWED_ORIGIN
+}))
 app.use(e.json())
 app.use(e.urlencoded({extended: true}))
 app.use(session({
@@ -27,6 +32,9 @@ app.use(session({
     secure: false
   }
 }))
+
+app.use(passport.initialize())
+app.use(passport.session())
 
 //Rota padrão
 app.get("/", def)

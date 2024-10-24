@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { passport } from '../adapters/passport/passport.ts'
+import { passport } from '../adapters/passport/passport.ts';
 
 export const routeAuth = Router()
 
@@ -9,12 +9,12 @@ routeAuth.get("/", (req, res) => {
   })
 })
 
-
-
 routeAuth.get("/google", passport.authenticate("google", { scope: ["profile", "email"]}))
 
-routeAuth.get("/google/callback", passport.authenticate("google", {failureRedirect: "/login" }),
+routeAuth.get("/google/callback", 
+  passport.authenticate("google", {failureRedirect: "/login" }),
   (req, res) => {
-    res.status(200).redirect("/")
+    res.status(200)
+    res.redirect("/dashboard")
   }
 )
