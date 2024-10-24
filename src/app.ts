@@ -1,6 +1,7 @@
 import e from 'express'
 import session from 'express-session'
 import cors from 'cors'
+import helmet from 'helmet'
 import { passport } from './adapters/passport/passport.ts'
 import { redisStore } from './configs/redis.ts'
 import { envs } from './configs/env.ts'
@@ -15,12 +16,12 @@ import { routeSwagger } from './routes/routeSwagger.ts'
 import { routeAuth } from './routes/routeAuth.ts'
 
 export const app = e()
-app.disable('x-powered-by')
 
 //Configurações do Express
 app.use(cors({
   origin: envs.CORS_ALLOWED_ORIGIN
 }))
+app.use(helmet())
 app.use(e.json())
 app.use(e.urlencoded({extended: true}))
 app.use(session({
