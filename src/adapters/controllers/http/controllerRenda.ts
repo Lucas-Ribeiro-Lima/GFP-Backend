@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { GerenciarRendaProps } from '../../../useCases/gerenciarRenda.ts'
 import { ControllerHttpProps } from './controllerHttpProps.ts'
+import { randomUUID } from 'crypto'
 
 export class ControllerRenda implements ControllerHttpProps {
   constructor(private gerenciarRenda: GerenciarRendaProps) {}
@@ -11,6 +12,7 @@ export class ControllerRenda implements ControllerHttpProps {
   }
 
   public async handleHttpPost (req: Request, res: Response): Promise<Response> {
+    req.body.despesa.uuid = randomUUID()
     await this.gerenciarRenda.cadastrar(req.body.renda)
     return res.status(201).json({message: "Renda cadastrada com sucesso"})
   }
