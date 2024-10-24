@@ -14,7 +14,6 @@ routeAuth.get("/google", passport.authenticate("google", { scope: ["profile", "e
 routeAuth.get("/google/callback", 
   passport.authenticate("google", {failureRedirect: "/auth/google" }),
   (req, res) => {
-    res.status(200)
-    res.redirect("/")
+    res.status(200).redirect("/")
   }
 )
