@@ -62,7 +62,6 @@ routeConta.post("/buscar", isAuthenticated, requestBodyValido, requiredPropEmail
  *            conta:
  *               nome: johndoe
  *               email: johndoe@doe.uk
- *               cpf: 123456789-09
  *    responses:
  *      201:
  *        description: Conta criada com sucesso
