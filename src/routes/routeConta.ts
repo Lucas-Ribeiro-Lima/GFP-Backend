@@ -62,7 +62,6 @@ routeConta.post("/buscar", isAuthenticated, requestBodyValido, requiredPropEmail
  *            conta:
  *               nome: johndoe
  *               email: johndoe@doe.uk
- *               cpf: 123456789-09
  *    responses:
  *      201:
  *        description: Conta criada com sucesso
@@ -94,14 +93,15 @@ routeConta.post("/criar", isAuthenticated, requestBodyValido, requiredPropCriar,
  *      content:
  *         application/json:
  *          example:
- *            id: 0
- *            nome: Doe John
- *            email: johndoe@doe.uk
- *            cpf: 12345678909
- *            configs:
- *              tema: dark            
- *              displayName: Does
- *              customWpp: myCustomWpp
+ *            conta: 
+ *              id: 1
+ *              nome: Doe John
+ *              email: johndoe@doe.uk
+ *              cpf: "12345678909"
+ *              configs:
+ *                tema: Dark            
+ *                displayName: Does
+ *                customWpp: myCustomWpp
  *    responses:
  *      200: 
  *        description: Conta atualizada com sucesso
