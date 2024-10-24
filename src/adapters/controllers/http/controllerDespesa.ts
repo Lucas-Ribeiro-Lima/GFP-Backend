@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { GerenciarDespesaProps } from '../../../useCases/gerenciarDespesa.ts'
 import { ControllerHttpProps } from './controllerHttpProps.ts'
+import { randomUUID } from 'crypto'
 
 export class ControllerDespesa implements ControllerHttpProps {
   constructor(private gerenciarDespesa: GerenciarDespesaProps) {}
@@ -11,6 +12,7 @@ export class ControllerDespesa implements ControllerHttpProps {
   }
 
   async handleHttpPost(req: Request, res: Response): Promise<Response> {
+    req.body.despesa.uuid = randomUUID()
     await this.gerenciarDespesa.cadastrar(req.body.despesa)
     return res.status(201).json({message: "Despesa criada com sucesso"})
   }
