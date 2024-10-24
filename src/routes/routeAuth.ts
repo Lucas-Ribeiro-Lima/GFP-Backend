@@ -12,9 +12,9 @@ routeAuth.get("/", (req, res) => {
 routeAuth.get("/google", passport.authenticate("google", { scope: ["profile", "email"]}))
 
 routeAuth.get("/google/callback", 
-  passport.authenticate("google", {failureRedirect: "/login" }),
+  passport.authenticate("google", {failureRedirect: "/auth/google" }),
   (req, res) => {
     res.status(200)
-    res.redirect("/dashboard")
+    res.redirect("/")
   }
 )
