@@ -5,7 +5,13 @@ export type ErrorResponse = {
   type: string,
   message: string
 }
-
+/**
+ * @param err Instância da super classe Error ou classes especilizadas
+ * @param extendedHandler Função de extensão do comportamento da função básica. A mesma deve aceitar
+ * um parametro de error e retonar um objeto do tipo ErrorResponse ou null
+ * @returns Retorna uma objeto do tipo ErrorResponse para ser tratado por um adaptador de interface
+ * implementado.
+ */
 export function errorHandler(err: Error, extendedHandler?: (err: Error) => ErrorResponse | void): ErrorResponse {
   if (err instanceof AdapterRepoError) return {
     code: 500,

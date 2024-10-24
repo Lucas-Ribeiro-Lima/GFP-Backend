@@ -1,6 +1,11 @@
 import { appendFile } from 'fs/promises'
 import path from 'path'
 
+/**
+ * 
+ * @param cpf Cpf em formato de string com 11 caracteres.
+ * @returns Booleano indicando se o CPF é valido.
+ */
 export function cpfValido (cpf: string) {
   const cpfFormatted = cpf.replace(/\D/g, "")
 
@@ -33,6 +38,12 @@ export function cpfValido (cpf: string) {
   else return true
 }
 
+/**
+ * 
+ * @param email Email
+ * @returns Retorna se o e-mail é valido. Contendo uma seção anterior ao \@ e
+ * uma seção posterior seguida de um dominio.
+ */
 export function emailValido (email: string) {
   if((/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g).test(email)) return true
   else return false
