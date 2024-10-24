@@ -1,7 +1,8 @@
-import { Router  } from "express";
-import { controllerDespesa } from "../configs/controllers.ts"
-import { requestBodyValido, requiredBodyProps } from "../lib/middlewares/validacoesHttp.ts"
+import { Router } from "express";
 import { despesaSchema, idCarteiraSchema, uuidSchema } from "../adapters/zod/schemas/registros.ts";
+import { controllerDespesa } from "../configs/controllers.ts";
+import { requestBodyValido, requiredBodyProps } from "../lib/middlewares/validacoesHttp.ts";
+import { isAuthenticated } from "../lib/middlewares/authentication.ts";
 
 export const routeDespesa = Router()
 
@@ -37,7 +38,7 @@ routeDespesa.get("/", (req, res) => {
  *      500: 
  *        description: Erro interno
  */
-routeDespesa.post("/buscar", requestBodyValido, requiredIdCarteira, async (req, res, next) => {
+routeDespesa.post("/buscar", isAuthenticated, requestBodyValido, requiredIdCarteira, async (req, res, next) => {
   try {
     await controllerDespesa.handleHttpGet(req, res)
   } catch (error) {
@@ -79,7 +80,7 @@ routeDespesa.post("/buscar", requestBodyValido, requiredIdCarteira, async (req, 
  *      500: 
  *        description: Erro interno
  */
-routeDespesa.post("/criar", requestBodyValido, requiredDespesa, async(req, res, next) => {
+routeDespesa.post("/criar", isAuthenticated, requestBodyValido, requiredDespesa, async(req, res, next) => {
   try {
     await controllerDespesa.handleHttpPost(req, res)
   } catch (error) {
@@ -123,7 +124,7 @@ routeDespesa.post("/criar", requestBodyValido, requiredDespesa, async(req, res, 
  *      500: 
  *        description: Erro interno
  */
-routeDespesa.patch("/atualizar", requestBodyValido, requiredDespesa, async (req, res, next) => {
+routeDespesa.patch("/atualizar", isAuthenticated, requestBodyValido, requiredDespesa, async (req, res, next) => {
   try {
     await controllerDespesa.handleHttpPatch(req, res)
   } catch (error) {
@@ -153,7 +154,7 @@ routeDespesa.patch("/atualizar", requestBodyValido, requiredDespesa, async (req,
  *      500: 
  *        description: Erro interno
  */
-routeDespesa.delete("/excluir", requestBodyValido, requiredUuid, async (req, res, next) => {
+routeDespesa.delete("/excluir", isAuthenticated, requestBodyValido, requiredUuid, async (req, res, next) => {
   try {
     await controllerDespesa.handleHttpDelete(req, res)
   } catch (error) {

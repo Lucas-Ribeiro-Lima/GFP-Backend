@@ -1,7 +1,8 @@
-import { Router  } from "express";
-import { controllerRenda } from "../configs/controllers.ts"
-import { requestBodyValido, requiredBodyProps } from "../lib/middlewares/validacoesHttp.ts";
+import { Router } from "express";
 import { idCarteiraSchema, rendaSchema, uuidSchema } from "../adapters/zod/schemas/registros.ts";
+import { controllerRenda } from "../configs/controllers.ts";
+import { requestBodyValido, requiredBodyProps } from "../lib/middlewares/validacoesHttp.ts";
+import { isAuthenticated } from "../lib/middlewares/authentication.ts";
 
 export const routeRenda = Router()
 
@@ -37,7 +38,7 @@ routeRenda.get("/", (req, res) => {
  *      500: 
  *        description: Erro interno
  */
-routeRenda.post("/buscar", requestBodyValido, requiredIdCarteira, async (req, res, next) => {
+routeRenda.post("/buscar", isAuthenticated, requestBodyValido, requiredIdCarteira, async (req, res, next) => {
   try {
     await controllerRenda.handleHttpGet(req, res)
   } catch (error) {
@@ -80,7 +81,7 @@ routeRenda.post("/buscar", requestBodyValido, requiredIdCarteira, async (req, re
  *      500: 
  *        description: Erro interno
  */
-routeRenda.post("/criar", requestBodyValido, requiredRenda, async(req, res, next) => {
+routeRenda.post("/criar", isAuthenticated, requestBodyValido, requiredRenda, async(req, res, next) => {
   try {
     await controllerRenda.handleHttpPost(req, res)
   } catch (error) {
@@ -124,7 +125,7 @@ routeRenda.post("/criar", requestBodyValido, requiredRenda, async(req, res, next
  *      500: 
  *        description: Erro interno
  */
-routeRenda.patch("/atualizar", requestBodyValido, requiredRenda, async (req, res, next) => {
+routeRenda.patch("/atualizar", isAuthenticated, requestBodyValido, requiredRenda, async (req, res, next) => {
   try {
     await controllerRenda.handleHttpPatch(req, res)
   } catch (error) {
@@ -155,7 +156,7 @@ routeRenda.patch("/atualizar", requestBodyValido, requiredRenda, async (req, res
  *      500: 
  *        description: Erro interno
  */
-routeRenda.delete("/excluir", requestBodyValido, requiredUuid, async (req, res, next) => {
+routeRenda.delete("/excluir", isAuthenticated, requestBodyValido, requiredUuid, async (req, res, next) => {
   try {
     await controllerRenda.handleHttpDelete(req, res)
   } catch (error) {

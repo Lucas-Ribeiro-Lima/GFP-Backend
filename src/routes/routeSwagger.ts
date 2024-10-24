@@ -1,7 +1,7 @@
-import { Router, Response, Request, NextFunction } from "express";
-import { serve, setup } from 'swagger-ui-express'
-import swaggerJsDocs from 'swagger-jsdoc'
-import { envs } from "../configs/env.ts";
+import { isAuthenticated } from "../lib/middlewares/authentication.ts";
+import { Router } from "express";
+import swaggerJsDocs from 'swagger-jsdoc';
+import { serve, setup } from 'swagger-ui-express';
 
 export const routeSwagger = Router()
 
@@ -67,13 +67,5 @@ const optionsUi = {
 }
 
 routeSwagger.use('/', serve)
-routeSwagger.get('/', authorizateDocs, setup(openApiSpecification, optionsUi))
+routeSwagger.get('/',  isAuthenticated, setup(openApiSpecification, optionsUi))
 
-
-function authorizateDocs(req: Request, res: Response, next: NextFunction) {
-  if(req.hostname !== envs.EXPRESS_HOST) {
-    res.status(403).json({message: "Acesso proibido"})
-    return
-  }
-  next()
-}

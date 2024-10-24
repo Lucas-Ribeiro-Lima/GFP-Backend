@@ -2,6 +2,7 @@ import { Router } from "express";
 import { controllerCarteira } from '../configs/controllers.ts'
 import { requestBodyValido, requiredBodyProps } from "../lib/middlewares/validacoesHttp.ts";
 import { carteiraIdContaDonoSchema, carteiraIdSchema, carteiraSchema } from '../adapters/zod/schemas/carteira.ts'
+import { isAuthenticated } from "../lib/middlewares/authentication.ts";
 
 export const routeCarteira = Router()
 
@@ -36,7 +37,7 @@ routeCarteira.get("/", (req, res) => {
  *      500: 
  *        description: Erro interno
  */
-routeCarteira.post("/buscar", requestBodyValido, requiredPropIdContaDono, async (req, res, next) => {
+routeCarteira.post("/buscar", isAuthenticated, requestBodyValido, requiredPropIdContaDono, async (req, res, next) => {
   try {
     await controllerCarteira.handleHttpGet(req, res)
   } catch (error) {
@@ -75,7 +76,7 @@ routeCarteira.post("/buscar", requestBodyValido, requiredPropIdContaDono, async 
  *      500: 
  *        description: Erro interno
  */
-routeCarteira.post("/criar", requestBodyValido, requiredPropCarteira, async (req, res, next) => {
+routeCarteira.post("/criar", isAuthenticated, requestBodyValido, requiredPropCarteira, async (req, res, next) => {
   try {
     await controllerCarteira.handleHttpPost(req, res)
   } catch (error) {
@@ -114,7 +115,7 @@ routeCarteira.post("/criar", requestBodyValido, requiredPropCarteira, async (req
  *      500: 
  *        description: Erro interno
  */
-routeCarteira.patch("/atualizar", requestBodyValido, requiredPropCarteira,async (req, res, next) => {
+routeCarteira.patch("/atualizar", isAuthenticated, requestBodyValido, requiredPropCarteira,async (req, res, next) => {
   try {
     await controllerCarteira.handleHttpPatch(req, res)
   } catch (error) {
@@ -146,7 +147,7 @@ routeCarteira.patch("/atualizar", requestBodyValido, requiredPropCarteira,async 
  *      500: 
  *        description: Erro interno
  */
-routeCarteira.delete("/excluir", requestBodyValido, requiredPropId, async (req, res, next) => {
+routeCarteira.delete("/excluir", isAuthenticated, requestBodyValido, requiredPropId, async (req, res, next) => {
   try {
     await controllerCarteira.handleHttpDelete(req, res)
   } catch (error) {

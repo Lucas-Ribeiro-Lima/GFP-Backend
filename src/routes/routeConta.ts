@@ -1,7 +1,8 @@
 import { Router } from 'express'
+import { contaCriarSchema, contaEmailSchema, contaSchema } from '../adapters/zod/schemas/conta.ts'
 import { controllerConta } from '../configs/controllers.ts'
 import { requestBodyValido, requiredBodyProps } from '../lib/middlewares/validacoesHttp.ts'
-import { contaCriarSchema, contaEmailSchema, contaSchema } from '../adapters/zod/schemas/conta.ts'
+import { isAuthenticated } from '../lib/middlewares/authentication.ts'
 
 export const routeConta = Router()
 
@@ -35,7 +36,7 @@ routeConta.get("/", async (req, res) => {
  *      404:
  *         description: Returna null se não exister uma conta com o e-mail.
  */
-routeConta.post("/buscar", requestBodyValido, requiredPropEmail, async (req, res, next) => {
+routeConta.post("/buscar", isAuthenticated, requestBodyValido, requiredPropEmail, async (req, res, next) => {
   try {
     await controllerConta.handleHttpGet(req,res)
   } catch (error) {
@@ -70,7 +71,7 @@ routeConta.post("/buscar", requestBodyValido, requiredPropEmail, async (req, res
  *      500:
  *        description: Erro interno    
  */
-routeConta.post("/criar", requestBodyValido, requiredPropCriar, async (req, res, next) => {
+routeConta.post("/criar", isAuthenticated, requestBodyValido, requiredPropCriar, async (req, res, next) => {
   try {
     await controllerConta.handleHttpPost(req, res)
   } catch (error) {
@@ -107,7 +108,7 @@ routeConta.post("/criar", requestBodyValido, requiredPropCriar, async (req, res,
  *      500: 
  *        description: Erro ao atualizar uma conta
  */
-routeConta.patch("/atualizar", requestBodyValido, requiredPropConta, async (req, res, next) => {
+routeConta.patch("/atualizar", isAuthenticated, requestBodyValido, requiredPropConta, async (req, res, next) => {
   try {
     await controllerConta.handleHttpPatch(req, res)
   } catch (error) {
@@ -137,7 +138,7 @@ routeConta.patch("/atualizar", requestBodyValido, requiredPropConta, async (req,
  *      500: 
  *        description: Erro ao deletar uma conta
  */
-routeConta.delete("/excluir", requestBodyValido, requiredPropEmail, async (req, res, next) => {
+routeConta.delete("/excluir", isAuthenticated, requestBodyValido, requiredPropEmail, async (req, res, next) => {
   try {
     await controllerConta.handleHttpDelete(req, res)
   } catch (error) {
