@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { RendaProps } from "../../../entities/Renda.ts";
 import { AdapterRepoError } from "../../../errors/customErrors.ts";
 import { RendaRepo } from "../../../useCases/repo/RegistrosRepo.ts";
-import { logWriter } from "../../../lib/utils.ts";
+import { logger } from "../../../lib/utils.ts";
 
 export class PrismaRenda implements RendaRepo {
   constructor(private pc = new PrismaClient({log: ["error"], errorFormat: "pretty"})) {}
@@ -39,7 +39,7 @@ export class PrismaRenda implements RendaRepo {
         }
       })
     } catch (error) {
-      if(error instanceof Error) logWriter(error)
+      if(error instanceof Error) logger.error(error)
       throw new Error("Erro ao deletar registro do banco de dados")
     } finally {
       this.pc.$disconnect()
@@ -81,7 +81,7 @@ export class PrismaRenda implements RendaRepo {
       
       return response
     } catch (error) {
-      if(error instanceof Error) logWriter(error)
+      if(error instanceof Error) logger.error(error)
       throw new AdapterRepoError("Erro ao carregar registros de renda da carteira")
     } finally {
       this.pc.$disconnect()
@@ -106,7 +106,7 @@ export class PrismaRenda implements RendaRepo {
         }
       })
     } catch (error) {
-      if(error instanceof Error) logWriter(error)
+      if(error instanceof Error) logger.error(error)
       throw new AdapterRepoError("Erro ao salvar o registro de renda no banco de dados")
     } finally {
       this.pc.$disconnect()

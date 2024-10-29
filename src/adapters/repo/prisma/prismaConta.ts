@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { ContaProps } from "../../../entities/Conta.ts";
 import { AdapterRepoError } from "../../../errors/customErrors.ts";
-import { logWriter } from "../../../lib/utils.ts";
+import { logger } from "../../../lib/utils.ts";
 import { ContaRepo } from "../../../useCases/repo/ContaRepo.ts";
 
 export class PrismaConta implements ContaRepo {
@@ -21,7 +21,7 @@ export class PrismaConta implements ContaRepo {
       });
       return response.id
     } catch (error) {
-      if(error instanceof Error) logWriter(error)
+      if(error instanceof Error) logger.error(error)
       throw new AdapterRepoError("Erro ao criar conta no banco de dados");
     } finally {
       await this.pc.$disconnect();
@@ -36,7 +36,7 @@ export class PrismaConta implements ContaRepo {
         }
       });
     } catch (error) {
-      if(error instanceof Error) logWriter(error)
+      if(error instanceof Error) logger.error(error)
       throw new AdapterRepoError("Erro ao deletar conta no banco de dados");
     } finally {
       await this.pc.$disconnect();
@@ -56,7 +56,7 @@ export class PrismaConta implements ContaRepo {
       const conta = {id, nome, email, cpf, configs}
       return conta
     } catch (error) {
-      if(error instanceof Error) logWriter(error)
+      if(error instanceof Error) logger.error(error)
       return null
     } finally {
       await this.pc.$disconnect();
@@ -77,7 +77,7 @@ export class PrismaConta implements ContaRepo {
       const conta = {id, nome, email, cpf, configs}
       return conta;
     } catch (error) {
-      if(error instanceof Error) logWriter(error)
+      if(error instanceof Error) logger.error(error)
       return null
     } finally {
       await this.pc.$disconnect();
@@ -100,7 +100,7 @@ export class PrismaConta implements ContaRepo {
         }
       });
     } catch (error) {
-      if(error instanceof Error) logWriter(error)
+      if(error instanceof Error) logger.error(error)
       throw new AdapterRepoError("Erro ao salvar a conta no banco de dados");
     } finally {
       await this.pc.$disconnect();

@@ -3,7 +3,7 @@ import { randomUUID } from "crypto";
 import { DespesaProps } from "../../../entities/Despesa.ts";
 import { AdapterRepoError } from "../../../errors/customErrors.ts";
 import { DespesaRepo } from "../../../useCases/repo/RegistrosRepo.ts";
-import { logWriter } from "../../../lib/utils.ts";
+import { logger } from "../../../lib/utils.ts";
 
 export class PrismaDespesa implements DespesaRepo {
   constructor(private pc = new PrismaClient({log: ["error"], errorFormat: "pretty"})) {}
@@ -85,7 +85,7 @@ export class PrismaDespesa implements DespesaRepo {
 
       return response
     } catch (error) {
-      if(error instanceof Error) logWriter(error)
+      if(error instanceof Error) logger.error(error)
       throw new AdapterRepoError("Erro ao carregar os registros de despesa da carteira")
     }
   }
@@ -108,7 +108,7 @@ export class PrismaDespesa implements DespesaRepo {
         }
       })
     } catch (error) {
-      if(error instanceof Error) logWriter(error)
+      if(error instanceof Error) logger.error(error)
       throw new AdapterRepoError("Erro ao salvar o registro de despesa no banco de dados")
     } finally {
       this.pc.$disconnect()

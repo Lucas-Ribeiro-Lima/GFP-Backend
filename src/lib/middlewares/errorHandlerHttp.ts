@@ -10,7 +10,6 @@ function zodErrorHandler(err: Error): ErrorResponse | void {
       message: JSON.parse(err.message)
     }
   }
-  return
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { FederadoProps } from "../../../entities/Federado.ts";
 import { AdapterRepoError } from "../../../errors/customErrors.ts";
-import { logWriter } from "../../../lib/utils.ts";
+import { logger } from "../../../lib/utils.ts";
 import { FederadoRepo } from "../../../useCases/repo/FederadoRepo.ts";
 
 
@@ -18,7 +18,7 @@ export class PrismaFederado implements FederadoRepo {
       })
       return prismaResponse ?? null
     } catch (error) {
-      if(error instanceof Error) logWriter(error)
+      if(error instanceof Error) logger.error(error)
       throw new AdapterRepoError("Erro ao buscar conta federada")
     } finally {
       this.pc.$disconnect()
@@ -35,7 +35,7 @@ export class PrismaFederado implements FederadoRepo {
         }
       })
     } catch (error) {
-      if(error instanceof Error) logWriter(error)
+      if(error instanceof Error) logger.error(error)
       throw new AdapterRepoError("Erro ao criar conta federada")
     } finally {
       this.pc.$disconnect()

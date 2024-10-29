@@ -1,5 +1,6 @@
-import { appendFile } from 'fs/promises'
 import path from 'path'
+import { env } from 'process'
+import { createLogger, transports, format } from 'winston'
 
 /**
  * 
@@ -49,8 +50,27 @@ export function emailValido (email: string) {
   else return false
 }
 
-export async function logWriter(err: Error): Promise<void> {
-  const logPath = path.join(path.dirname("./"), '..', 'backend', 'src', 'logs', 'errorServer.log');
-  const logLine = `stack: ${err.stack}`
-  await appendFile(logPath, logLine);
+const logFilesPath = path.join(process.cwd(), "src", "logs")
+const { cli, timestamp, combine, label, printf } = format
+
+const customFormat = printf(({ level, message, label, timestamp }) => {
+  return `${timestamp} [${label}] ${level}:${message}`;
+});
+
+export const logger = createLogger({
+   level: "info",
+   format: combine(
+    label({ label: "GFP"}),
+    timestamp({ format: "YYYY-MM-dd HH:mm"}),
+    customFormat
+  ),
+   transports: [
+     new transports.File({ dirname: logFilesPath, filename: "info.log", level: "info"}),
+     new transports.File({ dirname: logFilesPath, filename: "error.log", level: "error"}),
+     new transports.Console({format: combine(cli(), customFormat)})
+   ]
+})
+
+if(env.NODE_ENV === "production") {
+  logger.remove(transports.Console)
 }
