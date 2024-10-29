@@ -20,6 +20,6 @@ export class InMemoryCarteira implements CarteiraRepo {
   }
 
   async delete(id: number): Promise<void> {
-    this.carteiraArray.filter((cart) => cart.id !== id)
+    this.carteiraArray = this.carteiraArray.filter((cart) => cart.id !== id)
   }
 }

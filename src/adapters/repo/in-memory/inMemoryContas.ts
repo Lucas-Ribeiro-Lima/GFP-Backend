@@ -26,6 +26,6 @@ export class InMemoryContas implements ContaRepo {
   }
 
   async delete(email: string): Promise<void> {
-    this.contasArray.filter((cont) => cont.email !== email)
+    this.contasArray = this.contasArray.filter((cont) => cont.email !== email)
   }
 }

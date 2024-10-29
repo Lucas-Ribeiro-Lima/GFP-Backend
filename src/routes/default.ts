@@ -8,3 +8,6 @@ def.get("/", (req, res) => {
   })
 })
 
+def.get("/__healthy", (req, res) => {
+  res.status(200).send("ok")
+})

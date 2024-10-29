@@ -75,7 +75,7 @@ describe("Testes para as funções middleware para roteamento", () => {
     }
     req.body = carteira
 
-    await requiredPropsCarteira(req, res, next)
+    requiredPropsCarteira(req, res, next)
 
     expect(next).toBeCalled()
   })
