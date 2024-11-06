@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "yarn build && node ./dist/src/main.js",
+    "start": "yarn db:push && node --loader ts-node/esm ./src/main.ts",
     "dev": "npx nodemon --exec node --inspect --loader ts-node/esm --env-file=.env ./src/main.ts",
     "build": "npx tsc",
     "test": "npx vitest",
