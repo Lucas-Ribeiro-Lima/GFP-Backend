@@ -29,9 +29,12 @@ app.use(session({
   secret: envs.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
+  name: "SSID",
   cookie: {
+    domain: envs.GFP_COOKIE_DOMAIN,
     maxAge: 1000 * 60 * 30, //30 minutos
-    secure: false
+    secure: false,
+    sameSite: 'lax'
   }
 }))
 

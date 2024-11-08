@@ -10,7 +10,9 @@ const envSchema = z.object({
   GOOGLE_CLIENT_ID: z.string({ message: "Client API OAuth não está presente"}),
   GOOGLE_CLIENT_SECRET: z.string({ message :"Client secret não está presente"}),
   CALLBACK_DOMAIN: z.string().default(`http://localhost:5000`),
-  CORS_ALLOWED_ORIGIN: z.string().default("*")
+  REDIRECT_FRONTEND_URL: z.string().default(`http://localhost:5000/`),
+  GFP_COOKIE_DOMAIN: z.string().default("localhost"),
+  CORS_ALLOWED_ORIGIN: z.string().default("*"),
 })
 
 export const envs = envSchema.parse(env)
