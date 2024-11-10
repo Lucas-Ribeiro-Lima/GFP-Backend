@@ -3,7 +3,7 @@ import { Federado, FederadoProps } from "../entities/Federado.ts"
 import { FederadoRepo } from "./repo/FederadoRepo.ts"
 
 export interface GerenciarFederadoProps {
-  buscar(provider: string, subject: string): Promise<Federado | null>
+  buscar(provider: string, subject: string): Promise<FederadoProps | null>
   criar(federado: FederadoProps): Promise<void>
 }
 
@@ -12,7 +12,7 @@ export class GerenciarFederado implements GerenciarFederadoProps {
 
   async buscar(provider: string, subject: string) {
     const repoResponse = await this.federadoRepo.find(provider, subject)
-    return (repoResponse) ? new Federado(repoResponse) : null
+    return (repoResponse) ? new Federado(repoResponse).allProps : null
   }
 
   async criar({idConta, provider, subject}: FederadoProps) {
