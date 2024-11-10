@@ -1,6 +1,5 @@
 import { Request, Response } from 'express'
 import { describe, expect, it, vi } from 'vitest'
-import { Carteira } from '../../../entities/Carteira.ts'
 import { GerenciarCarteira } from '../../../useCases/gerenciarCarteira.ts'
 import { InMemoryCarteira } from '../../repo/in-memory/inMemoryCarteira.ts'
 import { ControllerCarteira } from '../http/controllerCarteira.ts'
@@ -21,7 +20,7 @@ describe("Testes para o controller de carteira", () => {
     json: vi.fn().mockReturnThis()
   } as unknown as Response;
 
-  const carteira = new Carteira({
+  const carteira = {
     id: 1,
     idContaDono: 1,
     nome: "Carteira 1",
@@ -29,7 +28,8 @@ describe("Testes para o controller de carteira", () => {
     compartilhada: false,
     idGrupoEconomico: null,
     meta: 0.00
-  })
+  }
+  
   it("deve criar uma carteira corretamente", async () => {
     req.body = {
       carteira
@@ -49,7 +49,7 @@ describe("Testes para o controller de carteira", () => {
   })
 
   it("deve atualizar a carteira corretamente", async () => {
-    const carteira = new Carteira({
+    const carteira = {
       id: 1,
       idContaDono: 1,
       nome: "Carteira 1",
@@ -57,7 +57,7 @@ describe("Testes para o controller de carteira", () => {
       compartilhada: false,
       idGrupoEconomico: null,
       meta: 0.00
-    })
+    }
 
     req.body = {
       carteira

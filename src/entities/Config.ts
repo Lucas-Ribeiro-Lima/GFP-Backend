@@ -17,6 +17,10 @@ export class Configs {
     this.props.customWpp = customWpp
   }
 
+  get allProps() {
+    return this.props
+  }
+
   get tema() {
     return this.props.tema
   }

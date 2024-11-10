@@ -2,7 +2,7 @@ import { Renda, RendaProps } from "../entities/Renda.ts";
 import { RendaRepo } from "./repo/RegistrosRepo.ts";
 export interface GerenciarRendaProps {
   cadastrar(renda: RendaProps): Promise<void>
-  buscar(carteiraId: number): Promise<Renda[] | []>
+  buscar(carteiraId: number): Promise<RendaProps[] | []>
   atualizar(renda: RendaProps): Promise<void>
   excluir(uuid: string): Promise<void>
 }
@@ -14,9 +14,9 @@ export class GerenciarRenda implements GerenciarRendaProps {
     await this.rendaRepo.create(renda.allProps)
   }
 
-  async buscar(carteira_id: number): Promise<Renda[] | []> {
+  async buscar(carteira_id: number): Promise<RendaProps[] | []> {
     const repoResponse = await this.rendaRepo.load(carteira_id)
-    const rendas = repoResponse.map(renda => new Renda(renda))
+    const rendas = repoResponse.map(renda => new Renda(renda).allProps)
     return rendas ?? []
   }
 

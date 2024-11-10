@@ -5,7 +5,7 @@ import { ContaRepo } from "./repo/ContaRepo.ts";
 
 export interface GerenciarContaProps {
   cadastrar(nome: string, email:string): Promise<number>
-  buscar(id: number): Promise<Conta | null>
+  buscar(id: number): Promise<ContaProps | null>
   buscarEmail(email: string): Promise<ContaProps | null>
   atualizar(conta: ContaProps): Promise<void>
   excluir(email: string): Promise<void>
@@ -20,18 +20,19 @@ export class GerenciarConta implements GerenciarContaProps{
 
     const configs = new Configs({tema: "Light", displayName: "", customWpp: ""})
     const conta = new Conta({nome, email, configs}) 
+    conta.configs = configs.allProps
 
     return await this.contaRepo.create(conta.allProps)
   }
 
-  async buscar(id: number): Promise<Conta | null> {
+  async buscar(id: number): Promise<ContaProps | null> {
     const repoReponse = await this.contaRepo.find(id)
-    return (repoReponse) ? new Conta(repoReponse) : null
+    return (repoReponse) ? new Conta(repoReponse).allProps : null
   }
 
-  async buscarEmail(email: string): Promise<Conta | null> {
-    const repoReponse = await this.contaRepo.findEmail(email)
-    return (repoReponse) ? new Conta(repoReponse) : null
+  async buscarEmail(email: string): Promise<ContaProps | null> {
+    const repoResponse = await this.contaRepo.findEmail(email)
+    return (repoResponse) ? new Conta(repoResponse).allProps : null
   }
 
   async atualizar(acc: ContaProps): Promise<void> {
