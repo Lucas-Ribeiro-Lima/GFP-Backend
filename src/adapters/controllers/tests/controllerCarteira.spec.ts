@@ -10,8 +10,19 @@ describe("Testes para o controller de carteira", () => {
   const controllerCarteira = new ControllerCarteira(gerenciarCarteira)
 
   const req = {
-    body: {
-       idContaDono: "0" 
+    user: {
+      id: 1,
+      email: "johndoe@doe.uk",
+      idCarteira: 1
+    },
+    session: {
+      passport: {
+        user: {
+          id: 1,
+          email: "johndoe@doe.uk",
+          idCarteira: 1
+        }
+      }
     }
   } as unknown as Request;
 
@@ -41,7 +52,6 @@ describe("Testes para o controller de carteira", () => {
   })
 
   it("deve retornar uma carteira corretamente", async () => {
-    req.body.idContaDono = '1'
     await controllerCarteira.handleHttpGet(req, res)
 
     expect(res.status).toBeCalledWith(200)
@@ -80,8 +90,6 @@ describe("Testes para o controller de carteira", () => {
 
   
   it("deve retornar null caso a carteira não exista", async () => {
-    req.body.idContaDono = "0"
-
     await controllerCarteira.handleHttpGet(req, res)
     expect(res.json).toBeCalledWith(null)
   });

@@ -12,9 +12,11 @@ describe("Testes para o controller Http de conta", () => {
   const controllerConta = new ControllerConta(gerenciarConta)
 
   const req = {
-    body: {
+    user: {
+      id: 0,
       email: "johndoe@doe.uk"
     },
+    body: {}
   } as unknown as Request
 
   const res = {
@@ -45,8 +47,6 @@ describe("Testes para o controller Http de conta", () => {
   })
 
   it("deve recuperar uma conta cadastrada corretamente", async () => {
-    req.body.email = "johndoe@doe.uk"
-
     await controllerConta.handleHttpGet(req, res)
 
     expect(res.status).toBeCalledWith(200)

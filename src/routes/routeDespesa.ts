@@ -1,12 +1,11 @@
 import { Router } from "express";
-import { despesaSchema, idCarteiraSchema, uuidSchema } from "../adapters/zod/schemas/registros.ts";
+import { despesaSchema, uuidSchema } from "../adapters/zod/schemas/registros.ts";
 import { controllerDespesa } from "../configs/controllers.ts";
-import { requestBodyValido, requiredBodyProps } from "../lib/middlewares/validacoesHttp.ts";
 import { isAuthenticated } from "../lib/middlewares/authentication.ts";
+import { requestBodyValido, requiredBodyProps } from "../lib/middlewares/validacoesHttp.ts";
 
 export const routeDespesa = Router()
 
-const requiredIdCarteira = requiredBodyProps(idCarteiraSchema)
 const requiredUuid = requiredBodyProps(uuidSchema)
 const requiredDespesa = requiredBodyProps(despesaSchema, "despesa")
 
@@ -19,17 +18,11 @@ routeDespesa.get("/", (req, res) => {
 /**
  * @openapi
  * /despesa/buscar:
- *  post:
+ *  get:
  *    summary: Busca todas as despesas da carteira
  *    tags:
  *      - Despesas
  *    description: Buscar todas as despesas conforme o Id da carteira
- *    requestBody:
- *      required: true
- *      content:
- *        application/json:
- *          example:
- *            idCarteira: 1
  *    responses:
  *      200:
  *        description: Retorna todas as despesas da carteira
@@ -38,7 +31,7 @@ routeDespesa.get("/", (req, res) => {
  *      500: 
  *        description: Erro interno
  */
-routeDespesa.post("/buscar", isAuthenticated, requestBodyValido, requiredIdCarteira, async (req, res, next) => {
+routeDespesa.get("/buscar", isAuthenticated, async (req, res, next) => {
   try {
     await controllerDespesa.handleHttpGet(req, res)
   } catch (error) {

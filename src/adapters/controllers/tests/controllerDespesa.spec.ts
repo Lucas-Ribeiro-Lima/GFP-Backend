@@ -14,8 +14,11 @@ describe("Testes para o controller Http de despesas", () => {
   const controllerDespesas = new ControllerDespesa(gerenciarDespesas)
 
   const req = {
-    body: {
+    user: {
       idCarteira: 1
+    },
+    body: {
+      uuid: 0
     }
   } as unknown as Request
 

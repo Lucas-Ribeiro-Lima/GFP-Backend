@@ -12,10 +12,6 @@ export const contaSchema = z.object({
   })
 })
 
-export const contaEmailSchema = z.object({
-  email: z.string({ message: "Email obrigatório"})
-})
-
 export const contaCriarSchema = z.object({
   nome: z.string({ message: "Nome inválido"}),
   email: z.string({ message: "Email obrigatório"}),

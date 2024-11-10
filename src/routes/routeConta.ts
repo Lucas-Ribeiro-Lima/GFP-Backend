@@ -1,12 +1,11 @@
 import { Router } from 'express'
-import { contaCriarSchema, contaEmailSchema, contaSchema } from '../adapters/zod/schemas/conta.ts'
+import { contaCriarSchema, contaSchema } from '../adapters/zod/schemas/conta.ts'
 import { controllerConta } from '../configs/controllers.ts'
-import { requestBodyValido, requiredBodyProps } from '../lib/middlewares/validacoesHttp.ts'
 import { isAuthenticated } from '../lib/middlewares/authentication.ts'
+import { requestBodyValido, requiredBodyProps } from '../lib/middlewares/validacoesHttp.ts'
 
 export const routeConta = Router()
 
-const requiredPropEmail = requiredBodyProps(contaEmailSchema)
 const requiredPropConta = requiredBodyProps(contaSchema, "conta")
 const requiredPropCriar = requiredBodyProps(contaCriarSchema, "conta")
 
@@ -19,24 +18,18 @@ routeConta.get("/", async (req, res) => {
 /**
  * @openapi
  * /conta/buscar:
- *  post:
+ *  get:
  *    tags:
  *      - Contas
  *    summary: Recupera uma conta
  *    description: Endpoint para recuperação de contas baseado no e-mail
- *    requestBody:
- *      required: true
- *      content:
- *        application/json:
- *          example:
- *            email: johndoe@doe.uk
  *    responses:
  *      200:
  *         description: Retorna a conta solicitada.
  *      404:
  *         description: Returna null se não exister uma conta com o e-mail.
  */
-routeConta.post("/buscar", isAuthenticated, requestBodyValido, requiredPropEmail, async (req, res, next) => {
+routeConta.get("/buscar", isAuthenticated, async (req, res, next) => {
   try {
     await controllerConta.handleHttpGet(req,res)
   } catch (error) {
@@ -126,19 +119,13 @@ routeConta.patch("/atualizar", isAuthenticated, requestBodyValido, requiredPropC
  *      - openIdConnect: []
  *    summary: Deleta uma conta
  *    description: Deleta uma conta baseada nos email enviados
- *    requestBody:
- *      required: true
- *      content:
- *         application/json:
- *          example:
- *            email: johndoe@doe.uk
  *    responses:
  *      204: 
  *        description: Conta deletada com sucesso
  *      500: 
  *        description: Erro ao deletar uma conta
  */
-routeConta.delete("/excluir", isAuthenticated, requestBodyValido, requiredPropEmail, async (req, res, next) => {
+routeConta.delete("/excluir", isAuthenticated, async (req, res, next) => {
   try {
     await controllerConta.handleHttpDelete(req, res)
   } catch (error) {

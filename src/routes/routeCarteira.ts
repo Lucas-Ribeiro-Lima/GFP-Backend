@@ -1,14 +1,12 @@
 import { Router } from "express";
-import { controllerCarteira } from '../configs/controllers.ts'
-import { requestBodyValido, requiredBodyProps } from "../lib/middlewares/validacoesHttp.ts";
-import { carteiraIdContaDonoSchema, carteiraIdSchema, carteiraSchema } from '../adapters/zod/schemas/carteira.ts'
+import { carteiraSchema } from '../adapters/zod/schemas/carteira.ts';
+import { controllerCarteira } from '../configs/controllers.ts';
 import { isAuthenticated } from "../lib/middlewares/authentication.ts";
+import { requestBodyValido, requiredBodyProps } from "../lib/middlewares/validacoesHttp.ts";
 
 export const routeCarteira = Router()
 
-const requiredPropIdContaDono = requiredBodyProps(carteiraIdContaDonoSchema)
 const requiredPropCarteira = requiredBodyProps(carteiraSchema, "carteira")
-const requiredPropId = requiredBodyProps(carteiraIdSchema)
 
 
 routeCarteira.get("/", (req, res) => {
@@ -18,17 +16,11 @@ routeCarteira.get("/", (req, res) => {
 /**
  * @openapi
  * /carteira/buscar:
- *  post:
+ *  get:
  *    summary: Busca uma carteira
  *    tags:
  *      - Carteira
  *    description: Buscar uma carteira conforme o Id do dono
- *    requestBody:
- *      required: true
- *      content:
- *        application/json:
- *          example:
- *            idContaDono: 1
  *    responses:
  *      200:
  *        description: Retorna a carteira especificada
@@ -37,7 +29,7 @@ routeCarteira.get("/", (req, res) => {
  *      500: 
  *        description: Erro interno
  */
-routeCarteira.post("/buscar", isAuthenticated, requestBodyValido, requiredPropIdContaDono, async (req, res, next) => {
+routeCarteira.get("/buscar", isAuthenticated, async (req, res, next) => {
   try {
     await controllerCarteira.handleHttpGet(req, res)
   } catch (error) {
@@ -133,12 +125,6 @@ routeCarteira.patch("/atualizar", isAuthenticated, requestBodyValido, requiredPr
  *    tags:
  *      - Carteira
  *    description: Deleta uma carteira conforme o Id do dono
- *    requestBody:
- *      required: true
- *      content:
- *        application/json:
- *          example:
- *            id: 1
  *    responses:
  *      204:
  *        description: Exclui a carteira solicitada
@@ -147,7 +133,7 @@ routeCarteira.patch("/atualizar", isAuthenticated, requestBodyValido, requiredPr
  *      500: 
  *        description: Erro interno
  */
-routeCarteira.delete("/excluir", isAuthenticated, requestBodyValido, requiredPropId, async (req, res, next) => {
+routeCarteira.delete("/excluir", isAuthenticated, async (req, res, next) => {
   try {
     await controllerCarteira.handleHttpDelete(req, res)
   } catch (error) {

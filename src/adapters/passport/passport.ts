@@ -1,12 +1,14 @@
 import { Passport } from 'passport'
-import { Strategy } from 'passport-google-oauth20'
+import { Strategy as GoogleStrat } from 'passport-google-oauth20'
 import { controllerLogin } from '../../configs/controllers.ts'
 import { envs } from '../../configs/env.ts'
 import { AuthenticationError } from '../../errors/customErrors.ts'
+import { ContaProps } from '@/entities/Conta.ts'
+
 
 export const passport = new Passport()
-const GoogleStrat = Strategy
 const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, CALLBACK_DOMAIN } = envs
+
 
 passport.use(new GoogleStrat({
   clientID: GOOGLE_CLIENT_ID,
@@ -26,7 +28,8 @@ passport.serializeUser((user, done) => {
   done(null, user)
 })
 
-passport.deserializeUser(async (user, done) => {
+
+passport.deserializeUser(async (user: ContaProps & { idCarteira?: number }, done) => {
   if(!user) throw new AuthenticationError("Erro de autenticação ao deserializar usuário")
-  done(null, user)
+  done(null, { email: user.email, id: user.id, idCarteira: user.idCarteira })
 })
