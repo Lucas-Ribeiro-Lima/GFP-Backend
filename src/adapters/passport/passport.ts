@@ -15,7 +15,7 @@ passport.use(new GoogleStrat({
 }, async (accesToken, refreshToken, profile, done) => {
     try {
       const conta = await controllerLogin.validate(profile)
-      done(null, conta.allProps)
+      done(null, conta)
     } catch (error) {
       done(error, false)
     }
