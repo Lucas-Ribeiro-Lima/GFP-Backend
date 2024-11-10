@@ -1,10 +1,10 @@
-import { Conta } from '../entities/Conta.ts'
+import { ContaProps } from '../entities/Conta.ts'
 import { AuthenticationError } from '../errors/customErrors.ts'
 import { GerenciarContaProps } from "./gerenciarConta.ts"
 import { GerenciarFederadoProps } from "./gerenciarFederado.ts"
 
 export interface GerenciarLoginProps {
-  loginFederado(profile: ProfileProps): Promise<Conta>
+  loginFederado(profile: ProfileProps): Promise<ContaProps>
 }
 
 export interface ProfileProps {
@@ -18,7 +18,7 @@ export class GerenciarLogin implements GerenciarLoginProps {
 
   constructor(private gerenciarFederados: GerenciarFederadoProps, private gerenciarConta: GerenciarContaProps) {}
 
-  async loginFederado({ provider, subject, email, displayName }: ProfileProps): Promise<Conta> {
+  async loginFederado({ provider, subject, email, displayName }: ProfileProps): Promise<ContaProps> {
     const federado = await this.gerenciarFederados.buscar(provider, subject)
 
     if (federado) {

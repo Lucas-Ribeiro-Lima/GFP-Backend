@@ -7,7 +7,7 @@ import { GerenciarDespesa } from '../gerenciarDespesa.ts'
 describe("Teste para o caso de uso gerenciar Despesa [UC004] [UC005] [UC006]", async () => {
   const repository = new InMemoryDespesas()
   const gerenciarDespesa = new GerenciarDespesa(repository)
-  const arrayTeste: Despesa[] = []
+  const arrayTeste: DespesaProps[] = []
 
   for(let i = 0; i < 4; i ++) {
     const despesa: DespesaProps = {
@@ -26,7 +26,7 @@ describe("Teste para o caso de uso gerenciar Despesa [UC004] [UC005] [UC006]", a
       },
     }
     await gerenciarDespesa.cadastrar(despesa)
-    arrayTeste.push(new Despesa(despesa))
+    arrayTeste.push(new Despesa(despesa).allProps)
   }
   it("deve cadastrar quantas despesas forem necessária para a mesma carteira", async () => {
     expect(await gerenciarDespesa.buscar(1)).toStrictEqual(arrayTeste)

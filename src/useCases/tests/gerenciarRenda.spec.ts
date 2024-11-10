@@ -7,7 +7,7 @@ import { GerenciarRenda } from '../gerenciarRenda.ts'
 describe("Teste para o caso de uso gerenciar Renda [UC001] [UC002] [UC003]", () => {
   const repository = new InMemoryRendas()
   const gerenciarRenda = new GerenciarRenda(repository)
-  const arrayTeste: Renda[] = []
+  const arrayTeste: RendaProps[] = []
 
   for(let i = 1; i<11; i++) {
     const renda: RendaProps = {
@@ -22,7 +22,7 @@ describe("Teste para o caso de uso gerenciar Renda [UC001] [UC002] [UC003]", () 
       valor: 200 * i
     }
     gerenciarRenda.cadastrar(renda)
-    arrayTeste.push(new Renda(renda))
+    arrayTeste.push(new Renda(renda).allProps)
   }
 
   it("Deve criar quantas rendas forem necessárias para a mesma carteira", async () => {

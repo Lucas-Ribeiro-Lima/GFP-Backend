@@ -35,8 +35,3 @@ export const rendaSchema = z.object({
 export const uuidSchema = z.object({
   uuid: z.string().length(36)
 })
-
-export const idCarteiraSchema = z.object({
-  idCarteira: z.coerce.number()
-})
-

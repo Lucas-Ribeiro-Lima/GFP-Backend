@@ -1,13 +1,17 @@
+import { randomUUID } from 'crypto'
 import { Request, Response } from 'express'
 import { GerenciarDespesaProps } from '../../../useCases/gerenciarDespesa.ts'
 import { ControllerHttpProps } from './controllerHttpProps.ts'
-import { randomUUID } from 'crypto'
+import { InvalidInputError } from '../../../errors/customErrors.ts'
 
 export class ControllerDespesa implements ControllerHttpProps {
   constructor(private gerenciarDespesa: GerenciarDespesaProps) {}
 
   async handleHttpGet(req: Request, res: Response): Promise<Response> {
-    const despesas = await this.gerenciarDespesa.buscar(req.body.idCarteira)
+    const idCarteira = Number(req.user?.idCarteira)
+    if(isNaN(idCarteira)) throw new InvalidInputError("Id de conta do dono inválido")
+  
+    const despesas = await this.gerenciarDespesa.buscar(idCarteira)
     return res.status(200).json(despesas)
   }
 

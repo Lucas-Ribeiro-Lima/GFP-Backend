@@ -31,6 +31,7 @@ app.use(session({
   saveUninitialized: false,
   name: "SSID",
   cookie: {
+    httpOnly: true,
     domain: envs.GFP_COOKIE_DOMAIN,
     maxAge: 1000 * 60 * 30, //30 minutos
     secure: false,

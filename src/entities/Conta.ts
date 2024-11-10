@@ -1,5 +1,5 @@
 import { EntitieInstanceError } from "../errors/customErrors.ts"
-import { Configs, ConfigsProps } from "./Config.ts"
+import { ConfigsProps } from "./Config.ts"
 
 export interface ContaProps {
   id?: number,
@@ -53,7 +53,7 @@ export class Conta {
   public get configs() {
     return this.props.configs
   }
-  public set configs(configs: Configs) {
+  public set configs(configs: ConfigsProps) {
     this.props.configs = configs
   }
 

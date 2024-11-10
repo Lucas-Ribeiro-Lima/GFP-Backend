@@ -4,7 +4,7 @@ import { CarteiraRepo } from "./repo/CarteiraRepo.ts";
 
 export interface GerenciarCarteiraProps {
   cadastrar(carteira: CarteiraProps): Promise<void>
-  buscar(idDono: number): Promise<Carteira | null>
+  buscar(idDono: number): Promise<CarteiraProps | null>
   atualizar(carteira: CarteiraProps): Promise<void>
   excluir(id: number): Promise<void>
 }
@@ -21,9 +21,9 @@ export class GerenciarCarteira implements GerenciarCarteiraProps {
     await this.carteiraRepo.create(carteira.allProps)
   }
 
-  async buscar(idDono: number): Promise<Carteira | null> {
+  async buscar(idDono: number): Promise<CarteiraProps | null> {
     const repoResponse = await this.carteiraRepo.find(idDono)
-    return (repoResponse)  ? new Carteira(repoResponse) : null
+    return (repoResponse)  ? new Carteira(repoResponse).allProps : null
   }
 
   async atualizar(cart: CarteiraProps): Promise<void> {

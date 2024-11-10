@@ -1,6 +1,5 @@
 import { Request, Response } from 'express'
 import { describe, expect, it, vi } from 'vitest'
-import { Carteira } from '../../../entities/Carteira.ts'
 import { GerenciarCarteira } from '../../../useCases/gerenciarCarteira.ts'
 import { InMemoryCarteira } from '../../repo/in-memory/inMemoryCarteira.ts'
 import { ControllerCarteira } from '../http/controllerCarteira.ts'
@@ -11,8 +10,19 @@ describe("Testes para o controller de carteira", () => {
   const controllerCarteira = new ControllerCarteira(gerenciarCarteira)
 
   const req = {
-    body: {
-       idContaDono: "0" 
+    user: {
+      id: 1,
+      email: "johndoe@doe.uk",
+      idCarteira: 1
+    },
+    session: {
+      passport: {
+        user: {
+          id: 1,
+          email: "johndoe@doe.uk",
+          idCarteira: 1
+        }
+      }
     }
   } as unknown as Request;
 
@@ -21,7 +31,7 @@ describe("Testes para o controller de carteira", () => {
     json: vi.fn().mockReturnThis()
   } as unknown as Response;
 
-  const carteira = new Carteira({
+  const carteira = {
     id: 1,
     idContaDono: 1,
     nome: "Carteira 1",
@@ -29,7 +39,8 @@ describe("Testes para o controller de carteira", () => {
     compartilhada: false,
     idGrupoEconomico: null,
     meta: 0.00
-  })
+  }
+  
   it("deve criar uma carteira corretamente", async () => {
     req.body = {
       carteira
@@ -41,7 +52,6 @@ describe("Testes para o controller de carteira", () => {
   })
 
   it("deve retornar uma carteira corretamente", async () => {
-    req.body.idContaDono = '1'
     await controllerCarteira.handleHttpGet(req, res)
 
     expect(res.status).toBeCalledWith(200)
@@ -49,7 +59,7 @@ describe("Testes para o controller de carteira", () => {
   })
 
   it("deve atualizar a carteira corretamente", async () => {
-    const carteira = new Carteira({
+    const carteira = {
       id: 1,
       idContaDono: 1,
       nome: "Carteira 1",
@@ -57,7 +67,7 @@ describe("Testes para o controller de carteira", () => {
       compartilhada: false,
       idGrupoEconomico: null,
       meta: 0.00
-    })
+    }
 
     req.body = {
       carteira
@@ -80,8 +90,6 @@ describe("Testes para o controller de carteira", () => {
 
   
   it("deve retornar null caso a carteira não exista", async () => {
-    req.body.idContaDono = "0"
-
     await controllerCarteira.handleHttpGet(req, res)
     expect(res.json).toBeCalledWith(null)
   });

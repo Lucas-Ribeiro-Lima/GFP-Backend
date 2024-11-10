@@ -13,8 +13,11 @@ describe("Testes para o controller Http de renda", () => {
   const controllerRenda = new ControllerRenda(gerenciarRenda)
 
   const req = {
-    body: {
+    user: {
       idCarteira: 1
+    },
+    body: {
+      uuid: 0
     }
   } as unknown as Request
 
