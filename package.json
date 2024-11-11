@@ -14,7 +14,7 @@
   "author": "Lucas Ribeiro Lima",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "^5.20.0",
+    "@prisma/client": "^5.22.0",
     "connect-redis": "^7.1.1",
     "cors": "^2.8.5",
     "express": "^4.21.0",
@@ -43,7 +43,7 @@
     "@types/winston": "^2.4.4",
     "eslint": "^9.11.1",
     "globals": "^15.10.0",
-    "prisma": "^5.20.0",
+    "prisma": "^5.22.0",
     "ts-node-dev": "^2.0.0",
     "tslib": "^2.7.0",
     "typescript": "^5.6.2",
