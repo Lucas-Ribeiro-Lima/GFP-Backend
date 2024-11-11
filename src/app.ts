@@ -19,9 +19,11 @@ export const app = e()
 
 //Configurações do Express
 app.use(cors({
-  origin: envs.CORS_ALLOWED_ORIGIN
+  origin: envs.CORS_ALLOWED_ORIGIN,
+  credentials: true
 }))
 app.use(helmet())
+
 app.use(e.json())
 app.use(e.urlencoded({extended: true}))
 app.use(session({
@@ -39,6 +41,7 @@ app.use(session({
   }
 }))
 
+//Configuração do passport
 app.use(passport.initialize())
 app.use(passport.session())
 
