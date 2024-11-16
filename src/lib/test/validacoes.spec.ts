@@ -21,7 +21,7 @@ describe("Testes para as funções middleware para roteamento", () => {
   it("deve retornar status 400 caso a requisição não possua paramêtros", () => {
     requestParamsValido(req, res, next)
     expect(res.status).toHaveBeenCalledWith(400)
-    expect(res.json).toHaveBeenCalledWith({ error: "Requisição sem parâmetros" })
+    expect(res.json).toHaveBeenCalledWith({ message: "Requisição sem parâmetros" })
   })
 
   it("deve chamar a função next caso a função possua paramêtros", () => {
@@ -36,7 +36,7 @@ describe("Testes para as funções middleware para roteamento", () => {
     requestBodyValido(req, res, next)
 
     expect(res.status).toBeCalledWith(400)
-    expect(res.json).toBeCalledWith({error: "Requisição sem corpo"})
+    expect(res.json).toBeCalledWith({message: "Requisição sem corpo"})
   })
 
   it("deve chamar a função next caso a função possua corpo", () => {

@@ -46,7 +46,7 @@ export function cpfValido (cpf: string) {
  * uma seção posterior seguida de um dominio.
  */
 export function emailValido (email: string) {
-  if((/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g).test(email)) return true
+  if((/^[a-zA-Z0-9._%+-]{3,56}@[a-zA-Z0-9.-]{3,36}\.[a-zA-Z]{2,4}$/).test(email)) return true
   else return false
 }
 

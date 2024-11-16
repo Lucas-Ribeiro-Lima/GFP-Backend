@@ -1,15 +1,30 @@
+# Usar uma imagem base leve
 FROM node:23-alpine3.20
 
-RUN corepack enable
+# Criar usuário e grupo
+RUN addgroup -S gfp \
+    && adduser -S gfp -G gfp
 
-RUN mkdir /gfp
-
+# Configurar diretório de trabalho e permissões
 WORKDIR /gfp
+RUN mkdir /gfp/prisma \
+    && chown -R gfp:gfp /gfp
 
-COPY . .
+# Copiar arquivos antes de alterar o usuário para melhorar cacheabilidade
+COPY package.json . 
+COPY prisma ./prisma
 
-RUN yarn install
+# Instalar dependências de produção
+RUN yarn install --omit=dev && yarn cache clean --force
 
+# Copiar o restante do código
+COPY ./dist ./dist
+
+# Alterar para o usuário não-root
+USER gfp
+
+# Expor a porta da aplicação
 EXPOSE 5000
 
-CMD [ "yarn", "start" ]
+# Comando para iniciar o container
+CMD [ "npm", "start" ]
