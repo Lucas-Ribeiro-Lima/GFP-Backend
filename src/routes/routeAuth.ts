@@ -21,8 +21,10 @@ routeAuth.get("/google/callback",
 
 routeAuth.post("/logout", (req, res, next) => {
   req.logOut((err) => {
-    if(err) next(err)
-
+    if(!err){ 
       res.status(301).redirect(envs.REDIRECT_FRONTEND_URL)
+    } else {
+      next(err)
+    }
   })
 })

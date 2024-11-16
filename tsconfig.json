@@ -6,14 +6,16 @@
     "lib": ["ES2022"],                
     "typeRoots": ["./node_modules/@types", "./src/types"],   
     "resolveJsonModule": true,                    
-    "outDir": "./dist",                              
-    "esModuleInterop": true,                           
+    "outDir": "./dist",  
+    "rootDir": "./src",
     "incremental": true,      
+    "strict": true,                               
+    "alwaysStrict": true,
+    "removeComments": true,
+    "esModuleInterop": true,      
     "noEmit": true,
     "allowImportingTsExtensions": true,              
     "forceConsistentCasingInFileNames": true,            
-    "strict": true,                               
-    "alwaysStrict": true,
     "paths": {
       "@/entities/*": ["./src/entities/*"],
       "@/useCases/*": ["./src/useCases/*"],
@@ -25,8 +27,13 @@
     },                             
     "skipLibCheck": true                          
   },
-  "include": ["**/*.ts"],
-  "exclude": ["node_modules"],
+  "include": [
+    "src/**/*.ts",
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts" // Ignora arquivos com extensão .spec.ts
+  ],
   "ts-node": {
     "transpileOnly": true,
     "files": true,
