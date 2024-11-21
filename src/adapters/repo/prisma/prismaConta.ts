@@ -52,9 +52,9 @@ export class PrismaConta implements ContaRepo {
         }
       });
       if(!prismaResponse) return null
-      const { nome, email, cpf, tema, customWpp, displayName} = prismaResponse
+      const { nome, email, cpf, photo, tema, customWpp, displayName} = prismaResponse
       const configs = { tema, displayName, customWpp }
-      const conta = {id, nome, email, cpf, configs}
+      const conta = {id, nome, email, cpf, photo, configs}
       return conta
     } catch (error) {
       if(error instanceof Error) logger.error(error)
@@ -73,9 +73,9 @@ export class PrismaConta implements ContaRepo {
       });
       if(!prismaResponse)  return null
 
-      const { id, nome, cpf, tema, displayName, customWpp } = prismaResponse
+      const { id, nome, cpf, photo, tema, displayName, customWpp } = prismaResponse
       const configs = { tema, displayName, customWpp }
-      const conta = {id, nome, email, cpf, configs}
+      const conta = {id, nome, email, cpf, photo, configs}
       return conta;
     } catch (error) {
       if(error instanceof Error) logger.error(error)
