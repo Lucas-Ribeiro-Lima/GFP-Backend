@@ -7,13 +7,14 @@ import { ContaRepo } from "../../../useCases/repo/ContaRepo.ts";
 export class PrismaConta implements ContaRepo {
   constructor(private pc = new PrismaClient({ log: ["error"], errorFormat: "pretty"})) {}
 
-  async create({ nome, email, cpf, configs: {tema, customWpp, displayName} }: ContaProps): Promise<number> {
+  async create({ nome, email, cpf, photo, configs: {tema, customWpp, displayName} }: ContaProps): Promise<number> {
     try {
       const response = await this.pc.conta.create({
         data: {
           nome,
           cpf,
           email,
+          photo,
           tema,
           displayName,
           customWpp
@@ -84,13 +85,14 @@ export class PrismaConta implements ContaRepo {
     }
   }
 
-  async save({ id, nome, email, cpf, configs: { tema, displayName, customWpp } }: ContaProps): Promise<void> {
+  async save({ id, nome, email, cpf, photo, configs: { tema, displayName, customWpp } }: ContaProps): Promise<void> {
     try {
       await this.pc.conta.update({
         data: {
           nome,
           email,
           cpf,
+          photo,
           tema,
           displayName,
           customWpp

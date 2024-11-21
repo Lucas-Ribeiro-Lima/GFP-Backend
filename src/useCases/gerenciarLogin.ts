@@ -11,6 +11,7 @@ export interface ProfileProps {
   provider: string
   subject: string
   email: string
+  photo: string
   displayName: string
 }
 
@@ -18,7 +19,7 @@ export class GerenciarLogin implements GerenciarLoginProps {
 
   constructor(private gerenciarFederados: GerenciarFederadoProps, private gerenciarConta: GerenciarContaProps) {}
 
-  async loginFederado({ provider, subject, email, displayName }: ProfileProps): Promise<ContaProps> {
+  async loginFederado({ provider, subject, email, displayName, photo }: ProfileProps): Promise<ContaProps> {
     const federado = await this.gerenciarFederados.buscar(provider, subject)
 
     if (federado) {
@@ -27,7 +28,7 @@ export class GerenciarLogin implements GerenciarLoginProps {
       return conta
     } 
     else {
-      const idConta = await this.gerenciarConta.cadastrar(displayName ?? "Usuário", email)
+      const idConta = await this.gerenciarConta.cadastrar(displayName ?? "Usuário", email, photo)
       await this.gerenciarFederados.criar({ idConta, provider, subject })
 
       const conta = await this.gerenciarConta.buscar(idConta)
