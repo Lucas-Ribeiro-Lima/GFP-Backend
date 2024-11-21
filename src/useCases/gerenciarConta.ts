@@ -4,7 +4,7 @@ import { UseCaseError } from "../errors/customErrors.ts";
 import { ContaRepo } from "./repo/ContaRepo.ts";
 
 export interface GerenciarContaProps {
-  cadastrar(nome: string, email:string): Promise<number>
+  cadastrar(nome: string, email:string, photo?: string): Promise<number>
   buscar(id: number): Promise<ContaProps | null>
   buscarEmail(email: string): Promise<ContaProps | null>
   atualizar(conta: ContaProps): Promise<void>
@@ -14,12 +14,12 @@ export interface GerenciarContaProps {
 export class GerenciarConta implements GerenciarContaProps{
   constructor(private contaRepo: ContaRepo) {}
 
-  async cadastrar(nome: string, email:string): Promise<number> {
+  async cadastrar(nome: string, email:string, photo: string): Promise<number> {
     const contaExistente = await this.contaRepo.findEmail(email)
     if(contaExistente) throw new UseCaseError("Conta já cadastrada com esse e-mail")
 
-    const configs = new Configs({tema: "Light", displayName: "", customWpp: ""})
-    const conta = new Conta({nome, email, configs}) 
+    const configs = new Configs({ tema: "Light", displayName: "", customWpp: "" })
+    const conta = new Conta({ nome, email, configs, photo }) 
     conta.configs = configs.allProps
 
     return await this.contaRepo.create(conta.allProps)

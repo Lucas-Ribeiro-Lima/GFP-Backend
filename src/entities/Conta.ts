@@ -6,6 +6,7 @@ export interface ContaProps {
   email: string,
   nome: string,
   cpf?: string,
+  photo?: string,
   configs: ConfigsProps
 }
 
@@ -40,6 +41,14 @@ export class Conta {
   }
   public set nome(nome: string) {
     this.props.nome = nome
+  }
+
+  public get photo() {
+    return this.props.photo ?? ""
+  }
+
+  public set photo(photo: string) {
+    this.props.photo = photo
   }
 
   public get cpf() {

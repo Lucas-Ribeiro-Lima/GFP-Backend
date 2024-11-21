@@ -5,9 +5,9 @@ import { AdapterRepoError } from "../../../errors/customErrors.ts";
 export class InMemoryContas implements ContaRepo {
   public contasArray: ContaProps[] = []
 
-  async create({nome, email, cpf, configs}: ContaProps): Promise<number> {
+  async create({nome, email, cpf, photo, configs}: ContaProps): Promise<number> {
     const id = this.contasArray.length
-    this.contasArray.push({id, nome, email, cpf, configs})
+    this.contasArray.push({id, nome, email, cpf, photo, configs})
     return id 
   }
 

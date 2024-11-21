@@ -4,6 +4,7 @@ model Conta {
   email String @unique
   cpf String @unique @default("")
   nome String
+  photo String @default("")
   tema Tema @default(Light)
   displayName String @default("")
   customWpp String @default("")
