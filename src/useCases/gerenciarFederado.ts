@@ -8,7 +8,7 @@ export interface GerenciarFederadoProps {
 }
 
 export class GerenciarFederado implements GerenciarFederadoProps {
-  constructor(private federadoRepo: FederadoRepo) {}
+  constructor(private readonly federadoRepo: FederadoRepo) {}
 
   async buscar(provider: string, subject: string) {
     const repoResponse = await this.federadoRepo.find(provider, subject)

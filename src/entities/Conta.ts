@@ -11,7 +11,7 @@ export interface ContaProps {
 }
 
 export class Conta {
-  private props: ContaProps
+  private readonly props: ContaProps
     constructor(props: ContaProps) {
     if(!this.emailValido(props.email)) throw new EntitieInstanceError("Email inválido")
     this.props = props

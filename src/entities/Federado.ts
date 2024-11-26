@@ -5,7 +5,7 @@ export interface FederadoProps {
 }
 
 export class Federado {
-  private props: FederadoProps
+  private readonly props: FederadoProps
 
   constructor(props: FederadoProps) {
     this.props = props

@@ -17,7 +17,7 @@ export interface ProfileProps {
 
 export class GerenciarLogin implements GerenciarLoginProps {
 
-  constructor(private gerenciarFederados: GerenciarFederadoProps, private gerenciarConta: GerenciarContaProps) {}
+  constructor(private readonly gerenciarFederados: GerenciarFederadoProps, private readonly gerenciarConta: GerenciarContaProps) {}
 
   async loginFederado({ provider, subject, email, displayName, photo }: ProfileProps): Promise<ContaProps> {
     const federado = await this.gerenciarFederados.buscar(provider, subject)

@@ -12,7 +12,7 @@ export interface GerenciarContaProps {
 }
 
 export class GerenciarConta implements GerenciarContaProps{
-  constructor(private contaRepo: ContaRepo) {}
+  constructor(private readonly contaRepo: ContaRepo) {}
 
   async cadastrar(nome: string, email:string, photo: string): Promise<number> {
     const contaExistente = await this.contaRepo.findEmail(email)

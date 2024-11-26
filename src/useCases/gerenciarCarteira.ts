@@ -10,7 +10,7 @@ export interface GerenciarCarteiraProps {
 }
 
 export class GerenciarCarteira implements GerenciarCarteiraProps {
-  constructor(private carteiraRepo: CarteiraRepo) {}
+  constructor(private readonly carteiraRepo: CarteiraRepo) {}
   
   async cadastrar(cart: CarteiraProps): Promise<void> {
     const carteiraExistente = await this.carteiraRepo.find(cart.idContaDono)

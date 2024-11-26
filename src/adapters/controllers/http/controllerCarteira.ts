@@ -4,7 +4,7 @@ import { GerenciarCarteiraProps } from '../../../useCases/gerenciarCarteira.ts'
 import { ControllerHttpProps } from './controllerHttpProps.ts'
 
 export class ControllerCarteira implements ControllerHttpProps {
-  constructor(private gerenciarCarteira: GerenciarCarteiraProps) {}
+  constructor(private readonly gerenciarCarteira: GerenciarCarteiraProps) {}
 
   public async handleHttpGet(req: Request, res: Response): Promise<Response> {
 	const idContaDono = Number(req.user?.id)

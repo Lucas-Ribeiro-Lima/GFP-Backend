@@ -6,7 +6,7 @@ import { GerenciarContaProps } from '../../../useCases/gerenciarConta.ts'
 import { ControllerHttpProps } from './controllerHttpProps.ts'
 
 export class ControllerConta implements ControllerHttpProps {
-  constructor(private gerenciarConta: GerenciarContaProps) {}
+  constructor(private readonly gerenciarConta: GerenciarContaProps) {}
 
   public async handleHttpGet(req: Request, res: Response): Promise<Response> {
     const email = String(req.user?.email)

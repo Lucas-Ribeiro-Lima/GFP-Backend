@@ -8,7 +8,7 @@ export interface GrupoEconomicoProps {
 }
 
 export class GrupoEconomico {
-  private props: GrupoEconomicoProps
+  private readonly props: GrupoEconomicoProps
 
   constructor({id, nome, descricao, metaGeral}: GrupoEconomicoProps) {
     this.props = {id, nome, descricao, metaGeral}

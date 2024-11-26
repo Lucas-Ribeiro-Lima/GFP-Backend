@@ -5,7 +5,7 @@ import { ControllerHttpProps } from './controllerHttpProps.ts'
 import { InvalidInputError } from '../../../errors/customErrors.ts'
 
 export class ControllerRenda implements ControllerHttpProps {
-  constructor(private gerenciarRenda: GerenciarRendaProps) {}
+  constructor(private readonly gerenciarRenda: GerenciarRendaProps) {}
 
   public async handleHttpGet(req: Request, res: Response): Promise<Response> {
     const idCarteira = Number(req.user?.idCarteira)

@@ -9,7 +9,7 @@ export interface GerenciarDespesaProps {
 }
 
 export class GerenciarDespesa implements GerenciarDespesaProps {
-  constructor(private despesaRepo: DespesaRepo) {}
+  constructor(private readonly despesaRepo: DespesaRepo) {}
 
   async cadastrar(desp: DespesaProps): Promise<void> {
     const despesa = new Despesa(desp)

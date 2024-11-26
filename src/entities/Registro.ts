@@ -17,7 +17,7 @@ export interface RegistroProps {
 
 
 export abstract class Registro {
-  protected props: RegistroProps
+  protected readonly props: RegistroProps
   
   constructor({uuid, descricao, idCarteira, valor, competencia, modalidade}: RegistroProps) {
     this.props = {uuid, idCarteira, descricao, valor, competencia, modalidade}

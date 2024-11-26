@@ -5,7 +5,7 @@ import { RendaRepo } from "../../../useCases/repo/RegistrosRepo.ts";
 import { logger } from "../../../lib/utils.ts";
 
 export class PrismaRenda implements RendaRepo {
-  constructor(private pc = new PrismaClient({log: ["error"], errorFormat: "pretty"})) {}
+  constructor(private readonly pc = new PrismaClient({log: ["error"], errorFormat: "pretty"})) {}
 
   async create({uuid, idCarteira, descricao, categoria, valor, fonte, frequencia, competencia: { mes, ano }}: RendaProps): Promise<void> {
     try {

@@ -9,7 +9,7 @@ export interface DespesaProps extends RegistroProps {
 }
 
 export class Despesa extends Registro {
-  protected props: DespesaProps
+  protected readonly props: DespesaProps
   constructor(props: DespesaProps) {
     super(props)
     this.props = props

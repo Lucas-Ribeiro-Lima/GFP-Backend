@@ -2,7 +2,7 @@ import { FederadoProps } from "@/entities/Federado.ts";
 import { FederadoRepo } from "../../../useCases/repo/FederadoRepo.ts";
 
 export class InMemoryFederado implements FederadoRepo {
-  private federadoArray: FederadoProps[] = []
+  private readonly federadoArray: FederadoProps[] = []
 
   async find(provider: string, subject: string): Promise<FederadoProps | null> {
     return this.federadoArray.find(

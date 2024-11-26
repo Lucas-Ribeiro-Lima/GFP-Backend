@@ -6,7 +6,7 @@ import { FederadoRepo } from "../../../useCases/repo/FederadoRepo.ts";
 
 
 export class PrismaFederado implements FederadoRepo {
-  constructor(private pc = new PrismaClient()) {}
+  constructor(private readonly pc = new PrismaClient()) {}
   
   async find(provider: string, subject: string): Promise<FederadoProps | null> {
     try {

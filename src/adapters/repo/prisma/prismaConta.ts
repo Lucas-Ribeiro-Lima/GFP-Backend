@@ -5,7 +5,7 @@ import { logger } from "../../../lib/utils.ts";
 import { ContaRepo } from "../../../useCases/repo/ContaRepo.ts";
 
 export class PrismaConta implements ContaRepo {
-  constructor(private pc = new PrismaClient({ log: ["error"], errorFormat: "pretty"})) {}
+  constructor(private readonly pc = new PrismaClient({ log: ["error"], errorFormat: "pretty"})) {}
 
   async create({ nome, email, cpf, photo, configs: {tema, customWpp, displayName} }: ContaProps): Promise<number> {
     try {

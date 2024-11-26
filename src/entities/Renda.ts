@@ -11,7 +11,7 @@ export interface RendaProps extends RegistroProps {
 }
 
 export class Renda extends Registro {
-  protected props: RendaProps
+  protected readonly props: RendaProps
   constructor(props: RendaProps) {
     super(props)
     this.props = props

@@ -7,7 +7,7 @@ export interface GerenciarRendaProps {
   excluir(uuid: string): Promise<void>
 }
 export class GerenciarRenda implements GerenciarRendaProps {
-  constructor(private rendaRepo: RendaRepo) {}
+  constructor(private readonly rendaRepo: RendaRepo) {}
 
   async cadastrar(rend: RendaProps) {
     const renda = new Renda(rend)

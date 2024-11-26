@@ -3,8 +3,7 @@ import { InMemoryContas } from '../../adapters/repo/in-memory/inMemoryContas.ts'
 import { InMemoryFederado } from '../../adapters/repo/in-memory/inMemoryFederado.ts'
 import { GerenciarConta } from '../gerenciarConta.ts'
 import { GerenciarFederado } from '../gerenciarFederado.ts'
-import { GerenciarLogin } from '../gerenciarLogin.ts'
-import { ProfileProps } from '../gerenciarLogin.ts'
+import { GerenciarLogin, ProfileProps } from '../gerenciarLogin.ts'
 
 
 describe("Testes para o caso de uso de gerenciamento de login", () => {
@@ -21,7 +20,8 @@ describe("Testes para o caso de uso de gerenciamento de login", () => {
     email: "johndoe@doe.uk",
     displayName: "John Doe",
     provider: "google",
-    subject: "12345"
+    subject: "12345",
+    photo: ""
   }
   it("deve criar uma conta e linkar a conta federada corretamente", async () => {
 
@@ -42,7 +42,8 @@ describe("Testes para o caso de uso de gerenciamento de login", () => {
       email: "doeJohn@john.uk",
       displayName: "Doe Jonh",
       provider: "google",
-      subject: "123456"
+      subject: "123456",
+      photo: ""
     }
     gerenciarFederado.buscar = vi.fn().mockReturnValue(null)
     gerenciarConta.cadastrar = vi.fn().mockReturnValue(null)

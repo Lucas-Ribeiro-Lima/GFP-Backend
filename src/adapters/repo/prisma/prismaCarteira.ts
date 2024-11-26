@@ -6,7 +6,7 @@ import { CarteiraRepo } from '../../../useCases/repo/CarteiraRepo.ts';
 
 
 export class PrismaCarteira implements CarteiraRepo {
-  constructor(private pc = new PrismaClient({log: ['error'], errorFormat: 'minimal'})) {}
+  constructor(private readonly pc = new PrismaClient({log: ['error'], errorFormat: 'minimal'})) {}
 
   async create({idContaDono, nome, compartilhada, meta, saldo}: CarteiraProps): Promise<void> {
     try {

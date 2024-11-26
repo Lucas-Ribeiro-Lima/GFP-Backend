@@ -6,7 +6,7 @@ import { DespesaRepo } from "../../../useCases/repo/RegistrosRepo.ts";
 import { logger } from "../../../lib/utils.ts";
 
 export class PrismaDespesa implements DespesaRepo {
-  constructor(private pc = new PrismaClient({log: ["error"], errorFormat: "pretty"})) {}
+  constructor(private readonly pc = new PrismaClient({log: ["error"], errorFormat: "pretty"})) {}
 
   async create({
     idCarteira,

@@ -5,7 +5,7 @@ export interface ConfigsProps {
 }
 
 export class Configs {  
-  private props: ConfigsProps = {
+  private readonly props: ConfigsProps = {
     tema: "Light",
     displayName: '',
     customWpp: ''
