@@ -9,7 +9,7 @@ export interface ControllerLoginProps {
 
 
 export class ControllerLogin implements ControllerLoginProps {
-  constructor(private gerenciarLogin: GerenciarLoginProps) {}
+  constructor(private readonly gerenciarLogin: GerenciarLoginProps) {}
   
   async validate({ provider, id: subject, emails, displayName, photos}: Profile): Promise<ContaProps> {
     const email = emails?.[0].value
